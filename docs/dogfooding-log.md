@@ -165,6 +165,17 @@ Evidence: `evidence/round2/messages-*.json`.
 - **Transfer reached voicemail:** `transfer` result "Transfer completed". The call was bridged to the mobile's voicemail (likely phone-side screening of an unknown international +1 caller, e.g. iOS "Silence Unknown Callers" or carrier scam filtering). The platform counts voicemail as success, so `escalate_failed` didn't run. Fix: the transfer tool's `voicemail_detection` with `on_voicemail_detected.action = "stop_transfer"`, so voicemail → transfer fails → `escalate_failed`. Plus `warm_transfer_instructions` so the specialist hears context (verified? customer name? what happened?) before the bridge.
 - API note: `GET /v2/ai/conversations/{id}/messages?page[size]=200` → `10015 Bad Request` (max page size 100).
 
+## 25. Phase 5 (commit 54c874c)
+- `/verify` remembers the customer resolved earlier in the same call (in-isolate map + actor write keyed by `call_control_id`, 30 min staleness). Reason for the actor write: the platform doesn't document isolate affinity between the requests of one voice conversation, so a map alone could lose the customer mid-call. The round-2 repro (mobile omitted on the 3rd attempt, SIP caller) now counts the attempt (`failed`, 2 → 1 left) instead of `not_found`.
+- Base prompt: at most "One moment." alongside a tool call; never repeat after the result. Transfer tool: `warm_transfer_instructions` briefs the specialist (verification status, first name, what happened). Voicemail detection deliberately not enabled (assumption: the specialist answers; production would enable `stop_transfer`).
+- **Trade-off of moving the signature bypass off KV:** `DEV_SKIP_SIG` is now a deploy-time env var, so flipping it needs `telnyx-edge ship` (unsigned calls kept getting `{"error":"invalid signature"}` 401 until re-ship). That's the intended semantics: an auth bypass shouldn't be a runtime toggle.
+
+## 26. Signature check left OFF in production after phase 5, caught by post-deploy review ⭐ (security story)
+- **Found by:** Claude's post-deploy probe at ~08:55Z: unsigned `POST /verify` → **200** with a real verification result (`C004 … attempts_remaining "2"`); unsigned `/dv` → 200. `telnyx-edge secrets list` showed `DEV_SKIP_SIG` last updated **08:51**, the same minute as revision `ed93872c` (OpenCode turned the bypass on for a live repro, shipped, and didn't turn it off). Impact while open: anyone could brute-force or lock out personas via `/verify`.
+- **Fix:** `telnyx-edge secrets add DEV_SKIP_SIG false` + re-ship. The first two ships failed: `shipping upload returned API error (HTTP 500): … The Telnyx API server encountered an error … could not be confirmed (no new revision observed)`. The third (`ship -v`) deployed revision `5761aec9` at 09:08Z. Verified: unsigned `/verify` and `/dv` → **401**. Demo state reset afterwards.
+- **Guardrail to add:** the deep health check reports `sig_enforced`, and the 60 s probe alerts if it's false. Secrets are injected at deploy time, so a flipped secret without a ship (or a ship without flipping back) is exactly the drift the probe should catch.
+- `ship` 500s are transient upload failures with no revision created (`deployments` showed none). Retry with `-v` to see the request flow; `rollback <fn> <revision>` is the instant escape hatch.
+
 ---
 
 ## Observations (not bugs, but they shaped decisions)

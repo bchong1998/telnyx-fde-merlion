@@ -390,7 +390,7 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
     return finish(json({ ok: true }), ctx, { ...base, outcome: "ok" });
   }
 
-  // Deep probe: one KV read + one actor read against a probe instance.
+  // Deep probe: KV read + actor read + signature-enforcement state.
   let kvOk = false;
   let actorOk = false;
   const errors: string[] = [];
@@ -406,12 +406,33 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
   } catch (e) {
     errors.push(`actor: ${e instanceof Error ? e.message : String(e)}`);
   }
-  const ok = kvOk && actorOk;
-  return finish(json({ ok, checks: { kv: kvOk, actor: actorOk } }, ok ? 200 : 503), ctx, {
-    ...base,
-    outcome: ok ? "ok" : "error",
-    err: errors.length ? errors.join("; ") : null,
-  });
+  const sigEnforced = !(await devSkipEnabled(env));
+  if (!sigEnforced) errors.push("sig_enforced: DEV_SKIP_SIG is on — unsigned webhooks would be accepted");
+  const ok = kvOk && actorOk && sigEnforced;
+  // No revision id is exposed to function code (checked edge-runtime: no env
+  // var) — reported when the platform starts injecting one.
+  const revision =
+    process.env.EC_REVISION ?? process.env.REVISION ?? process.env.TELNYX_REVISION ?? null;
+  const kvMsTotal = [...ctx.kvMs.values()].reduce((a, b) => a + b, 0);
+  return finish(
+    json(
+      {
+        ok,
+        checks: { kv: kvOk, actor: actorOk },
+        sig_enforced: sigEnforced,
+        kv_ms: ctx.kvMs.size ? kvMsTotal : 0,
+        actor_ms: ctx.actorMs ?? 0,
+        revision,
+      },
+      ok ? 200 : 503,
+    ),
+    ctx,
+    {
+      ...base,
+      outcome: ok ? "ok" : "error",
+      err: errors.length ? errors.join("; ") : null,
+    },
+  );
 }
 
 async function handleAdminReset(req: Request, env: Env, ctx: HopCtx): Promise<Response> {

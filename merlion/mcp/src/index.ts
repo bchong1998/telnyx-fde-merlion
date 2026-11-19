@@ -14,6 +14,8 @@ import { logLine, type Outcome } from "../../shared/log.ts";
 import { normalisePhone } from "../../shared/phone.ts";
 import scamFeed from "../../shared/scam-feed.json" with { type: "json" };
 
+declare const process: { env: Record<string, string | undefined> };
+
 // ---- reference actor stub (owner = merlion-webhook) -------------------------
 
 type FreezeCardStatus = "frozen" | "already_frozen" | "not_verified";
@@ -451,12 +453,33 @@ async function checkAuth(req: Request, env: Env): Promise<boolean> {
 
 // ---- routes -------------------------------------------------------------------
 
+/** In-process MCP liveness: run tools/list through the same SDK wiring. */
+async function mcpSelfCheck(env: Env, ctx: HopCtx): Promise<boolean> {
+  const server = buildServer(env, ctx);
+  const transport = new WebStandardStreamableHTTPServerTransport({
+    sessionIdGenerator: undefined,
+    enableJsonResponse: true,
+  });
+  await server.connect(transport);
+  const res = await transport.handleRequest(
+    new Request("https://selfcheck.local/mcp", {
+      method: "POST",
+      headers: { "content-type": "application/json", accept: "application/json, text/event-stream" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/list" }),
+    }),
+  );
+  if (res.status !== 200) return false;
+  const body = (await res.json()) as { result?: { tools?: unknown[] } };
+  return Array.isArray(body.result?.tools) && body.result!.tools!.length === 4;
+}
+
 async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response> {
   if (url.searchParams.get("deep") !== "1") {
     return finish(json({ ok: true }), ctx, { route: "/healthz", outcome: "ok" });
   }
   let kvOk = false;
   let actorOk = false;
+  let mcpOk = false;
   const errors: string[] = [];
   try {
     await kvGet(env, "flag/scam_surge_alert", ctx);
@@ -470,12 +493,31 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
   } catch (e) {
     errors.push(`actor: ${e instanceof Error ? e.message : String(e)}`);
   }
-  const ok = kvOk && actorOk;
-  return finish(json({ ok, checks: { kv: kvOk, actor: actorOk } }, ok ? 200 : 503), ctx, {
-    route: "/healthz",
-    outcome: ok ? "ok" : "error",
-    err: errors.length ? errors.join("; ") : null,
-  });
+  try {
+    mcpOk = await mcpSelfCheck(env, ctx);
+    if (!mcpOk) errors.push("mcp: tools/list self-check failed");
+  } catch (e) {
+    errors.push(`mcp: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  const ok = kvOk && actorOk && mcpOk;
+  // No revision id is exposed to function code; report when the platform injects one.
+  const revision =
+    process.env.EC_REVISION ?? process.env.REVISION ?? process.env.TELNYX_REVISION ?? null;
+  const kvMsTotal = [...ctx.kvMs.values()].reduce((a, b) => a + b, 0);
+  return finish(
+    json(
+      {
+        ok,
+        checks: { kv: kvOk, actor: actorOk, mcp: mcpOk },
+        kv_ms: ctx.kvMs.size ? kvMsTotal : 0,
+        actor_ms: ctx.actorMs ?? 0,
+        revision,
+      },
+      ok ? 200 : 503,
+    ),
+    ctx,
+    { route: "/healthz", outcome: ok ? "ok" : "error", err: errors.length ? errors.join("; ") : null },
+  );
 }
 
 export default {

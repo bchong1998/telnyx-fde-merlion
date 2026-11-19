@@ -1,0 +1,32 @@
+# Synthetic probe for the Merlion fraud line (see scripts/probe.sh).
+#
+# Runs every 5 minutes — the minimum interval GitHub Actions schedules — as an
+# external check that does not depend on the developer's laptop being awake.
+#
+# NOTE: production would use a 60-second external synthetic (e.g. Datadog
+# Synthetics, Checkly) with on-call paging; Actions cron is best-effort and can
+# drift minutes under load, so it only approximates the 60 s budget.
+name: probe
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: # allow manual runs
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run synthetic probe (--once)
+        env:
+          MERLION_WEBHOOK_URL: https://merlion-webhook-82dcb044-d.telnyxcompute.com
+          MERLION_MCP_URL: https://merlion-mcp-dc70ffb9-5.telnyxcompute.com
+        run: |
+          chmod +x scripts/probe.sh
+          scripts/probe.sh --once

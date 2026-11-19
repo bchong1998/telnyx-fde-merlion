@@ -1,0 +1,36 @@
+conversation 7723d64a-4caf-40f5-9f68-4ea8c5c85fc5  ↔  call_control_id v3:eAZwyMzw1AjlKSSl-7t5cxzZ8fzE6Ac0PN8wqtEHQYz58CXXq0YWbA
+────────────────────────────────────────────────────────────────────────
+08:30:16.134  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+08:30:16.159  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+08:30:16.202  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+08:30:36.839  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+08:30:52.384  user [triage]  What's the status of my case?
+08:30:52.599  assistant [verify_collect]  Let me help you with that.
+08:30:52.825  assistant [verify_collect]  To protect your account, I first need to verify your identity.  May I have the Singapore mobile number registered with Merlion Bank? Please read it to me in two
+08:31:02.641  user [verify_collect]  Nine one two three four five six seven.
+08:31:02.867  assistant [verify_collect]  Let me read that back: nine, one, two, three — four, five, six, seven. Is that correct?
+08:31:13.984  user [verify_collect]  Yes.
+08:31:14.204  assistant [verify_collect]  Thank you.  Now, may I have your date of birth, and the last four digits of your Merlion Bank card?
+08:31:16.298  user [verify_collect]  Second November nineteen seventy five.
+08:31:16.647  assistant [verify_collect]  Thank you. And the
+08:31:29.077  user [verify_collect]  eight eight three three.
+08:31:29.279  fn:webhook       webhook:/verify                    outcome=verified     status=200 duration_ms=308 actor_ms=307
+08:31:29.403  assistant [verify_collect]  Let me read that back. Your date of birth is second November, nineteen seventy five. The last four digits of your card are eight, eight, three, three. Is that c
+08:31:29.799  fn:mcp           mcp:get_case_status                outcome=ok           status=200 duration_ms=273 actor_ms=272
+08:31:29.800  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=276 actor_ms=272
+08:31:53.659  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=3
+08:31:53.682  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+08:31:53.740  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=5
+08:31:53.877  user [verify_collect]  Yes.
+08:31:54.216  transcript [verify_collect]  CALLS verify({"dob":"1975-11-02","last4":"8833","mobile":"+6591234567"})
+08:31:54.627  transcript [verify_collect]  tool-result {"attempts_remaining":"3","customer_id":"C002","first_name":"Raj","lockout_until":"","verification_status":"verified"}
+08:31:54.962  transcript [secure_actions]  CALLS get_case_status({"customer_id":"C002"})
+08:31:55.259  transcript [secure_actions]  tool-result You have 1 case: MB-C002-1, suspicious card transactions, open.
+08:31:55.490  assistant [secure_actions]  Thank you, Raj. You are verified.
+08:31:55.714  assistant [secure_actions]  Thank you, Raj. You are verified.  Here is what I have on file. You have one case. The case number is M, B, dash, C, zero, zero, two, dash, one. It is for suspi
+08:31:59.122  user [secure_actions]  No.
+08:31:59.355  assistant [secure_actions]  Understood. Is there anything else I can help you with today?
+08:32:15.837  user [secure_actions]  No.
+08:32:16.052  assistant [police_advice]  Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799
+08:32:16.278  transcript [bye]  CALLS hangup({})
+08:32:16.679  transcript [bye]  tool-result {"data":{"result":"ok"}}

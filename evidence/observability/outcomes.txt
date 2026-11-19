@@ -1,0 +1,50 @@
+{
+  "ts": "2026-11-19T09:23:30.904Z",
+  "window_hours": 2,
+  "lines_analysed": 159,
+  "by_outcome": {
+    "miss": 17,
+    "not_found": 5,
+    "verified": 15,
+    "failed": 7,
+    "locked": 2,
+    "denied": 13,
+    "ok": 100
+  },
+  "by_route_outcome": {
+    "webhook:/dv:miss": 11,
+    "webhook:/verify:not_found": 5,
+    "webhook:/verify:verified": 15,
+    "webhook:/verify:failed": 7,
+    "webhook:/verify:locked": 2,
+    "webhook:/:miss": 4,
+    "webhook:/admin/reset:denied": 2,
+    "webhook:/admin/reset:ok": 7,
+    "webhook:/dv:ok": 7,
+    "webhook:/verify:denied": 9,
+    "webhook:/dv:denied": 1,
+    "webhook:/healthz:ok": 1,
+    "mcp:/mcp:ok": 68,
+    "mcp:check_scam_indicator:ok": 8,
+    "mcp:open_fraud_case:ok": 2,
+    "mcp:freeze_card:ok": 3,
+    "mcp:/:miss": 2,
+    "mcp:get_case_status:ok": 3,
+    "mcp:get_case_status:denied": 1,
+    "mcp:/healthz:ok": 1
+  },
+  "p95_duration_ms_by_route": {
+    "webhook:/dv": 1701,
+    "webhook:/verify": 2379,
+    "webhook:/": 7,
+    "webhook:/admin/reset": 1391,
+    "webhook:/healthz": 1288,
+    "mcp:/mcp": 169,
+    "mcp:check_scam_indicator": 2529,
+    "mcp:open_fraud_case": 96,
+    "mcp:freeze_card": 166,
+    "mcp:/": 3,
+    "mcp:get_case_status": 273,
+    "mcp:/healthz": 1216
+  }
+}
