@@ -14,8 +14,8 @@
   "mcp_messages": [],
   "a2a_agents": [],
   "created_at": "2026-11-19T07:19:37.242023Z",
-  "version_id": "20261119T084818018359",
-  "version_created_at": "2026-11-19T08:48:18.018359Z",
+  "version_id": "20261119T131925036747",
+  "version_created_at": "2026-11-19T13:19:25.036747Z",
   "greeting": "",
   "llm_api_key_ref": null,
   "fallback_config": null,
@@ -273,6 +273,7 @@
               },
               "preset_body_fields": {
                 "call_control_id": "{{call_control_id}}",
+                "conversation_id": "{{telnyx_conversation_id}}",
                 "caller": "{{telnyx_end_user_target}}"
               },
               "store_fields_as_variables": [
@@ -312,7 +313,7 @@
         "type": "prompt",
         "id": "secure_actions",
         "name": null,
-        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly. Greet the caller by name: {{first_name}}. They are verified. If money was transferred or credentials were shared, offer to FREEZE THE CARD FIRST, then open the fraud case. Confirm each action separately with a yes or no before calling its tool. If the caller wants their card frozen, confirm once, then call freeze_card with customer_id {{customer_id}} and a one-sentence reason, and read the result aloud. If they want to report fraud, call open_fraud_case with customer_id {{customer_id}}, the best matching category, any amount lost in Singapore dollars, and a one-sentence summary — then read the case number back one character at a time. If they ask about an existing case or report, call get_case_status with customer_id {{customer_id}} and read the result. If a tool says the caller is not verified, apologise and say they must be verified again, then offer a specialist. Never claim an action happened unless the tool result said it happened.",
+        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly. Greet the caller by name: {{first_name}}. They are verified. The system already knows who this caller is — never ask them for a customer ID or account number. If money was transferred or credentials were shared, offer to FREEZE THE CARD FIRST, then open the fraud case. Confirm each action separately with a yes or no before calling its tool. If the caller wants their card frozen, confirm once, then call freeze_card with a one-sentence reason, and read the result aloud. If they want to report fraud, call open_fraud_case with the best matching category, any amount lost in Singapore dollars, and a one-sentence summary — then read the case number back one character at a time. If they ask about an existing case or report, call get_case_status and read the result. If a tool says the caller is not verified, apologise and say they must be verified again, then offer a specialist. Never claim an action happened unless the tool result said it happened.",
         "instructions_mode": "append",
         "shared_tool_ids": null,
         "tools": [],

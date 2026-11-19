@@ -8,7 +8,8 @@
 import assert from "node:assert/strict";
 import { CustomerActor } from "../src/customer-actor.ts";
 import { CallContext } from "../src/call-context.ts";
-import { resolvePersona } from "../src/index.ts";
+import { resolvePersona, pickCallKey } from "../src/index.ts";
+import { isValidCallKey } from "../../shared/callkey.ts";
 import { normalisePhone, maskPhone } from "../../shared/phone.ts";
 import { verifyTelnyxSignature, SigError } from "../src/sig.ts";
 
@@ -250,6 +251,26 @@ console.log("PASS  phone normalise + mask");
   storage._map.set("call", { ...mem, written_at: Date.now() - 31 * 60_000 });
   assert.deepEqual(await memory.getCustomer({ traceId: "t" }), { customer_id: null });
   console.log("PASS  per-call memory: set/get, mobile wins, SIP+memory resolves, stale memory ignored");
+}
+
+// ---- call-key validation + voice-first picking (#30) --------------------------
+
+{
+  assert.equal(isValidCallKey("v3:abc123"), true);
+  assert.equal(isValidCallKey("{{call_control_id}}"), false);
+  assert.equal(isValidCallKey("{{telnyx_conversation_id}}"), false);
+  assert.equal(isValidCallKey("x{{y}}z"), false);
+  assert.equal(isValidCallKey(""), false);
+  assert.equal(isValidCallKey(null), false);
+  assert.equal(isValidCallKey(undefined), false);
+  assert.equal(isValidCallKey("a".repeat(128)), true);
+  assert.equal(isValidCallKey("a".repeat(129)), false);
+
+  // voice-first: prefer call_control_id when valid, fall back to conversation id
+  assert.equal(pickCallKey(["v3:voiceid", "chat-conv-1"]), "v3:voiceid");
+  assert.equal(pickCallKey(["{{call_control_id}}", "chat-conv-1"]), "chat-conv-1");
+  assert.equal(pickCallKey([null, "{{x}}", null]), null);
+  console.log("PASS  call-key validator: fail closed on empty/template/overlong; voice-first picking");
 }
 
 // ---- 6. signature round-trip -------------------------------------------------

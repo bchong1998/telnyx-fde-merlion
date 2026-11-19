@@ -30,6 +30,7 @@
     },
     "preset_body_fields": {
       "call_control_id": "{{call_control_id}}",
+      "conversation_id": "{{telnyx_conversation_id}}",
       "caller": "{{telnyx_end_user_target}}"
     },
     "store_fields_as_variables": [

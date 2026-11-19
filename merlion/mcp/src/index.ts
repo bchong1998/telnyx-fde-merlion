@@ -12,6 +12,7 @@ import type {
 } from "@telnyx/edge-runtime";
 import { logLine, type Outcome } from "../../shared/log.ts";
 import { normalisePhone } from "../../shared/phone.ts";
+import { isValidCallKey } from "../../shared/callkey.ts";
 import scamFeed from "../../shared/scam-feed.json" with { type: "json" };
 
 declare const process: { env: Record<string, string | undefined> };
@@ -41,8 +42,16 @@ interface CustomerStub extends ActorStub {
 interface CustomerNS extends ActorNamespace {
   idFromName(name: string, options?: IdFromNameOptions): CustomerStub;
 }
+interface CallContextStub extends ActorStub {
+  getCustomer(a: { traceId: string }): Promise<{ customer_id: string | null }>;
+  setCustomer(a: { customerId: string; traceId: string }): Promise<{ ok: true }>;
+}
+interface CallContextNS extends ActorNamespace {
+  idFromName(name: string, options?: IdFromNameOptions): CallContextStub;
+}
 interface Env {
   CUSTOMER: CustomerNS;
+  CALLCTX: CallContextNS;
   MERLION_KV: KvNamespace;
   SECRETS?: { get(binding: string): Promise<string> };
 }
@@ -52,6 +61,7 @@ interface Env {
 interface HopCtx {
   start: number;
   traceId: string;
+  callKey: string | null; // validated binding key for actor gates (#30); null = fail closed
   kvMs: Map<string, number>;
   actorMs: number | null;
 }
@@ -222,9 +232,63 @@ async function checkScamIndicator(
 
 // ---- MCP server (fresh per request; stateless) --------------------------------
 
+/**
+ * Resolve the verified customer for this conversation SERVER-SIDE (#31): the
+ * model never supplies identity. Source: the per-call memory the /verify route
+ * wrote into CallContext under the validated call key. The actor's own
+ * verified_call_id gate is the second line — even a stale memory can't mint
+ * permissions for a different customer.
+ */
+async function verifiedCustomer(
+  env: Env,
+  ctx: HopCtx,
+  tool: string,
+  t0: number,
+): Promise<{ customerId: string } | { refusal: { text: string; outcome: Outcome } }> {
+  if (!ctx.callKey) {
+    toolLog(ctx, tool, "bad_call_key", t0);
+    return {
+      refusal: {
+        outcome: "bad_call_key",
+        text: "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      },
+    };
+  }
+  let mem: { customer_id: string | null };
+  try {
+    mem = await actorCall(ctx, env.CALLCTX.idFromName(ctx.callKey).getCustomer({ traceId: ctx.traceId }));
+  } catch {
+    mem = { customer_id: null };
+  }
+  if (!mem.customer_id) {
+    toolLog(ctx, tool, "denied", t0);
+    return {
+      refusal: {
+        outcome: "not_verified",
+        text: "The caller's identity has not been verified in this conversation, so I cannot do that. Please verify the caller first, then try again.",
+      },
+    };
+  }
+  return { customerId: mem.customer_id };
+}
+
+function refusalResult(refusal: { text: string; outcome: Outcome }) {
+  return {
+    content: [{ type: "text" as const, text: refusal.text }],
+    structuredContent: { status: refusal.outcome === "bad_call_key" ? "bad_call_key" : "not_verified" },
+  };
+}
+
+function errorResult(tool: string, text: string) {
+  return {
+    content: [{ type: "text" as const, text }],
+    structuredContent: { retryable: true },
+    isError: true,
+  };
+}
+
 function buildServer(env: Env, ctx: HopCtx): McpServer {
-  const server = new McpServer({ name: "merlion-mcp", version: "0.1.0" });
-  const callControlId = ctx.traceId; // never a model-supplied argument
+  const server = new McpServer({ name: "merlion-mcp", version: "0.2.0" });
 
   server.registerTool(
     "check_scam_indicator",
@@ -273,26 +337,28 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
     "freeze_card",
     {
       description:
-        "Freeze the caller's bank card immediately so no money can leave it. " +
+        "Freeze the verified caller's bank card immediately so no money can leave it. " +
+        "The customer is resolved from the conversation itself — never ask the caller for an ID. " +
         "Only use this after the caller's identity has been verified in this call, and after they confirm they want the card frozen.",
       inputSchema: {
-        customer_id: z.string().describe("The verified caller's customer id, for example C001"),
         reason: z.string().describe("One short sentence about why the card is being frozen"),
       },
     },
-    async ({ customer_id, reason }) => {
+    async ({ reason }) => {
       const t0 = Date.now();
       try {
-        const r = await actorCall(
+        const r = await verifiedCustomer(env, ctx, "freeze_card", t0);
+        if ("refusal" in r) return refusalResult(r.refusal);
+        const res = await actorCall(
           ctx,
-          env.CUSTOMER.idFromName(customer_id).freezeCard({
-            callControlId,
+          env.CUSTOMER.idFromName(r.customerId).freezeCard({
+            callControlId: ctx.callKey!,
             reason,
             traceId: ctx.traceId,
           }),
         );
-        toolLog(ctx, "freeze_card", r.status === "not_verified" ? "denied" : "ok", t0, {
-          customerId: customer_id,
+        toolLog(ctx, "freeze_card", res.status === "not_verified" ? "denied" : "ok", t0, {
+          customerId: r.customerId,
         });
         const byStatus: Record<FreezeCardStatus, string> = {
           frozen: "The card is now frozen. No new transactions can go through.",
@@ -301,18 +367,15 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
             "The caller's identity has not been verified in this call, so I cannot freeze the card. Please verify the caller first, then try again.",
         };
         return {
-          content: [{ type: "text", text: byStatus[r.status] }],
-          structuredContent: { status: r.status },
+          content: [{ type: "text", text: byStatus[res.status] }],
+          structuredContent: { status: res.status },
         };
       } catch (e) {
-        toolLog(ctx, "freeze_card", "error", t0, { customerId: customer_id, err: String(e) });
-        return {
-          content: [
-            { type: "text", text: "The freeze could not be completed. You may retry once; if it fails again, offer to connect a specialist." },
-          ],
-          structuredContent: { retryable: true },
-          isError: true,
-        };
+        toolLog(ctx, "freeze_card", "error", t0, { err: String(e) });
+        return errorResult(
+          "freeze_card",
+          "The freeze could not be completed. You may retry once; if it fails again, offer to connect a specialist.",
+        );
       }
     },
   );
@@ -322,9 +385,9 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
     {
       description:
         "Open a fraud case for the verified caller, recording what happened in one or two short sentences. " +
+        "The customer is resolved from the conversation itself — never ask the caller for an ID. " +
         "Only use this after the caller's identity has been verified in this call.",
       inputSchema: {
-        customer_id: z.string().describe("The verified caller's customer id, for example C001"),
         category: z
           .enum(["money_transferred", "credentials_shared", "suspicious_contact"])
           .describe("money_transferred: caller already sent money; credentials_shared: caller revealed codes or card details; suspicious_contact: suspicious contact but nothing lost yet"),
@@ -332,44 +395,43 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
         summary: z.string().describe("One or two short sentences describing what happened"),
       },
     },
-    async ({ customer_id, category, amount_sgd, summary }) => {
+    async ({ category, amount_sgd, summary }) => {
       const t0 = Date.now();
       try {
-        const r = await actorCall(
+        const r = await verifiedCustomer(env, ctx, "open_fraud_case", t0);
+        if ("refusal" in r) return refusalResult(r.refusal);
+        const res = await actorCall(
           ctx,
-          env.CUSTOMER.idFromName(customer_id).openCase({
-            callControlId,
+          env.CUSTOMER.idFromName(r.customerId).openCase({
+            callControlId: ctx.callKey!,
             category,
             amount_sgd: amount_sgd ?? null,
             summary,
             traceId: ctx.traceId,
           }),
         );
-        toolLog(ctx, "open_fraud_case", r.status === "not_verified" ? "denied" : "ok", t0, {
-          customerId: customer_id,
+        toolLog(ctx, "open_fraud_case", res.status === "not_verified" ? "denied" : "ok", t0, {
+          customerId: r.customerId,
         });
         let text: string;
-        if (r.status === "opened") {
-          text = `Fraud case ${r.case_id} is now open. Our fraud team will review it today.`;
-        } else if (r.status === "existing") {
-          text = `Fraud case ${r.case_id} is already open for this call, so no duplicate was created.`;
+        if (res.status === "opened") {
+          text = `Fraud case ${res.case_id} is now open. Our fraud team will review it today.`;
+        } else if (res.status === "existing") {
+          text = `Fraud case ${res.case_id} is already open for this call, so no duplicate was created.`;
         } else {
           text =
             "The caller's identity has not been verified in this call, so I cannot open a case. Please verify the caller first, then try again.";
         }
         return {
           content: [{ type: "text", text }],
-          structuredContent: { status: r.status, case_id: r.case_id ?? undefined },
+          structuredContent: { status: res.status, case_id: res.case_id ?? undefined },
         };
       } catch (e) {
-        toolLog(ctx, "open_fraud_case", "error", t0, { customerId: customer_id, err: String(e) });
-        return {
-          content: [
-            { type: "text", text: "The case could not be opened right now. You may retry once; if it fails again, offer to connect a specialist." },
-          ],
-          structuredContent: { retryable: true },
-          isError: true,
-        };
+        toolLog(ctx, "open_fraud_case", "error", t0, { err: String(e) });
+        return errorResult(
+          "open_fraud_case",
+          "The case could not be opened right now. You may retry once; if it fails again, offer to connect a specialist.",
+        );
       }
     },
   );
@@ -379,22 +441,23 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
     {
       description:
         "Read back the fraud cases the verified caller already has, with each case number and status. " +
+        "The customer is resolved from the conversation itself — never ask the caller for an ID. " +
         "Only use this after the caller's identity has been verified in this call.",
-      inputSchema: {
-        customer_id: z.string().describe("The verified caller's customer id, for example C001"),
-      },
+      inputSchema: {},
     },
-    async ({ customer_id }) => {
+    async () => {
       const t0 = Date.now();
       try {
-        const r = await actorCall(
+        const r = await verifiedCustomer(env, ctx, "get_case_status", t0);
+        if ("refusal" in r) return refusalResult(r.refusal);
+        const res = await actorCall(
           ctx,
-          env.CUSTOMER.idFromName(customer_id).getCases({ callControlId, traceId: ctx.traceId }),
+          env.CUSTOMER.idFromName(r.customerId).getCases({ callControlId: ctx.callKey!, traceId: ctx.traceId }),
         );
-        toolLog(ctx, "get_case_status", r.status === "not_verified" ? "denied" : "ok", t0, {
-          customerId: customer_id,
+        toolLog(ctx, "get_case_status", res.status === "not_verified" ? "denied" : "ok", t0, {
+          customerId: r.customerId,
         });
-        if (r.status === "not_verified") {
+        if (res.status === "not_verified") {
           return {
             content: [
               {
@@ -405,26 +468,23 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
             structuredContent: { status: "not_verified" },
           };
         }
-        const open = r.cases.filter((c) => c.status === "open");
+        const open = res.cases.filter((c) => c.status === "open");
         const text =
-          r.cases.length === 0
+          res.cases.length === 0
             ? "There are no fraud cases on file for you yet."
-            : `You have ${r.cases.length} case${r.cases.length === 1 ? "" : "s"}: ` +
-              r.cases.map((c) => `${c.case_id}, ${c.category.replace(/_/g, " ")}, ${c.status}`).join("; ") +
+            : `You have ${res.cases.length} case${res.cases.length === 1 ? "" : "s"}: ` +
+              res.cases.map((c) => `${c.case_id}, ${c.category.replace(/_/g, " ")}, ${c.status}`).join("; ") +
               ".";
         return {
           content: [{ type: "text", text }],
-          structuredContent: { status: "ok", open_count: open.length, cases: r.cases },
+          structuredContent: { status: "ok", open_count: open.length, cases: res.cases },
         };
       } catch (e) {
-        toolLog(ctx, "get_case_status", "error", t0, { customerId: customer_id, err: String(e) });
-        return {
-          content: [
-            { type: "text", text: "I could not read the case status right now. You may retry once; if it fails again, offer to connect a specialist." },
-          ],
-          structuredContent: { retryable: true },
-          isError: true,
-        };
+        toolLog(ctx, "get_case_status", "error", t0, { err: String(e) });
+        return errorResult(
+          "get_case_status",
+          "I could not read the case status right now. You may retry once; if it fails again, offer to connect a specialist.",
+        );
       }
     },
   );
@@ -524,7 +584,21 @@ export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const start = Date.now();
     const url = new URL(req.url);
-    const ctx: HopCtx = { start, traceId: url.searchParams.get("trace") ?? "", kvMs: new Map(), actorMs: null };
+    // Binding key candidates: ?trace= is {{call_control_id}} (voice), ?conv= is
+    // {{telnyx_conversation_id}} (chat). First valid wins; literal template
+    // text fails validation and the gated tools fail closed on it (#30).
+    const rawTrace = url.searchParams.get("trace") ?? "";
+    const ctx: HopCtx = {
+      start,
+      traceId: rawTrace || (url.searchParams.get("conv") ?? ""),
+      callKey: isValidCallKey(rawTrace)
+        ? rawTrace
+        : isValidCallKey(url.searchParams.get("conv"))
+          ? url.searchParams.get("conv")
+          : null,
+      kvMs: new Map(),
+      actorMs: null,
+    };
 
     try {
       if (url.pathname === "/healthz" && req.method === "GET") {

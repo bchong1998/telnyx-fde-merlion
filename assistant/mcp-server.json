@@ -1,5 +1,5 @@
 {
   "name": "merlion-mcp",
   "type": "http",
-  "url": "https://merlion-mcp-dc70ffb9-5.telnyxcompute.com/mcp?trace={{call_control_id}}"
+  "url": "https://merlion-mcp-dc70ffb9-5.telnyxcompute.com/mcp?trace={{call_control_id}}&conv={{telnyx_conversation_id}}"
 }

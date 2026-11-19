@@ -5,6 +5,7 @@ import type { ActorNamespace as __TelnyxActorNamespace, KvNamespace as __TelnyxK
 declare global {
   interface Env {
     CUSTOMER: __TelnyxActorNamespace;
+    CALLCTX: __TelnyxActorNamespace;
     MERLION_KV: __TelnyxKvNamespace;
   }
 }
@@ -12,6 +13,7 @@ declare global {
 declare module "@telnyx/edge-runtime" {
   interface Env {
     CUSTOMER: __TelnyxActorNamespace;
+    CALLCTX: __TelnyxActorNamespace;
     MERLION_KV: __TelnyxKvNamespace;
   }
 }

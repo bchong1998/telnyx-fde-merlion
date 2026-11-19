@@ -16,7 +16,9 @@ export type Outcome =
   | "verified"
   | "failed"
   | "not_found"
-  | "skipped";
+  | "not_verified"
+  | "skipped"
+  | "bad_call_key";
 
 export interface LogFields {
   svc: Svc;

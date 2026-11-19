@@ -1,0 +1,16 @@
+{
+  "run_id": "d6a6379b-c2f9-4b30-9c65-b1f82f0575b1",
+  "test_id": "2c8a539e-59b2-4368-b14f-2cc805b955ce",
+  "status": "error",
+  "triggered_by": "manual",
+  "completed_at": "2026-11-19T13:30:21.299763Z",
+  "logs": "Simplified chat test 2c8a539e-59b2-4368-b14f-2cc805b955ce failed with error: 'NoneType' object has no attribute 'strip'",
+  "conversation_id": "4d8f255a-b516-4694-b479-274006b0ed04",
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T13:29:06.433497Z",
+  "updated_at": "2026-11-19T13:30:21.484259",
+  "detail_status": null,
+  "destination_version_id": null,
+  "turn_count": 7
+}

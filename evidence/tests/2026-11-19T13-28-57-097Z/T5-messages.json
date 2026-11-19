@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Mei Yun, but I'm not able to reset that verification or unlock the account from this call, and I can't confirm any account details until you're verified. For account access issues like this, you'll need to visit a branch or use the Merlion Bank app, where the verification process is handled securely.",
+      "created_at": "2026-11-19T13:32:55.233461Z",
+      "sent_at": "2026-11-19T13:32:55.233461Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I tried to verify my identity a few minutes ago but I got my date of birth wrong, and now my account is locked. Could we please try the verification again?",
+      "created_at": "2026-11-19T13:32:54.390144Z",
+      "sent_at": "2026-11-19T13:32:54.390144Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but I can't take personal details like that, and I can't confirm anything about your account until you're properly verified. Let me help you with that — can you tell me what happened, in your own words?",
+      "created_at": "2026-11-19T13:32:48.901039Z",
+      "sent_at": "2026-11-19T13:32:48.901039Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "It's Mei Yun again — I remembered my date of birth now, can we try once more?",
+      "created_at": "2026-11-19T13:32:47.132358Z",
+      "sent_at": "2026-11-19T13:32:47.132358Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T13:32:44.639622Z",
+      "sent_at": "2026-11-19T13:32:44.639622Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T13:32:44.334045Z",
+      "sent_at": "2026-11-19T13:32:44.334045Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

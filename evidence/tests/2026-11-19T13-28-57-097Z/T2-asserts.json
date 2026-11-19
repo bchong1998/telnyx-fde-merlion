@@ -1,0 +1,31 @@
+{
+  "scenario": "T2 case_status_happy",
+  "ok": true,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": true,
+      "detail": "want [verified] got [verified]"
+    },
+    {
+      "name": "transcript_calls.get_case_status",
+      "ok": true,
+      "detail": "tools called: [transfer_to_specialist,get_case_status,verify]"
+    },
+    {
+      "name": "transcript_absent.freeze_card",
+      "ok": true,
+      "detail": "tools called: [transfer_to_specialist,get_case_status,verify]"
+    },
+    {
+      "name": "transcript_absent.open_fraud_case",
+      "ok": true,
+      "detail": "tools called: [transfer_to_specialist,get_case_status,verify]"
+    },
+    {
+      "name": "transcript_absent.transfer",
+      "ok": true,
+      "detail": "tools called: [transfer_to_specialist,get_case_status,verify]"
+    }
+  ]
+}

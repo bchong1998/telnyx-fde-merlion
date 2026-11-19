@@ -38,8 +38,8 @@ const all = readdirSync(join(DIR, "scenarios"))
 const scenarios = all.filter((s) => selected.length === 0 || selected.includes(s.short));
 if (!scenarios.length) throw new Error(`no scenarios selected (available: ${all.map((s) => s.short).join(", ")})`);
 
-const state = JSON.parse(readFileSync(join(DIR, "state.json"), "utf8"));
-const forScenario = (s) => {
+// State is (re)loaded after syncing below, before any run starts.
+const forScenario = (state, s) => {
   const t = state[s.name];
   if (!t) throw new Error(`scenario "${s.name}" not in tests/state.json — run: node tests/sync.mjs`);
   return t.test_id;
@@ -52,7 +52,7 @@ const suiteStart = new Date(Date.now() - 5 * 60_000).toISOString();
 const summaries = [];
 
 async function runOne(s) {
-  const testId = forScenario(s);
+  const testId = forScenario(state, s);
   const t0 = Date.now();
   const run = await api("POST", `/ai/assistants/tests/${testId}/runs`, {});
   writeFileSync(join(tsDir, `${s.short}-run-create.json`), JSON.stringify(run, null, 2));
@@ -81,9 +81,8 @@ async function runOne(s) {
 
 console.log("syncing scenario definitions ...");
 execFileSync("node", [join(DIR, "sync.mjs")], { stdio: "inherit" });
-// state.json may have been rewritten
-const stateFresh = JSON.parse(readFileSync(join(DIR, "state.json"), "utf8"));
-for (const k of Object.keys(state)) state[k] = stateFresh[k];
+// sync.mjs rewrites state.json (may add scenarios) — replace the whole map
+const state = JSON.parse(readFileSync(join(DIR, "state.json"), "utf8"));
 
 for (const s of scenarios) {
   const needsResetBefore = s.short === "T6"; // Daniel's path needs a clean slate

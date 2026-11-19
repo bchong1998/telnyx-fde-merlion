@@ -2,10 +2,14 @@ name = "merlion-mcp"
 main = "src/index.ts"
 compatibility_date = "2026-05-01"
 
-# REFERENCE binding: merlion-webhook owns the CustomerActor class.
+# REFERENCE bindings: merlion-webhook owns both actor classes.
 [[actors]]
 binding = "CUSTOMER"
 type = "CustomerActor"
+
+[[actors]]
+binding = "CALLCTX"
+type = "CallContext"
 
 [storage.kv.MERLION_KV]
 id = "85b93e35-6eb9-4055-b7ba-4afc76ebaa97"

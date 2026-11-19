@@ -1,0 +1,106 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but I'm unable to freeze the card from my side at the moment, and a system check didn't go through. I'll connect you to a specialist who can do it for you. Please hold the line.",
+      "created_at": "2026-11-19T13:27:16.935128Z",
+      "sent_at": "2026-11-19T13:27:16.935128Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T13:27:16.581247Z",
+      "sent_at": "2026-11-19T13:27:16.581247Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-dynamo-at1-overshoot_fe6c638210d5a012_f6fb3592-e94b-41b3-be90-2c4f13923201",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. One moment.",
+      "created_at": "2026-11-19T13:27:16.476500Z",
+      "sent_at": "2026-11-19T13:27:16.476500Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-dynamo-at1-overshoot_fe6c638210d5a012_f6fb3592-e94b-41b3-be90-2c4f13923201",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "freeze_card",
+            "arguments": "{\"reason\":\"Caller's wallet was stolen, card frozen to prevent unauthorised charges.\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My wallet was stolen. I need to freeze my bank card right away.",
+      "created_at": "2026-11-19T13:27:15.626345Z",
+      "sent_at": "2026-11-19T13:27:15.626345Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T13:27:14.410510Z",
+      "sent_at": "2026-11-19T13:27:14.410510Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T13:27:14.111718Z",
+      "sent_at": "2026-11-19T13:27:14.111718Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

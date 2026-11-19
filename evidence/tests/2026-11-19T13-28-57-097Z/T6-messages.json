@@ -1,0 +1,196 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Daniel — I can't do either right now, as the verification for this session didn't go through. Only a specialist can complete this for you. Shall I connect you to one now?",
+      "created_at": "2026-11-19T13:34:11.787619Z",
+      "sent_at": "2026-11-19T13:34:11.787619Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No thank you, please don't transfer me. Can you freeze the card and open a fraud case for me right there? That's all I need.",
+      "created_at": "2026-11-19T13:34:11.464861Z",
+      "sent_at": "2026-11-19T13:34:11.464861Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand the urgency, and I'm not able to freeze the card from this session right now — the system could not confirm the verification. To get this done safely, I need to connect you to a specialist who can complete verification and freeze your card. May I transfer you now?",
+      "created_at": "2026-11-19T13:34:06.224443Z",
+      "sent_at": "2026-11-19T13:34:06.224443Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No need to transfer me — can you please just freeze the card on your end right now? That's all I need.",
+      "created_at": "2026-11-19T13:34:05.693333Z",
+      "sent_at": "2026-11-19T13:34:05.693333Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Daniel — I wasn't able to complete the freeze on my end just now. Let me connect you to a specialist who can verify you properly and freeze your card.",
+      "created_at": "2026-11-19T13:33:58.989995Z",
+      "sent_at": "2026-11-19T13:33:58.989995Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T13:33:58.481634Z",
+      "sent_at": "2026-11-19T13:33:58.481634Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-dynamo-at1-overshoot_1d2c79c0be34ec13_d6350a8f-df89-4004-9c42-5de671797ef1",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "One moment.",
+      "created_at": "2026-11-19T13:33:58.396548Z",
+      "sent_at": "2026-11-19T13:33:58.396548Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-dynamo-at1-overshoot_1d2c79c0be34ec13_d6350a8f-df89-4004-9c42-5de671797ef1",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "freeze_card",
+            "arguments": "{\"reason\":\"Caller reports wallet stolen and requests immediate card freeze\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "This is Daniel. The last four digits of my card are 1204. My registered mobile is 8123 4567 and my date of birth is 25 January 1995, if you need those for verification.",
+      "created_at": "2026-11-19T13:33:56.987324Z",
+      "sent_at": "2026-11-19T13:33:56.987324Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I can help you with that. First I need to verify you — may I have your full name, and the last four digits of your card?",
+      "created_at": "2026-11-19T13:33:51.431865Z",
+      "sent_at": "2026-11-19T13:33:51.431865Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, my wallet was stolen. I need to freeze my bank card right away.",
+      "created_at": "2026-11-19T13:33:49.278928Z",
+      "sent_at": "2026-11-19T13:33:49.278928Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T13:33:48.001333Z",
+      "sent_at": "2026-11-19T13:33:48.001333Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T13:33:47.702192Z",
+      "sent_at": "2026-11-19T13:33:47.702192Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

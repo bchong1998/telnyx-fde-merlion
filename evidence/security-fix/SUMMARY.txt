@@ -1,0 +1,57 @@
+# Security-fix evidence (dogfooding #30 / #31) — 2026-11-19T13:40Z
+
+## A. /verify fails closed on unusable key (needs,DEV_SKIP_SIG=true at the time)
+
+POST /verify with literal template keys everywhere → HTTP 200 {"verification_status":"error",...}
+Proof: verify-literal-key.json
+Function log: outcome "bad_call_key" (logs below).
+
+## B/C. MCP gated tools reject bad/unknown keys
+
+- ?trace={{call_control_id}}&conv={{telnyx_conversation_id}} (literal) →
+  "I can't verify this session's binding..." (structuredContent.status = bad_call_key) — mcp-literal-key.json
+- ?trace=v3:not-a-real-key-123 (valid-looking, unknown) → CallContext miss →
+  "The caller's identity has not been verified..." (not_verified) — mcp-unknown-key.json
+
+## D. Chat-resolvable key works end to end (curl wire-up)
+
+- POST /verify {call_control_id:"{{call_control_id}}", conversation_id:"demo-conv-9001"} → verified C002 — verify-conv-key.json
+- MCP get_case_status ?trace=demo-conv-9001 (no customer_id supplied) → "You have 1 case: MB-C002-1, ..." — proof the
+  customer is resolved server-side from CallContext under the call key (#31).
+- SAME action with ?trace=other-conv-9002 → not_verified (cross-session isolation at the actor).
+
+## E. Chat-model ended at fail-closed too (live web_chat run)
+
+T6 rerun, conversation b0a78354-bb6c-487f-8f77-d9e2f2605aba:
+- model completes verification successfully (no "customer id" prompt), then calls freeze_card;
+- MCP returns bad_call_key because in the MCP server URL both {{call_control_id}} AND
+  {{telnyx_conversation_id}} arrive LITERAL on web_chat (unresolvable at URL-template scope —
+  programming note: the SAME variable resolves in webhook-tool preset body fields; see run logs).
+- Assistant relays the refusal and offers a specialist. Chat cannot change actor state: correct.
+
+MCP log line (2026-11-19T13:33:58Z): {"route":"freeze_card","outcome":"bad_call_key","trace_id":"{{call_control_id}}"}
+
+## Variable-resolution map (empirical, this phase)
+
+| Surface | Variable | On voice | On web_chat |
+| --- | --- | --- | --- |
+| webhook tool preset_body_fields | {{call_control_id}} | resolves (v3:…) | literal |
+| webhook tool preset_body_fields | {{telnyx_conversation_id}} | resolves | RESOLVES (conversation UUID) |
+| MCP server URL query params | {{call_control_id}} | resolves | literal |
+| MCP server URL query params | {{telnyx_conversation_id}} | (not probed) | literal |
+
+Consequence: verification works on chat (via conversation_id, voice-first precedence picked by
+pickCallKey), but gated MCP actions are unavailable on chat (fail-closed, per design).
+
+## F. Regression checks
+
+- probe --once: 4/4 OK (probe-once.txt)
+- unsigned /verify → 401; /healthz?deep=1 → {"ok":true, checks.bad_call_key_rejected:true, sig_enforced:true}
+- unit tests (webhook): 12/12 PASS incl. call-key validator section
+- demo state reset afterwards: reset.txt ({"ok":true,"reset":["C001".."C004"]})
+
+## Runner-side rerun artifacts (for completeness)
+
+T2/T4/T5/T6/T8 reruns live in evidence/tests/2026-11-19T13-28-57-097Z/ (runner errors, platform-known
+flakiness; transcripts show no customer_id argument anywhere, and the verify flow completing
+via conversation_id on chat). T8 asserts (upgraded to called-denied-or-never-called) pass offline.

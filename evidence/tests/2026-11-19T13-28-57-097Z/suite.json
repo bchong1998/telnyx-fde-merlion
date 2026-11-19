@@ -1,0 +1,51 @@
+{
+  "finished_at": "2026-11-19T13:35:45.958Z",
+  "ok": false,
+  "table": [
+    {
+      "test": "T2 case_status_happy",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "4d8f255a-b516-4694-b479-274006b0ed04",
+      "wall_s": 84,
+      "ok": false
+    },
+    {
+      "test": "T4 lockout",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [failed,failed,locked] got []",
+      "conversation_id": "f091ded8-8672-4968-b71b-244f1e0f092c",
+      "wall_s": 95,
+      "ok": false
+    },
+    {
+      "test": "T5 locked_correct_dob",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [locked] got []",
+      "conversation_id": "72e9ffb0-b10e-405a-8dcd-af80e287dd60",
+      "wall_s": 63,
+      "ok": false
+    },
+    {
+      "test": "T6 freeze_card",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [verified] got []; mcp_tool_outcomes.freeze_card: want freeze_card:ok got [bad_call_key]; mcp_tool_outcomes.open_fraud_case: want open_fraud_case:ok got []",
+      "conversation_id": "b0a78354-bb6c-487f-8f77-d9e2f2605aba",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T8 cross_session_isolation",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ mcp_tool_outcomes.get_case_status: want get_case_status:denied got []",
+      "conversation_id": "d37e24f5-b1f8-44ca-a792-7cfdfe6ddc96",
+      "wall_s": 64,
+      "ok": false
+    }
+  ]
+}

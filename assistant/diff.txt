@@ -56,6 +56,7 @@ ADDED    conversation_flow.nodes.6.tools.0.webhook.body_parameters.properties.la
 ADDED    conversation_flow.nodes.6.tools.0.webhook.body_parameters.required.0 = "dob"  (only in live response)
 ADDED    conversation_flow.nodes.6.tools.0.webhook.body_parameters.required.1 = "last4"  (only in live response)
 ADDED    conversation_flow.nodes.6.tools.0.webhook.preset_body_fields.call_control_id = "{{call_control_id}}"  (only in live response)
+ADDED    conversation_flow.nodes.6.tools.0.webhook.preset_body_fields.conversation_id = "{{telnyx_conversation_id}}"  (only in live response)
 ADDED    conversation_flow.nodes.6.tools.0.webhook.preset_body_fields.caller = "{{telnyx_end_user_target}}"  (only in live response)
 ADDED    conversation_flow.nodes.6.tools.0.webhook.store_fields_as_variables.0.name = "verification_status"  (only in live response)
 ADDED    conversation_flow.nodes.6.tools.0.webhook.store_fields_as_variables.0.value_path = "verification_status"  (only in live response)

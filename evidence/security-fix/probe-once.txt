@@ -1,0 +1,5 @@
+{"ts":"2026-11-19T13:40:02.446Z","check":"webhook_deep","ok":true,"ms":1276}
+{"ts":"2026-11-19T13:40:02.549Z","check":"verify_sig_401","ok":true,"ms":102}
+{"ts":"2026-11-19T13:40:02.915Z","check":"mcp_initialize","ok":true,"ms":366}
+{"ts":"2026-11-19T13:40:03.037Z","check":"mcp_tools","ok":true,"ms":121}
+{"ts":"2026-11-19T13:40:03.037Z","overall":"OK"}

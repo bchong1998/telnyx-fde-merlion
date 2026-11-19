@@ -79,6 +79,12 @@ if ("mcp_tool_outcomes" in asserts) {
   }
 }
 
+// ---- mcp_tool_not_ok: tool must never succeed (absent or denied is fine) -------
+for (const tool of asserts.mcp_tool_not_ok ?? []) {
+  const oks = mcp.filter((m) => m.route === tool && m.outcome === "ok");
+  add(`mcp_tool_not_ok.${tool}`, oks.length === 0, `successful ${tool} calls: ${oks.length}`);
+}
+
 // ---- transcript tool presence/absence -----------------------------------------
 const toolCalls = [];
 for (const msg of messages) {

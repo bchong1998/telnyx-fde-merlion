@@ -5,6 +5,7 @@ export { CallContext } from "./call-context.ts";
 
 import { logLine, type Outcome } from "../../shared/log.ts";
 import { normalisePhone, maskPhone } from "../../shared/phone.ts";
+import { isValidCallKey } from "../../shared/callkey.ts";
 import { SigError, verifyTelnyxSignature } from "./sig.ts";
 import type { CustomerSummary } from "./customer-actor.ts";
 import customersData from "../../shared/customers.json" with { type: "json" };
@@ -21,6 +22,17 @@ interface Persona {
 const personas: Persona[] = customersData.customers as Persona[];
 const byMobile = new Map(personas.map((p) => [p.mobile_e164, p]));
 const byCustomerId = new Map(personas.map((p) => [p.customer_id, p]));
+
+/**
+ * Pick the conversation's binding key, VOICE-FIRST: call_control_id on calls
+ * (v3: …), telnyx_conversation_id on chat (resolves there; call_control_id
+ * stays literal and fails validation). First valid candidate wins; null when
+ * neither is usable — handlers must then fail closed (dogfooding #30).
+ */
+export function pickCallKey(candidates: unknown[]): string | null {
+  for (const c of candidates) if (isValidCallKey(c)) return c;
+  return null;
+}
 
 // ---- /verify resolution -------------------------------------------------------
 
@@ -325,11 +337,28 @@ async function handleVerify(req: Request, env: Env, ctx: HopCtx, raw: string, pa
   }
   const skipWarn = sig.skipped ? { level: "warn" as const } : {};
 
+  // Binding key for this conversation, voice-first (see pickCallKey). An
+  // invalid key (e.g. literal template text on chat) fails CLOSED: HTTP 200
+  // with verification_status "error", no actor state touched, log bad_call_key.
+  const callControlId = pickCallKey([payload?.call_control_id, payload?.conversation_id]);
+  if (!callControlId) {
+    return finish(
+      json({
+        verification_status: "error",
+        customer_id: "",
+        first_name: "",
+        attempts_remaining: "",
+        lockout_until: "",
+      }),
+      ctx,
+      { ...base, ...skipWarn, outcome: "bad_call_key", err: "no usable call key in presets" },
+    );
+  }
+
   // Resolve the customer: spoken registered mobile first, then platform
   // caller, then whoever was already identified on this call (dogfooding #24:
   // the model sometimes drops `mobile` mid-call and web callers have no caller
   // id — without memory that produced not_found and swallowed an attempt).
-  const callControlId = String(payload?.call_control_id ?? ctx.traceId);
   const e164 =
     (typeof payload?.mobile === "string" ? normalisePhone(payload.mobile) : null) ??
     (typeof payload?.caller === "string" ? normalisePhone(payload.caller) : null);
@@ -408,7 +437,10 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
   }
   const sigEnforced = !(await devSkipEnabled(env));
   if (!sigEnforced) errors.push("sig_enforced: DEV_SKIP_SIG is on — unsigned webhooks would be accepted");
-  const ok = kvOk && actorOk && sigEnforced;
+  // Deep check: the exact /verify guard must reject a literal template key.
+  const badCallKeyRejected = pickCallKey(["{{call_control_id}}", "{{telnyx_conversation_id}}", "", null]) === null;
+  if (!badCallKeyRejected) errors.push("bad_call_key: literal template key would be accepted");
+  const ok = kvOk && actorOk && sigEnforced && badCallKeyRejected;
   // No revision id is exposed to function code (checked edge-runtime: no env
   // var) — reported when the platform starts injecting one.
   const revision =
@@ -418,7 +450,7 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
     json(
       {
         ok,
-        checks: { kv: kvOk, actor: actorOk },
+        checks: { kv: kvOk, actor: actorOk, bad_call_key_rejected: badCallKeyRejected },
         sig_enforced: sigEnforced,
         kv_ms: ctx.kvMs.size ? kvMsTotal : 0,
         actor_ms: ctx.actorMs ?? 0,

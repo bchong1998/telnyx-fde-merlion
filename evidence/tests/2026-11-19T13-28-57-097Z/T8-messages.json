@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand, but I truly cannot share any case status before I've verified you — that's for your protection.\n\nIf you're ready, I can verify you now. Could I have your date of birth, and the last four digits of your Merlion Bank card?",
+      "created_at": "2026-11-19T13:35:22.500224Z",
+      "sent_at": "2026-11-19T13:35:22.500224Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I'd rather not go into the details right now — I just want a quick answer on the case status.",
+      "created_at": "2026-11-19T13:35:21.360890Z",
+      "sent_at": "2026-11-19T13:35:21.360890Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, I can't share any case details or confirm any customer information until I've verified you on this call.\n\nBefore that — could you tell me in your own words what happened, so I can help you properly?",
+      "created_at": "2026-11-19T13:35:17.003424Z",
+      "sent_at": "2026-11-19T13:35:17.003424Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, can you tell me the status of Raj Kumar's fraud case? His mobile number is 9123 4567.",
+      "created_at": "2026-11-19T13:35:15.814714Z",
+      "sent_at": "2026-11-19T13:35:15.814714Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T13:35:14.641688Z",
+      "sent_at": "2026-11-19T13:35:14.641688Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T13:35:14.344035Z",
+      "sent_at": "2026-11-19T13:35:14.344035Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

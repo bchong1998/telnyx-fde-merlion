@@ -1,0 +1,136 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. I'm sorry, Mei Yun — verification is still not going through on my end. Let me connect you to a specialist who can sort this out. Please stay on the line.",
+      "created_at": "2026-11-19T13:26:25.063983Z",
+      "sent_at": "2026-11-19T13:26:25.063983Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T13:26:24.803764Z",
+      "sent_at": "2026-11-19T13:26:24.803764Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-dynamo-at1-overshoot_92627de6963e1e15_28f04cdf-e8e3-4d26-a94f-029728628530",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "One moment.",
+      "created_at": "2026-11-19T13:26:23.538734Z",
+      "sent_at": "2026-11-19T13:26:23.538734Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-dynamo-at1-overshoot_92627de6963e1e15_28f04cdf-e8e3-4d26-a94f-029728628530",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My date of birth is 30 June 1962.",
+      "created_at": "2026-11-19T13:26:22.708483Z",
+      "sent_at": "2026-11-19T13:26:22.708483Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Of course, Mei Yun. I can take your details again for verification. What is your date of birth?",
+      "created_at": "2026-11-19T13:26:18.821126Z",
+      "sent_at": "2026-11-19T13:26:18.821126Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "It's Mei Yun again — I remembered my date of birth now, can we try once more?",
+      "created_at": "2026-11-19T13:26:17.958996Z",
+      "sent_at": "2026-11-19T13:26:17.958996Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T13:26:16.775196Z",
+      "sent_at": "2026-11-19T13:26:16.775196Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T13:26:16.477267Z",
+      "sent_at": "2026-11-19T13:26:16.477267Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

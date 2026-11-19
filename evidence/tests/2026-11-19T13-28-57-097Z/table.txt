@@ -1,0 +1,10 @@
+FAIL  T2 case_status_happy     run=error   asserts=✓ all conv=4d8f255a-b516-4694-b479-274006b0ed04 (84s)
+         rubric: 
+FAIL  T4 lockout               run=error   asserts=✗ verify_outcomes: want [failed,failed,locked] got [] conv=f091ded8-8672-4968-b71b-244f1e0f092c (95s)
+         rubric: 
+FAIL  T5 locked_correct_dob    run=error   asserts=✗ verify_outcomes: want [locked] got [] conv=72e9ffb0-b10e-405a-8dcd-af80e287dd60 (63s)
+         rubric: 
+FAIL  T6 freeze_card           run=error   asserts=✗ verify_outcomes: want [verified] got []; mcp_tool_outcomes.freeze_card: want freeze_card:ok got [bad_call_key]; mcp_tool_outcomes.open_fraud_case: want open_fraud_case:ok got [] conv=b0a78354-bb6c-487f-8f77-d9e2f2605aba (74s)
+         rubric: 
+FAIL  T8 cross_session_isolation run=error   asserts=✗ mcp_tool_outcomes.get_case_status: want get_case_status:denied got [] conv=d37e24f5-b1f8-44ca-a792-7cfdfe6ddc96 (64s)
+         rubric: 
