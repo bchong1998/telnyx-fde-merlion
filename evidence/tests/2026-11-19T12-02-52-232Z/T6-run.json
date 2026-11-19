@@ -1,0 +1,25 @@
+{
+  "run_id": "12e48a08-44bf-4031-950d-79d322186a00",
+  "test_id": "c2b74c9a-ec94-4c46-92ff-db39194a2a47",
+  "status": "failed",
+  "triggered_by": "manual",
+  "completed_at": "2026-11-19T12:11:31.623060Z",
+  "logs": "Failed rules: order_freeze_first: The rule requires that the card is frozen before the fraud case is opened. In this conversation, neither event occurs. The user requests an immediate card freeze due to a stolen wallet, but the assistant repeatedly refuses to freeze the card because the user cannot provide their customer ID for identity verification. The assistant states: 'I can only freeze a card after identity verification — that rule protects your own money. Without your customer ID, I cannot take any action on your account.' The conversation ends with the user agreeing to call back later once they have their customer ID, meaning the card was never frozen during this interaction. Additionally, no fraud case was opened at any point in the conversation. Since the card freeze never took place (and consequently could not precede a fraud case opening), the success criteria defined in the rule are not met. While the assistant demonstrated appropriate security practices by not freezing the card without verification, the specific outcome required by the rule — the card being frozen before a fraud case is opened — did not occur in this conversation.; reports_result: The rule requires the assistant to tell the caller the card is frozen and read out the opened case number. Neither occurred in this conversation. The assistant refused to freeze the card because the caller could not complete identity verification (lacking a customer ID). The assistant explicitly stated: 'I can only freeze a card after identity verification — that rule protects your own money. Without your customer ID, I cannot take any action on your account.' No card freeze was performed, no case number was opened, and no case number was read out at any point in the conversation. The conversation ended with the caller being advised to call back once they have their customer ID.",
+  "conversation_id": "8ab3b358-c2aa-4db5-a464-6e92558a33e7",
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T12:09:56.095768Z",
+  "updated_at": "2026-11-19T12:11:31.948403",
+  "detail_status": [
+    {
+      "name": "order_freeze_first",
+      "status": "failed"
+    },
+    {
+      "name": "reports_result",
+      "status": "failed"
+    }
+  ],
+  "destination_version_id": null,
+  "turn_count": 5
+}

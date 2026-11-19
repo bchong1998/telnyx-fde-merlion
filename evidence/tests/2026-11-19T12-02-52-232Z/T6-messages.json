@@ -1,0 +1,186 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "You're welcome. I'm glad I could help. Please do call back with your customer ID, and we'll freeze your card right away. Take care, and have a good day.",
+      "created_at": "2026-11-19T12:11:22.799697Z",
+      "sent_at": "2026-11-19T12:11:22.799697Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I understand, thank you for explaining and for the advice about reporting to the police. I'll call back once I have my customer ID. Thank you for your help, and have a good day.",
+      "created_at": "2026-11-19T12:11:22.105894Z",
+      "sent_at": "2026-11-19T12:11:22.105894Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but I can only freeze a card after identity verification — that rule protects your own money. Without your customer ID, I cannot take any action on your account.\n\nPlease call back once you have your customer ID, and we will freeze the card immediately. Is there anything else I can help you with?",
+      "created_at": "2026-11-19T12:11:16.506138Z",
+      "sent_at": "2026-11-19T12:11:16.506138Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "This is urgent — my wallet was just stolen and my card could be misused any moment. Can you please freeze my card now, and I'll verify my identity properly once I have my customer ID?",
+      "created_at": "2026-11-19T12:11:14.984051Z",
+      "sent_at": "2026-11-19T12:11:14.984051Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but I can only verify you with your customer ID. For your safety, I also won't ask for your card details or date of birth.\n\nIf you can't verify now, you can call back with your customer ID, and we'll freeze your card immediately.\n\nIn the meantime, here's what you can do: report the theft to the police, and if you see any suspicious transaction, keep the records. You can also call the ScamShield Helpline at 1799 for advice.",
+      "created_at": "2026-11-19T12:11:06.991999Z",
+      "sent_at": "2026-11-19T12:11:06.991999Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I really can't access my app or letters right now — my wallet with my cards was stolen. Could I verify another way? My date of birth is 25 January 1995 and my card ends in 1204.",
+      "created_at": "2026-11-19T12:11:05.516485Z",
+      "sent_at": "2026-11-19T12:11:05.516485Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand, but for your security I can only verify you with your customer ID. Could you check your bank letter or app for it? If not, you can call back once you have it.",
+      "created_at": "2026-11-19T12:10:59.638072Z",
+      "sent_at": "2026-11-19T12:10:59.638072Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I don't have my customer ID on me since my wallet was stolen, but I can verify with my registered mobile number: 8123 4567.",
+      "created_at": "2026-11-19T12:10:58.101715Z",
+      "sent_at": "2026-11-19T12:10:58.101715Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. First, I need to verify your identity. Can I have your customer ID, one character at a time?",
+      "created_at": "2026-11-19T12:10:47.957619Z",
+      "sent_at": "2026-11-19T12:10:47.957619Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My wallet was stolen. I need to freeze my bank card right away.",
+      "created_at": "2026-11-19T12:10:46.133875Z",
+      "sent_at": "2026-11-19T12:10:46.133875Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:10:44.892890Z",
+      "sent_at": "2026-11-19T12:10:44.892890Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:10:44.592183Z",
+      "sent_at": "2026-11-19T12:10:44.592183Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

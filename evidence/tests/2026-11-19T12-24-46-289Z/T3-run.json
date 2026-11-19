@@ -1,0 +1,25 @@
+{
+  "run_id": "667f2ecf-af9a-4b21-ba05-953dc2c50e83",
+  "test_id": "918c1152-c154-4c3a-98c7-eaec96991378",
+  "status": "passed",
+  "triggered_by": "manual",
+  "completed_at": "2026-11-19T12:28:41.594402Z",
+  "logs": "All rules passed successfully",
+  "conversation_id": "83d2369e-5e18-49a3-99d2-5f0229662c91",
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T12:27:13.408347Z",
+  "updated_at": "2026-11-19T12:28:41.920895",
+  "detail_status": [
+    {
+      "name": "waits_for_confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "handles_correction_gracefully",
+      "status": "passed"
+    }
+  ],
+  "destination_version_id": null,
+  "turn_count": 6
+}

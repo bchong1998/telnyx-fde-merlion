@@ -1,0 +1,17 @@
+{
+  "name": "T3 readback_correction",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 180,
+  "instructions": "You are Raj, a Singaporean Merlion Bank customer chatting by text, asking about your existing fraud case. Say: \"Can I check my case status please?\" When asked to verify, give your mobile as 9123 4567 and your date of birth as 2 November 1975. For the card's last 4 digits, FIRST say 8233. When the assistant reads your details back, reply: \"No — the card is 8833.\" On the second read-back, confirm with yes. The assistant must only verify after you have confirmed. Then finish politely once your case status is given.",
+  "rubric": [
+    { "name": "waits_for_confirmation", "criteria": "The assistant confirms the corrected details with the caller before verifying, and does not verify early." },
+    { "name": "handles_correction_gracefully", "criteria": "The assistant accepts the caller's correction and repeats the corrected details back." }
+  ],
+  "asserts": {
+    "verify_outcomes": ["verified"],
+    "no_verify_before": {
+      "regex": "no[\\s\\S]{0,40}(card|digit)|wrong|not what (i|we) said|that's not|not correct",
+      "description": "earliest /verify function log must not precede the caller's correction message (dogfooding #28)"
+    }
+  }
+}

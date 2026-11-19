@@ -1,0 +1,266 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "You're most welcome, Raj. If anything else comes up, just give us a call again. For any suspicious messages or links, you can also check with the ScamShield Helpline at 1, 7, 9, 9. Take care — goodbye!",
+      "created_at": "2026-11-19T12:05:43.643353Z",
+      "sent_at": "2026-11-19T12:05:43.643353Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Thank you so much for your help. That's all I needed. Have a great day, goodbye!",
+      "created_at": "2026-11-19T12:05:42.295265Z",
+      "sent_at": "2026-11-19T12:05:42.295265Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Here's what I can see, Raj. You have one fraud case: M, B, dash, C, zero, zero, two, dash, one. That's for suspicious card transactions, and the status is open.\n\nIs there anything else you'd like to check on this case, or anything else I can help you with?",
+      "created_at": "2026-11-19T12:05:39.031981Z",
+      "sent_at": "2026-11-19T12:05:39.031981Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "You have 1 case: MB-C002-1, suspicious card transactions, open.",
+      "created_at": "2026-11-19T12:05:38.439211Z",
+      "sent_at": "2026-11-19T12:05:38.439211Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_4160662f15e79545_7b75858b-81bd-4c49-8b19-d2e5578d834f",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you, Raj — you're verified. Let me pull up your fraud cases now. One moment.",
+      "created_at": "2026-11-19T12:05:37.987596Z",
+      "sent_at": "2026-11-19T12:05:37.987596Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_4160662f15e79545_7b75858b-81bd-4c49-8b19-d2e5578d834f",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{\"customer_id\":\"C002\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "tool",
+      "text": "{\"verification_status\":\"verified\",\"customer_id\":\"C002\",\"first_name\":\"Raj\",\"attempts_remaining\":\"3\",\"lockout_until\":\"\"}",
+      "created_at": "2026-11-19T12:05:36.924373Z",
+      "sent_at": "2026-11-19T12:05:36.924373Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_60d17ab4d21b2b5e_86f42807-c173-436e-8973-965f08d1a712",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "One moment.",
+      "created_at": "2026-11-19T12:05:34.156052Z",
+      "sent_at": "2026-11-19T12:05:34.156052Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_60d17ab4d21b2b5e_86f42807-c173-436e-8973-965f08d1a712",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "verify",
+            "arguments": "{\"dob\":\"1975-11-02\",\"last4\":\"8833\",\"mobile\":\"+6591234567\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Yes, that's all correct.",
+      "created_at": "2026-11-19T12:05:32.688905Z",
+      "sent_at": "2026-11-19T12:05:32.688905Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me read that back. Your registered mobile is nine, one, two, three — four, five, six, seven. Your date of birth is 2 November 1975. And the last 4 digits of your card are eight, eight, three, three. Is all of that correct — yes or no?",
+      "created_at": "2026-11-19T12:05:28.509069Z",
+      "sent_at": "2026-11-19T12:05:28.509069Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My date of birth is 2 November 1975, and the last 4 digits of my card are 8833.",
+      "created_at": "2026-11-19T12:05:26.248342Z",
+      "sent_at": "2026-11-19T12:05:26.248342Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "That's fine. Could you also give me your date of birth, and the last 4 digits of your Merlion Bank card — together, in one go?",
+      "created_at": "2026-11-19T12:05:23.789153Z",
+      "sent_at": "2026-11-19T12:05:23.789153Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I don't have my customer ID with me, but I can verify with my registered mobile: nine one two three, four five six seven.",
+      "created_at": "2026-11-19T12:05:23.262446Z",
+      "sent_at": "2026-11-19T12:05:23.262446Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. First, I need to verify your identity — could you give me your customer ID, one character at a time?",
+      "created_at": "2026-11-19T12:05:19.198970Z",
+      "sent_at": "2026-11-19T12:05:19.198970Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, I'd like to check the status of my fraud case.",
+      "created_at": "2026-11-19T12:05:16.389342Z",
+      "sent_at": "2026-11-19T12:05:16.389342Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:05:14.764805Z",
+      "sent_at": "2026-11-19T12:05:14.764805Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:05:14.459017Z",
+      "sent_at": "2026-11-19T12:05:14.459017Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

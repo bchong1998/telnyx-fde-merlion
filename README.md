@@ -1,5 +1,27 @@
 # Merlion Bank scam-response hotline (fictional)
 
+## Testing
+
+Two layers, deliberately different, so a flaky LLM judge can't hide a real regression:
+
+| Layer | What | Where |
+| --- | --- | --- |
+| **Rubric** (LLM-judged) | Does the conversation read right? — via Telnyx Assistant Tests (`tests/scenarios/*.json`, suite `merlion-regression`, `tests/sync.mjs` keeps definitions in `tests/state.json`) | per-run `detail_status` |
+| **Asserts** (deterministic) | Did the wiring do the right thing? — `tests/asserts.mjs` evaluates ordered `/verify` outcomes, MCP tool outcomes, transcript tool presence, and `no_verify_before` from **function logs** (the truth for tool timing, dogfooding #28) at `evidence/tests/<ts>/` | `scripts/run-tests.sh [T1…]` |
+
+`run-tests.sh` resets demo state (`reset-demo.sh`), syncs scenarios, runs **sequentially over `web_chat`**, polls each run, pulls both functions' logs once, evaluates asserts per-scenario (window derived from each conversation's own message span), and exits non-zero on any rubric or assert failure. Channel is a per-scenario field (`channels: ["web_chat"]`) — flip to `phone_call` and the same suite runs on voice once the runner bug is fixed.
+
+**Blocked:** the `phone_call` runner can't originate calls on our account (`RetryError[…HTTPStatusError]`, `turn_count: 0`, dangling `conversation_id`; `web_call` is accepted by the types but rejected by the runner). Details in `docs/dogfooding-log.md` #29. Live logic coverage therefore runs in chat; the voice-only surface stays manual.
+
+**Manual (per release):** 3-call checklist on +1 601 867 8604 —
+1. Unknown caller, suspicious-SMS path → `check_scam_indicator` + 1799 mentioned,
+2. Verified path (C004) → freeze → case read back **digit by digit**, no double "thank you", STT digits correct,
+3. Wrong DOB ×3 → locked notice; then the warm transfer actually rings a human (not voicemail).
+
+**Cost per full run:** 7 tests × ~1–2 min ≈ **8–15 min wall**, plus ~8–10 min polling per setup; each run consumes one assistant conversation + its function calls (negligible $). The judge model adds LLM-judge latency only after the conversation ends.
+
+**Offline mode:** `node tests/backtest.mjs` re-evaluates asserts against exported transcripts/logs in `evidence/` (see `evidence/tests/backtest.txt`) — it correctly flags the round-2 conversations that violated "verify only after confirmation".
+
 ## Observability
 
 One voice call crosses four runtimes: the Telnyx AI Assistant (model + workflow),

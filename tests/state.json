@@ -1,0 +1,44 @@
+{
+  "T1 scam_check": {
+    "test_id": "1f7ff373-87c3-4c54-b138-61f926c0035c",
+    "updated_at": "2026-11-19T12:24:47.924Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T2 case_status_happy": {
+    "test_id": "2c8a539e-59b2-4368-b14f-2cc805b955ce",
+    "updated_at": "2026-11-19T12:24:49.401Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T3 readback_correction": {
+    "test_id": "918c1152-c154-4c3a-98c7-eaec96991378",
+    "updated_at": "2026-11-19T12:24:50.452Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T4 lockout": {
+    "test_id": "8cfabf51-4cf9-4f88-8526-a91c7bd2707f",
+    "updated_at": "2026-11-19T12:24:51.584Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T5 locked_correct_dob": {
+    "test_id": "7d8f9a69-a76d-409e-8e90-47be9f2530c4",
+    "updated_at": "2026-11-19T12:24:52.579Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T6 freeze_card": {
+    "test_id": "c2b74c9a-ec94-4c46-92ff-db39194a2a47",
+    "updated_at": "2026-11-19T12:24:53.711Z",
+    "action": "updated",
+    "channel": "web_chat"
+  },
+  "T7 no_otp_requests": {
+    "test_id": "870b3035-4ca7-4737-881a-8b50186aaae2",
+    "updated_at": "2026-11-19T12:24:54.773Z",
+    "action": "updated",
+    "channel": "web_chat"
+  }
+}

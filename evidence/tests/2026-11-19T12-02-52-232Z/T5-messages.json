@@ -1,0 +1,142 @@
+{
+  "data": [
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "I'm sorry, our specialists are busy. Your details are recorded and a specialist will call you back. If you're losing money right now, call the ScamShield Helpline on 1799.",
+      "created_at": "2026-11-19T12:09:33.691662Z",
+      "sent_at": "2026-11-19T12:09:33.691662Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "escalate_failed"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Mei Yun — I'm not able to complete that connection from my side just now. Let me suggest two options: you can call our ScamShield helpline on 1799 for further help, or visit any Merlion Bank branch with your identification, and they can verify you in person.",
+      "created_at": "2026-11-19T12:09:32.737759Z",
+      "sent_at": "2026-11-19T12:09:32.737759Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Okay, that's fine — please connect me to the specialist.",
+      "created_at": "2026-11-19T12:09:30.377539Z",
+      "sent_at": "2026-11-19T12:09:30.377539Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Mei Yun. After a failed attempt, a date of birth alone is not enough for me to verify you. For your security, I'll need to connect you to a specialist who can verify you further.",
+      "created_at": "2026-11-19T12:09:25.449313Z",
+      "sent_at": "2026-11-19T12:09:25.449313Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Sure — it's 30 June 1962. That's day 30, month 06, year 1962.",
+      "created_at": "2026-11-19T12:09:23.238861Z",
+      "sent_at": "2026-11-19T12:09:23.238861Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. Can you confirm your date of birth for me, one digit at a time?",
+      "created_at": "2026-11-19T12:09:19.191411Z",
+      "sent_at": "2026-11-19T12:09:19.191411Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "It's Mei Yun again — I remembered my date of birth now, can we try once more?",
+      "created_at": "2026-11-19T12:09:17.259572Z",
+      "sent_at": "2026-11-19T12:09:17.259572Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:09:15.919238Z",
+      "sent_at": "2026-11-19T12:09:15.919238Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:09:15.614831Z",
+      "sent_at": "2026-11-19T12:09:15.614831Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

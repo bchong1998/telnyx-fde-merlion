@@ -1,0 +1,292 @@
+{
+  "data": [
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "I'm sorry, our specialists are busy. Your details are recorded and a specialist will call you back. If you're losing money right now, call the ScamShield Helpline on 1799.",
+      "created_at": "2026-11-19T12:30:10.961113Z",
+      "sent_at": "2026-11-19T12:30:10.961113Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "escalate_failed"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, I have to be upfront with you. On this line, I'm not able to complete identity verification or access your account to freeze your card.\n\nWhat you can do: hang up and call the number printed on the back of your bank card, or visit any branch, where staff can verify you and secure your card on the spot.\n\nOne more thing — since the caller claimed to be Merlion Bank, that is a known scam pattern, and you did exactly the right thing by not sharing anything. If you ever doubt a caller, hang up and call us back using the number on your card.",
+      "created_at": "2026-11-19T12:30:09.995967Z",
+      "sent_at": "2026-11-19T12:30:09.995967Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Thank you. Hello, this is Mei Yun. I'm ready to verify my identity so you can help secure my card.",
+      "created_at": "2026-11-19T12:30:03.085869Z",
+      "sent_at": "2026-11-19T12:30:03.085869Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Yes, connecting you now.",
+      "created_at": "2026-11-19T12:29:58.458866Z",
+      "sent_at": "2026-11-19T12:29:58.458866Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Okay, I'm still here. Are you connecting me to the specialist now?",
+      "created_at": "2026-11-19T12:29:56.336858Z",
+      "sent_at": "2026-11-19T12:29:56.336858Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you for confirming. Since nothing was shared and no money moved, your account should be safe.\n\nI am noting this as a suspicious contact and will connect you to a specialist for identity verification right away. Please stay on the line.",
+      "created_at": "2026-11-19T12:29:51.020195Z",
+      "sent_at": "2026-11-19T12:29:51.020195Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No, they didn't ask me to transfer money or anything like that — they just said there was suspicious activity on my card. Please connect me to a specialist so I can verify my identity and get my card secured.",
+      "created_at": "2026-11-19T12:29:48.591598Z",
+      "sent_at": "2026-11-19T12:29:48.591598Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I can understand wanting your card secured right away.\n\nTo verify you and act on your account, I will need to connect you with a specialist who can do that step.\n\nBefore I connect you, may I confirm — did anything else happen in that call, like them asking you to transfer money or verify anything else?",
+      "created_at": "2026-11-19T12:29:42.420385Z",
+      "sent_at": "2026-11-19T12:29:42.420385Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No, there was no SMS or link — it was just the phone call. I'd still like to get my card secured. What do I need to do to verify my identity so you can check my account?",
+      "created_at": "2026-11-19T12:29:41.523863Z",
+      "sent_at": "2026-11-19T12:29:41.523863Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "That's okay, private numbers are common with scam callers.\n\nSince you did not share any codes or card details, your account should still be safe.\n\nHave you received any SMS or link from them, like a message asking you to click something?",
+      "created_at": "2026-11-19T12:29:35.849015Z",
+      "sent_at": "2026-11-19T12:29:35.849015Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I'm sorry, I don't have the number — it came through as an unknown/private number on my phone.",
+      "created_at": "2026-11-19T12:29:34.133075Z",
+      "sent_at": "2026-11-19T12:29:34.133075Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Good thinking — that is exactly the right thing to do. Not sharing anything keeps you safe.\n\nMay I know the phone number that called you? I can check if it is a known scam number.",
+      "created_at": "2026-11-19T12:29:29.721147Z",
+      "sent_at": "2026-11-19T12:29:29.721147Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No, I didn't share any one-time password or PIN with them. I'm just worried my card details might be at risk. Can you help me secure my card?",
+      "created_at": "2026-11-19T12:29:28.796201Z",
+      "sent_at": "2026-11-19T12:29:28.796201Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand your worry. Let's sort this out together.\n\nDid you share anything with that caller, like a one-time password, PIN or card details?",
+      "created_at": "2026-11-19T12:29:23.337125Z",
+      "sent_at": "2026-11-19T12:29:23.337125Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Someone called me claiming to be from Merlion Bank, saying there was suspicious activity on my card. I'm worried my card is compromised.",
+      "created_at": "2026-11-19T12:29:22.487460Z",
+      "sent_at": "2026-11-19T12:29:22.487460Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Can you tell me more about what happened?",
+      "created_at": "2026-11-19T12:29:17.599241Z",
+      "sent_at": "2026-11-19T12:29:17.599241Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, I got a call from someone saying they are the bank and I think my card is compromised.",
+      "created_at": "2026-11-19T12:29:17.226222Z",
+      "sent_at": "2026-11-19T12:29:17.226222Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:29:16.156317Z",
+      "sent_at": "2026-11-19T12:29:16.156317Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:29:15.851198Z",
+      "sent_at": "2026-11-19T12:29:15.851198Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

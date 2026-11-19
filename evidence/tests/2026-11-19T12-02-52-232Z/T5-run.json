@@ -1,0 +1,16 @@
+{
+  "run_id": "fc1f4713-cd8e-42ee-a05a-5505b018ec29",
+  "test_id": "7d8f9a69-a76d-409e-8e90-47be9f2530c4",
+  "status": "error",
+  "triggered_by": "manual",
+  "completed_at": "2026-11-19T12:09:44.938873Z",
+  "logs": "Simplified chat test 7d8f9a69-a76d-409e-8e90-47be9f2530c4 failed with chat transport error: Failed to deliver chat message to assistant assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65 (conversation b0b1f042-6ab1-4a03-b088-7c6152792682): Empty response from assistant: {'content': '', 'whatsapp_template': None}",
+  "conversation_id": "b0b1f042-6ab1-4a03-b088-7c6152792682",
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T12:08:40.805026Z",
+  "updated_at": "2026-11-19T12:09:45.120377",
+  "detail_status": null,
+  "destination_version_id": null,
+  "turn_count": 3
+}

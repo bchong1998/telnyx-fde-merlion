@@ -1,0 +1,16 @@
+{
+  "run_id": "fc1f4713-cd8e-42ee-a05a-5505b018ec29",
+  "test_id": "7d8f9a69-a76d-409e-8e90-47be9f2530c4",
+  "status": "pending",
+  "triggered_by": "manual",
+  "completed_at": null,
+  "logs": null,
+  "conversation_id": null,
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T12:08:40.805026Z",
+  "updated_at": null,
+  "detail_status": null,
+  "destination_version_id": null,
+  "turn_count": null
+}

@@ -1,0 +1,16 @@
+{
+  "scenario": "T7 no_otp_requests",
+  "ok": true,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": true,
+      "detail": "want [] got []"
+    },
+    {
+      "name": "transcript_absent.verify",
+      "ok": true,
+      "detail": "tools called: []"
+    }
+  ]
+}

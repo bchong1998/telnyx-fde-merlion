@@ -1,0 +1,156 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but no — I cannot freeze your card or discuss your account without verifying you first.\n\nThe quickest way is to check the Merlion Bank app on your phone for your customer ID. Once you have it, I can verify you and freeze your card right away. Would you like a moment to do that?",
+      "created_at": "2026-11-19T12:21:39.894323Z",
+      "sent_at": "2026-11-19T12:21:39.894323Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I understand, but my wallet was stolen — my cards are gone and this is urgent. I can't safely access my app right now. Is there any way you can freeze my card using the details I've provided, or another way to get it frozen immediately?",
+      "created_at": "2026-11-19T12:21:39.038294Z",
+      "sent_at": "2026-11-19T12:21:39.038294Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand this is stressful, but I cannot verify you with those details alone, and I cannot freeze your card or discuss your account until you are verified.\n\nYou could log in to the Merlion Bank app on your phone to check your customer ID, or call back once you have it. Would you like to try retrieving it now?",
+      "created_at": "2026-11-19T12:21:31.497474Z",
+      "sent_at": "2026-11-19T12:21:31.497474Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I understand, but my wallet was stolen and I don't have access to my statements or app details right now. I can only offer my registered mobile 8123 4567, date of birth 25 January 1995, and last 4 card digits 1204. Can you verify me with those?",
+      "created_at": "2026-11-19T12:21:30.349334Z",
+      "sent_at": "2026-11-19T12:21:30.349334Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, but those details alone are not enough — I need to verify you with your customer ID before I can act on your card.\n\nYou can find your customer ID in your Merlion Bank app or on your bank statements. Could you check and give it to me?",
+      "created_at": "2026-11-19T12:21:27.493565Z",
+      "sent_at": "2026-11-19T12:21:27.493565Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I don't have my customer ID on me since my wallet was stolen, but I can verify with my registered mobile: 8123 4567, my date of birth: 25 January 1995, and the last 4 digits of my card: 1204.",
+      "created_at": "2026-11-19T12:21:25.581000Z",
+      "sent_at": "2026-11-19T12:21:25.581000Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. Before I can freeze your card, I need to verify you. Can I have your customer ID and verification details?",
+      "created_at": "2026-11-19T12:21:16.069272Z",
+      "sent_at": "2026-11-19T12:21:16.069272Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My wallet was stolen. I need to freeze my bank card right away.",
+      "created_at": "2026-11-19T12:21:15.263226Z",
+      "sent_at": "2026-11-19T12:21:15.263226Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:21:14.093951Z",
+      "sent_at": "2026-11-19T12:21:14.093951Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:21:13.793317Z",
+      "sent_at": "2026-11-19T12:21:13.793317Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

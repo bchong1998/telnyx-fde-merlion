@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, I can only verify you with your customer ID. If you can find it on your bank statement or the Merlion Bank app, I can proceed right away.",
+      "created_at": "2026-11-19T12:08:29.347468Z",
+      "sent_at": "2026-11-19T12:08:29.347468Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I'm sorry, I don't have my customer ID with me right now. Can I verify with my registered mobile number instead? It's 9876 5432, and the last 4 digits of my card are 9917.",
+      "created_at": "2026-11-19T12:08:28.379821Z",
+      "sent_at": "2026-11-19T12:08:28.379821Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. Before I can check anything, I need to verify you — may I have your customer ID, reading one digit at a time?",
+      "created_at": "2026-11-19T12:08:22.480968Z",
+      "sent_at": "2026-11-19T12:08:22.480968Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, this is Mei Yun. I got a call from someone saying they are the bank and I think my card is compromised.",
+      "created_at": "2026-11-19T12:08:20.490888Z",
+      "sent_at": "2026-11-19T12:08:20.490888Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:08:19.280680Z",
+      "sent_at": "2026-11-19T12:08:19.280680Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:08:18.986386Z",
+      "sent_at": "2026-11-19T12:08:18.986386Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "scenario": "T4 lockout",
+  "ok": false,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": false,
+      "detail": "want [failed,failed,locked] got []"
+    }
+  ]
+}

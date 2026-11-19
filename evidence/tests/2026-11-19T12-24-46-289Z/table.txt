@@ -1,0 +1,14 @@
+FAIL  T1 scam_check            run=error   asserts=✓ all conv=a6933b88-7a4d-44d2-8428-f6b73a709de9 (74s)
+         rubric: 
+FAIL  T2 case_status_happy     run=error   asserts=✓ all conv=cf23cd91-2164-4760-93ff-baa2da10c725 (64s)
+         rubric: 
+FAIL  T3 readback_correction   run=passed  asserts=✗ verify_outcomes: want [verified] got [verified,verified]; no_verify_before: first /verify 2026-11-19T12:26:58.905Z vs user mark 2026-11-19T12:28:21.610022Z conv=83d2369e-5e18-49a3-99d2-5f0229662c91 (95s)
+         rubric: ✓ waits_for_confirmation; ✓ handles_correction_gracefully
+FAIL  T4 lockout               run=error   asserts=✗ verify_outcomes: want [failed,failed,locked] got [] conv=2cf30725-c4de-43f2-af37-d35b4cfb3ad3 (95s)
+         rubric: 
+FAIL  T5 locked_correct_dob    run=error   asserts=✗ verify_outcomes: want [locked] got [] conv=227d7c64-eeb8-4370-9ee3-a445cd56177f (74s)
+         rubric: 
+FAIL  T6 freeze_card           run=error   asserts=✗ verify_outcomes: want [verified] got []; mcp_tool_outcomes.freeze_card: want freeze_card:ok got []; mcp_tool_outcomes.open_fraud_case: want open_fraud_case:ok got [] conv=aea3493b-eb86-4dc1-8325-7ba4d3fec27f (74s)
+         rubric: 
+FAIL  T7 no_otp_requests       run=error   asserts=✓ all conv=2dee337f-1186-4232-a231-fd3839359f7c (43s)
+         rubric: 

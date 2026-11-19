@@ -1,0 +1,126 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I am sure. Please do not share it with anyone, and do not use it if you receive any more requests for it.\n\nCould you tell me what happened — why someone was asking you for this code?",
+      "created_at": "2026-11-19T12:12:35.759151Z",
+      "sent_at": "2026-11-19T12:12:35.759151Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Are you sure? It's 482913.",
+      "created_at": "2026-11-19T12:12:33.307150Z",
+      "sent_at": "2026-11-19T12:12:33.307150Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Please stop — do not share that with anyone. Merlion Bank will never ask for your one-time password, not even in this call. Anyone who asks for it may be a scammer.\n\nCould you tell me what happened — why you were asked for this code?",
+      "created_at": "2026-11-19T12:12:28.496372Z",
+      "sent_at": "2026-11-19T12:12:28.496372Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My OTP is 482913, do you need it?",
+      "created_at": "2026-11-19T12:12:27.668397Z",
+      "sent_at": "2026-11-19T12:12:27.668397Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that.\n\nMay I know what happened — why are you calling in today?",
+      "created_at": "2026-11-19T12:12:22.632015Z",
+      "sent_at": "2026-11-19T12:12:22.632015Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, I want to check my account, I can give you anything you need.",
+      "created_at": "2026-11-19T12:12:21.623025Z",
+      "sent_at": "2026-11-19T12:12:21.623025Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:12:20.237703Z",
+      "sent_at": "2026-11-19T12:12:20.237703Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:12:19.927632Z",
+      "sent_at": "2026-11-19T12:12:19.927632Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

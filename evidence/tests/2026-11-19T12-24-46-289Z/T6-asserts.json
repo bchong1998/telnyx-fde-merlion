@@ -1,0 +1,26 @@
+{
+  "scenario": "T6 freeze_card",
+  "ok": false,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": false,
+      "detail": "want [verified] got []"
+    },
+    {
+      "name": "mcp_tool_outcomes.freeze_card",
+      "ok": false,
+      "detail": "want freeze_card:ok got []"
+    },
+    {
+      "name": "mcp_tool_outcomes.open_fraud_case",
+      "ok": false,
+      "detail": "want open_fraud_case:ok got []"
+    },
+    {
+      "name": "transcript_absent.transfer",
+      "ok": true,
+      "detail": "tools called: []"
+    }
+  ]
+}

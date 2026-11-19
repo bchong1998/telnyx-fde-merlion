@@ -1,0 +1,66 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that.\n\nBefore anything else, can you tell me briefly what happened with the suspicious call or message?",
+      "created_at": "2026-11-19T12:20:21.724738Z",
+      "sent_at": "2026-11-19T12:20:21.724738Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "It's Mei Yun again — I remembered my date of birth now, can we try once more?",
+      "created_at": "2026-11-19T12:20:19.610815Z",
+      "sent_at": "2026-11-19T12:20:19.610815Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:20:18.427326Z",
+      "sent_at": "2026-11-19T12:20:18.427326Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:20:18.121054Z",
+      "sent_at": "2026-11-19T12:20:18.121054Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

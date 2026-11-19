@@ -1,0 +1,69 @@
+{
+  "finished_at": "2026-11-19T12:33:53.171Z",
+  "ok": false,
+  "table": [
+    {
+      "test": "T1 scam_check",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "a6933b88-7a4d-44d2-8428-f6b73a709de9",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T2 case_status_happy",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "cf23cd91-2164-4760-93ff-baa2da10c725",
+      "wall_s": 64,
+      "ok": false
+    },
+    {
+      "test": "T3 readback_correction",
+      "run": "passed",
+      "rubric": "✓ waits_for_confirmation; ✓ handles_correction_gracefully",
+      "asserts": "✗ verify_outcomes: want [verified] got [verified,verified]; no_verify_before: first /verify 2026-11-19T12:26:58.905Z vs user mark 2026-11-19T12:28:21.610022Z",
+      "conversation_id": "83d2369e-5e18-49a3-99d2-5f0229662c91",
+      "wall_s": 95,
+      "ok": false
+    },
+    {
+      "test": "T4 lockout",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [failed,failed,locked] got []",
+      "conversation_id": "2cf30725-c4de-43f2-af37-d35b4cfb3ad3",
+      "wall_s": 95,
+      "ok": false
+    },
+    {
+      "test": "T5 locked_correct_dob",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [locked] got []",
+      "conversation_id": "227d7c64-eeb8-4370-9ee3-a445cd56177f",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T6 freeze_card",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [verified] got []; mcp_tool_outcomes.freeze_card: want freeze_card:ok got []; mcp_tool_outcomes.open_fraud_case: want open_fraud_case:ok got []",
+      "conversation_id": "aea3493b-eb86-4dc1-8325-7ba4d3fec27f",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T7 no_otp_requests",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "2dee337f-1186-4232-a231-fd3839359f7c",
+      "wall_s": 43,
+      "ok": false
+    }
+  ]
+}

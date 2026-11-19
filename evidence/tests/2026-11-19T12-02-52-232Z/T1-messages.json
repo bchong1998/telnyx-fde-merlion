@@ -1,0 +1,168 @@
+{
+  "data": [
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank. Stay safe.",
+      "created_at": "2026-11-19T12:04:00.422103Z",
+      "sent_at": "2026-11-19T12:04:00.422103Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "goodbye"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799. Do not reply to the scammer.",
+      "created_at": "2026-11-19T12:04:00.109861Z",
+      "sent_at": "2026-11-19T12:04:00.109861Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "police_advice"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Good, that is the safest outcome.\n\nFor extra protection, you can forward that SMS to 1799, the ScamShield Helpline, to help block the sender.\n\nAlso delete the message as you planned, and do not tap the link.\n\nIf anyone contacts you again asking for codes or money, hang up and call us back on the number printed on your card.",
+      "created_at": "2026-11-19T12:03:58.840713Z",
+      "sent_at": "2026-11-19T12:03:58.840713Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Thank you — I haven't entered any details or tapped the link. I'll delete the SMS now. Thanks for your help!",
+      "created_at": "2026-11-19T12:03:56.526125Z",
+      "sent_at": "2026-11-19T12:03:56.526125Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you for checking before you tap — that is exactly the right move.\n\nThat site is not in our scam watchlist yet, but please do not log in there. Merlion Bank will only use our official website, and we never send SMS links asking you to log in.\n\nIf you already entered any details there, tell me. If not, delete the message and do not tap the link.",
+      "created_at": "2026-11-19T12:03:48.830985Z",
+      "sent_at": "2026-11-19T12:03:48.830985Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "This indicator is not in the current scam watchlist. I have no record of it, but stay cautious and never share one-time codes.",
+      "created_at": "2026-11-19T12:03:47.732829Z",
+      "sent_at": "2026-11-19T12:03:47.732829Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_f19a8aca3658e545_4079b907-be87-4ba5-bc12-d3228b50e28d",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "One moment.",
+      "created_at": "2026-11-19T12:03:47.635550Z",
+      "sent_at": "2026-11-19T12:03:47.635550Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_f19a8aca3658e545_4079b907-be87-4ba5-bc12-d3228b50e28d",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "check_scam_indicator",
+            "arguments": "{\"kind\":\"url\",\"value\":\"merlion-secure-verify.com\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, I got an SMS from Merlion Bank asking me to log in at merlion-secure-verify.com. Is this a real Merlion Bank page?",
+      "created_at": "2026-11-19T12:03:46.442643Z",
+      "sent_at": "2026-11-19T12:03:46.442643Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:03:45.192819Z",
+      "sent_at": "2026-11-19T12:03:45.192819Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:03:44.892355Z",
+      "sent_at": "2026-11-19T12:03:44.892355Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

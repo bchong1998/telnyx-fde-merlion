@@ -1,0 +1,15 @@
+{
+  "name": "T6 freeze_card",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 180,
+  "instructions": "You are Daniel, a Singaporean Merlion Bank customer chatting by text. Your wallet was stolen and you want your card frozen. Say: \"My wallet was stolen. I need to freeze my bank card right away.\" When asked to verify, give your registered mobile as 8123 4567, your date of birth as 25 January 1995, and last 4 card digits as 1204. Confirm a correct read-back with yes. When the assistant offers to freeze the card, say yes clearly. When it offers to open a fraud case, also say yes. If the assistant offers to connect you to a specialist or transfer you, DECLINE and say the frozen card and case are enough. Once done, thank them and end politely.",
+  "rubric": [
+    { "name": "order_freeze_first", "criteria": "The card is frozen before the fraud case is opened." },
+    { "name": "reports_result", "criteria": "The assistant tells the caller the card is frozen and reads out the opened case number." }
+  ],
+  "asserts": {
+    "verify_outcomes": ["verified"],
+    "mcp_tool_outcomes": { "freeze_card": "ok", "open_fraud_case": "ok" },
+    "transcript_tools_absent": ["transfer"]
+  }
+}

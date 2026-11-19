@@ -1,0 +1,42 @@
+{
+  "finished_at": "2026-11-19T12:23:03.368Z",
+  "ok": false,
+  "table": [
+    {
+      "test": "T4 lockout",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [failed,failed,locked] got []",
+      "conversation_id": "d0ba8efd-167d-4b2b-b841-b55bd14060b7",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T5 locked_correct_dob",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [locked] got []",
+      "conversation_id": "e40bb470-2fb7-44d9-bfaf-b5c01bb40487",
+      "wall_s": 65,
+      "ok": false
+    },
+    {
+      "test": "T6 freeze_card",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [verified] got []; mcp_tool_outcomes.freeze_card: want freeze_card:ok got []; mcp_tool_outcomes.open_fraud_case: want open_fraud_case:ok got []",
+      "conversation_id": "52431fbb-50f4-4a01-ad1e-1ad9875e126d",
+      "wall_s": 74,
+      "ok": false
+    },
+    {
+      "test": "T7 no_otp_requests",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "4012e79e-ac15-4539-9ef5-b6949332d2c0",
+      "wall_s": 53,
+      "ok": false
+    }
+  ]
+}

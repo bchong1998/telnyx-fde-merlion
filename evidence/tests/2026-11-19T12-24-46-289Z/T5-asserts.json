@@ -1,0 +1,11 @@
+{
+  "scenario": "T5 locked_correct_dob",
+  "ok": false,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": false,
+      "detail": "want [locked] got []"
+    }
+  ]
+}

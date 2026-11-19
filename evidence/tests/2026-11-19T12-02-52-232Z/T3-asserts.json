@@ -1,0 +1,16 @@
+{
+  "scenario": "T3 readback_correction",
+  "ok": true,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": true,
+      "detail": "want [verified] got [verified]"
+    },
+    {
+      "name": "no_verify_before",
+      "ok": true,
+      "detail": "first /verify 2026-11-19T12:07:11.593Z vs user mark 2026-11-19T12:07:05.972610Z"
+    }
+  ]
+}

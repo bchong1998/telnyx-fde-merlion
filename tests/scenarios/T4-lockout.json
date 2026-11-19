@@ -1,0 +1,13 @@
+{
+  "name": "T4 lockout",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 180,
+  "instructions": "You are Mei Yun, a Singaporean Merlion Bank customer chatting by text. You are worried about a suspicious call you got. Say: \"I got a call from someone saying they are the bank and I think my card is compromised.\" When asked to verify, give your registered mobile as 9876 5432 and the last 4 card digits as 9917. For the date of birth, ALWAYS say 1 January 1970, even when asked again after a failure. If told verification failed, just repeat the same wrong date of birth 1 January 1970 (and keep the same mobile and last 4 digits). Do not invent other details. When finally told you are locked out, acknowledge and end politely.",
+  "rubric": [
+    { "name": "no_details_disclosed", "criteria": "The assistant never reveals customer details (name, case, card status) during the failed verification." },
+    { "name": "locked_guidance", "criteria": "Once locked, the assistant tells the caller to visit a branch with their NRIC (or IC) and mentions the ScamShield Helpline 1799." }
+  ],
+  "asserts": {
+    "verify_outcomes": ["failed", "failed", "locked"]
+  }
+}

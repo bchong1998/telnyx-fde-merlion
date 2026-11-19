@@ -1,0 +1,36 @@
+{
+  "scenario": "T1 scam_check",
+  "ok": true,
+  "checks": [
+    {
+      "name": "verify_outcomes",
+      "ok": true,
+      "detail": "want [] got []"
+    },
+    {
+      "name": "transcript_calls.check_scam_indicator",
+      "ok": true,
+      "detail": "tools called: [check_scam_indicator]"
+    },
+    {
+      "name": "transcript_absent.verify",
+      "ok": true,
+      "detail": "tools called: [check_scam_indicator]"
+    },
+    {
+      "name": "transcript_absent.freeze_card",
+      "ok": true,
+      "detail": "tools called: [check_scam_indicator]"
+    },
+    {
+      "name": "transcript_absent.open_fraud_case",
+      "ok": true,
+      "detail": "tools called: [check_scam_indicator]"
+    },
+    {
+      "name": "transcript_absent.transfer",
+      "ok": true,
+      "detail": "tools called: [check_scam_indicator]"
+    }
+  ]
+}

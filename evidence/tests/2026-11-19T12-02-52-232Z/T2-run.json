@@ -1,0 +1,29 @@
+{
+  "run_id": "b3360399-b303-4785-9062-d814ee5fc86d",
+  "test_id": "2c8a539e-59b2-4368-b14f-2cc805b955ce",
+  "status": "passed",
+  "triggered_by": "manual",
+  "completed_at": "2026-11-19T12:06:00.527235Z",
+  "logs": "All rules passed successfully",
+  "conversation_id": "8b9355d4-2467-4f11-93ff-df8773888512",
+  "conversation_insights_id": null,
+  "test_suite_run_id": null,
+  "created_at": "2026-11-19T12:04:25.852773Z",
+  "updated_at": "2026-11-19T12:06:00.898559",
+  "detail_status": [
+    {
+      "name": "reads_case_id",
+      "status": "passed"
+    },
+    {
+      "name": "no_details_before_verification",
+      "status": "passed"
+    },
+    {
+      "name": "no_repeated_thanks",
+      "status": "passed"
+    }
+  ],
+  "destination_version_id": null,
+  "turn_count": 5
+}

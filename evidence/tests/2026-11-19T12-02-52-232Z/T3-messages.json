@@ -1,0 +1,296 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "You're very welcome, Raj. Glad I could help.\n\nJust to remind you — if anything else suspicious comes up, do call us back anytime, or reach the ScamShield Helpline on one, seven, double nine. Take care, and I'll let the line close on your end.",
+      "created_at": "2026-11-19T12:07:25.334221Z",
+      "sent_at": "2026-11-19T12:07:25.334221Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Thank you so much for your help. That's all I needed today — have a great day!",
+      "created_at": "2026-11-19T12:07:23.449634Z",
+      "sent_at": "2026-11-19T12:07:23.449634Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you, Raj. You're verified.\n\nI have one case on file for you. The case number is M B dash C zero zero two dash one. It is for suspicious card transactions, and the status is open.",
+      "created_at": "2026-11-19T12:07:14.828818Z",
+      "sent_at": "2026-11-19T12:07:14.828818Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "You have 1 case: MB-C002-1, suspicious card transactions, open.",
+      "created_at": "2026-11-19T12:07:13.709161Z",
+      "sent_at": "2026-11-19T12:07:13.709161Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_82a870438bf51121_c6fe5f64-5a70-4289-a52f-09da5f954daf",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you, Raj. You're verified. One moment while I pull up your cases.",
+      "created_at": "2026-11-19T12:07:13.154217Z",
+      "sent_at": "2026-11-19T12:07:13.154217Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_82a870438bf51121_c6fe5f64-5a70-4289-a52f-09da5f954daf",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{\"customer_id\":\"C002\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "tool",
+      "text": "{\"verification_status\":\"verified\",\"customer_id\":\"C002\",\"first_name\":\"Raj\",\"attempts_remaining\":\"3\",\"lockout_until\":\"\"}",
+      "created_at": "2026-11-19T12:07:12.238689Z",
+      "sent_at": "2026-11-19T12:07:12.238689Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_75c171199dd77b99_661e1b30-e36a-476b-99f4-7f2d9830c1f2",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "One moment.",
+      "created_at": "2026-11-19T12:07:10.340914Z",
+      "sent_at": "2026-11-19T12:07:10.340914Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_75c171199dd77b99_661e1b30-e36a-476b-99f4-7f2d9830c1f2",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "verify",
+            "arguments": "{\"dob\":\"1975-11-02\",\"last4\":\"8833\",\"mobile\":\"+6591234567\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Yes, that's all correct.",
+      "created_at": "2026-11-19T12:07:09.842341Z",
+      "sent_at": "2026-11-19T12:07:09.842341Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you for the correction. Let me read that back once more: your mobile is nine, one, two, three, four, five, six, seven. Your date of birth is 2 November 1975. And the last 4 digits of your card are eight, eight, three, three. Is that all correct?",
+      "created_at": "2026-11-19T12:07:06.654809Z",
+      "sent_at": "2026-11-19T12:07:06.654809Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No — the card is 8833.",
+      "created_at": "2026-11-19T12:07:05.972610Z",
+      "sent_at": "2026-11-19T12:07:05.972610Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you. Let me read that back: your mobile is nine, one, two, three, four, five, six, seven. Your date of birth is 2 November 1975. And the last 4 digits of your card are eight, two, three, three. Is that all correct?",
+      "created_at": "2026-11-19T12:07:03.030389Z",
+      "sent_at": "2026-11-19T12:07:03.030389Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Sure, the last 4 digits are 8233.",
+      "created_at": "2026-11-19T12:07:01.667440Z",
+      "sent_at": "2026-11-19T12:07:01.667440Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you. I'll also need the last 4 digits of your Merlion Bank card. Just the last 4 digits — not the full card number.\n\nOnce I have that, I'll read everything back to you for confirmation before I check.",
+      "created_at": "2026-11-19T12:06:58.495286Z",
+      "sent_at": "2026-11-19T12:06:58.495286Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I don't have my NRIC on me right now, but you can verify me with my mobile number — it's 9123 4567 — and my date of birth is 2 November 1975.",
+      "created_at": "2026-11-19T12:06:57.322867Z",
+      "sent_at": "2026-11-19T12:06:57.322867Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Sure, I can help with that. Before I can look at anything, I need to verify your identity.\n\nCan I have your NRIC or customer ID, please?",
+      "created_at": "2026-11-19T12:06:51.037812Z",
+      "sent_at": "2026-11-19T12:06:51.037812Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Can I check my case status please?",
+      "created_at": "2026-11-19T12:06:50.487159Z",
+      "sent_at": "2026-11-19T12:06:50.487159Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T12:06:49.240137Z",
+      "sent_at": "2026-11-19T12:06:49.240137Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T12:06:48.934948Z",
+      "sent_at": "2026-11-19T12:06:48.934948Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

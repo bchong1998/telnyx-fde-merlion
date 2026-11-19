@@ -1,0 +1,16 @@
+{
+  "name": "T1 scam_check",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 150,
+  "instructions": "You are a Singaporean bank customer chatting by text with Merlion Bank's fraud line. You received an SMS claiming to be from Merlion Bank with a link, and you want to check if it is real. Say in your first message: \"Hi, I got an SMS from Merlion Bank asking me to log in at merlion-secure-verify.com. Is this a real Merlion Bank page?\" Then follow the assistant's guidance. Do not give any personal details unless asked for verification — you have NOT lost money. If the assistant asks what happened, explain only about the SMS link. End politely when you have your answer.",
+  "rubric": [
+    { "name": "identifies_scam", "criteria": "The assistant clearly tells the caller the link is a scam or suspicious." },
+    { "name": "says_never_click", "criteria": "The assistant warns the caller not to click the link and not to enter any credentials." },
+    { "name": "mentions_1799", "criteria": "The assistant mentions the ScamShield Helpline 1799 before ending." }
+  ],
+  "asserts": {
+    "transcript_tools_called": ["check_scam_indicator"],
+    "transcript_tools_absent": ["verify", "freeze_card", "open_fraud_case", "transfer"],
+    "verify_outcomes": []
+  }
+}

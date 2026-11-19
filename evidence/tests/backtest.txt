@@ -1,0 +1,7 @@
+backtest against round2 + observability conversations (evaluator: tests/asserts.mjs) — 2026-11-19T12:35:54.612Z
+7723d64a-4caf-40f5-9f68-4ea8c5c85fc5  VIOLET  first /verify 2026-11-19T08:31:29.279Z vs user mark 2026-11-19T08:31:53.877024Z  (expected violation correctly flagged)
+16ddf0e8-e491-4862-baff-5cebeebed155  VIOLET  no user message matched /\byes\b|\bcorrect\b|\bright\b/i
+58a869ba-3036-4878-9c2d-bf7fb1489d90  VIOLET  first /verify 2026-11-19T08:27:59.391Z vs user mark 2026-11-19T08:29:58.250482Z
+7723d64a-4caf-40f5-9f68-4ea8c5c85fc5  VIOLET  first /verify 2026-11-19T08:31:29.279Z vs user mark 2026-11-19T08:31:53.877024Z
+d5891040-a08d-4212-825c-1022d9dff146  VIOLET  no user message matched /\byes\b|\bcorrect\b|\bright\b/i
+d9cf9b9f-ae18-43ff-be16-8a6a9998ec14  VIOLET  first /verify 2026-11-19T08:25:18.807Z vs user mark 2026-11-19T08:25:56.167994Z

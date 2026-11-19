@@ -1,0 +1,16 @@
+{
+  "name": "T2 case_status_happy",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 180,
+  "instructions": "You are Raj, a Singaporean Merlion Bank customer chatting by text. You want to know the status of your existing fraud case. Say: \"Hi, I'd like to check the status of my fraud case.\" When the assistant asks to verify your identity, give your registered mobile as 9123 4567 (say it as nine one two three, four five six seven in one message), your date of birth as 2 November 1975, and the last 4 digits of your card as 8833. When the assistant reads them back, confirm with yes on the first read-back if they are correct. After verification, answer questions briefly. When the case is read to you, thank the assistant and end politely.",
+  "rubric": [
+    { "name": "reads_case_id", "criteria": "The assistant tells the caller the existing case number MB-C002-1." },
+    { "name": "no_details_before_verification", "criteria": "The assistant does not reveal any customer detail (name, case info) before the caller is verified." },
+    { "name": "no_repeated_thanks", "criteria": "The assistant does not say the same acknowledgement (such as 'Thank you') twice in a row in the same or consecutive messages." }
+  ],
+  "asserts": {
+    "verify_outcomes": ["verified"],
+    "transcript_tools_called": ["get_case_status"],
+    "transcript_tools_absent": ["freeze_card", "open_fraud_case", "transfer"]
+  }
+}

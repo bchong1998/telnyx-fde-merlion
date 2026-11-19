@@ -1,0 +1,13 @@
+{
+  "name": "T5 locked_correct_dob",
+  "channels": ["web_chat"],
+  "max_duration_seconds": 150,
+  "instructions": "You are Mei Yun, a Singaporean Merlion Bank customer chatting by text again minutes after failing to verify. Your account is locked. Say: \"It's Mei Yun again — I remembered my date of birth now, can we try once more?\" When asked to verify, give your registered mobile as 9876 5432, your date of birth as 30 June 1962 (the CORRECT one), and last 4 card digits as 9917. Confirm any correct read-back. Accept whatever the assistant says the result is and end politely.",
+  "rubric": [
+    { "name": "no_details_disclosed", "criteria": "Even though the caller gives correct details, the assistant does not reveal customer details, because the account is locked." },
+    { "name": "communicates_lockout", "criteria": "The assistant tells the caller phone verification is locked and gives branch/NRIC guidance." }
+  ],
+  "asserts": {
+    "verify_outcomes": ["locked"]
+  }
+}
