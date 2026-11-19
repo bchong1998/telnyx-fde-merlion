@@ -189,6 +189,19 @@ Evidence: `evidence/round2/messages-*.json`.
   2. The prompt says "read back and ask to confirm" but never says "call verify only after yes". Retest in round 3, then tighten the prompt.
   3. The same log also shows "Thank you, Raj. You are verified." twice (a partial and then a full message; check against the audio).
 
+## 29. Assistant Tests runner can't place `phone_call` tests to our number; `web_call` unsupported ⭐ (platform bug report)
+- **Found by:** OpenCode, test-automation spike (19 Nov). Test `48358e23-…` (phone_call → +16018678604), 2 runs, both ended `pending → starting → running (~4–6 min) → error`. Logs: `RetryError[<Future at 0x7fd081355f90 state=finished raised HTTPStatusError>]`, `turn_count: 0`.
+- **Evidence it fails on the origination side:**
+  - Zero `/dv` hits on merlion-webhook during either run.
+  - The run's `conversation_id` returns `10005 Resource not found`.
+  - The outbound voice profile works: real transfer legs connected in round 2.
+- **`web_call`:** it's in the SDK's `TelnyxConversationChannel` type, but the runner rejects it: `Test channel 'web_call' is not supported by the test runner… Supported channels: phone_call, web_chat.` The types promise more than the runner supports.
+- **Other API notes:**
+  - Get a run's status with `GET /v2/ai/assistants/tests/{test_id}/runs/{run_id}`. A query-param variant returns a body with no `status`.
+  - `name` is required (`10004 … /body/name`). The SDK type does mark it required. OpenCode's claim that it was missing from the type was wrong.
+- **Did:** fell back to `web_chat` for the logic tests, plus deterministic checks against the function logs. Voice-only behaviour (speech-to-text digits, double-speak, transfer) stays manual. Re-trigger the phone_call test before the demo, and raise it with Telnyx if it still fails.
+- **Design catch from writing the scenarios:** "T5 locked callback via `/dv`" can't work with a simulated caller, because `/dv` keys on caller ID and the runner calls from a Telnyx number. That's correct behaviour, since caller ID isn't identity. So the lockout is tested at `/verify` (the 4th attempt returns `locked`), not at call start.
+
 ---
 
 ## Observations (not bugs, but they shaped decisions)
