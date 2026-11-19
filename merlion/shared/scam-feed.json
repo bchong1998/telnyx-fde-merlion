@@ -1,0 +1,88 @@
+{
+  "indicators": [
+    {
+      "kind": "phone",
+      "value": "+6580001001",
+      "verdict": "known_scam",
+      "reason": "Callers from this number impersonate Merlion Bank fraud-department officers and ask customers to move money to a 'safe account'.",
+      "advice": "Hang up now. Merlion Bank never asks you to transfer money to keep it safe."
+    },
+    {
+      "kind": "phone",
+      "value": "+6580001002",
+      "verdict": "known_scam",
+      "reason": "This number runs fake SingPass verification calls claiming your national digital identity will be suspended.",
+      "advice": "Hang up. SingPass never calls to suspend accounts or ask for one-time codes."
+    },
+    {
+      "kind": "phone",
+      "value": "+6580001003",
+      "verdict": "known_scam",
+      "reason": "This number is used for police and CPIB impersonation, claiming a warrant is out for the victim's arrest.",
+      "advice": "Hang up. Singapore police never demand payment or bank details over the phone."
+    },
+    {
+      "kind": "phone",
+      "value": "+85251000001",
+      "verdict": "suspicious",
+      "reason": "Overseas number pattern linked to spoofed courier and customs calls targeting Singapore residents.",
+      "advice": "Be careful. Real courier companies do not ask for card details or transfers by phone."
+    },
+    {
+      "kind": "url",
+      "value": "singpass-verify-account.top",
+      "verdict": "known_scam",
+      "reason": "Phishing site cloned to look like the SingPass login page to steal credentials and one-time codes.",
+      "advice": "Do not open it. SingPass is only ever at singpass.gov.sg."
+    },
+    {
+      "kind": "url",
+      "value": "dbs-secure-refund.top",
+      "verdict": "known_scam",
+      "reason": "Fake bank refund page that harvests card numbers, expiry dates and CVVs.",
+      "advice": "Do not enter card details there. Banks never process refunds by asking for your full card number."
+    },
+    {
+      "kind": "url",
+      "value": "parcel-redelivery-8492.xyz",
+      "verdict": "known_scam",
+      "reason": "Fake parcel redelivery site charging a small 'customs fee' to capture card details.",
+      "advice": "Do not pay or enter card details. Delete the message."
+    },
+    {
+      "kind": "url",
+      "value": "m1-billing-support.top",
+      "verdict": "suspicious",
+      "reason": "Lookalike telco billing domain reported in phishing messages about 'failed payments'.",
+      "advice": "Check your account only through the official telco app or website."
+    },
+    {
+      "kind": "sms_text",
+      "value": "your parcel is held at customs. pay s$1.50 redelivery fee: http://parcel-redelivery-8492.xyz",
+      "verdict": "known_scam",
+      "reason": "Classic parcel-customs-fee lure; the small fee is bait to steal card details.",
+      "advice": "Delete it. Real Singapore Post never charges redelivery fees by link."
+    },
+    {
+      "kind": "sms_text",
+      "value": "singpass: your account will be suspended. verify now at singpass-verify-account.top",
+      "verdict": "known_scam",
+      "reason": "SingPass suspension scare with a cloned login link.",
+      "advice": "Delete it. SingPass does not send suspension links by SMS."
+    },
+    {
+      "kind": "sms_text",
+      "value": "spf notice: a warrant has been issued for your arrest. call +6580001003 immediately to avoid prosecution.",
+      "verdict": "known_scam",
+      "reason": "Police-impersonation arrest warrant threat — the callback number is controlled by the scammer.",
+      "advice": "Ignore it. Police do not issue warrants over SMS."
+    },
+    {
+      "kind": "sms_text",
+      "value": "merlion bank: confirm a transaction of s$4,850 at once by replying with your otp or your card will be blocked",
+      "verdict": "known_scam",
+      "reason": "Fake bank alert engineered to make victims reply with a one-time code.",
+      "advice": "Never reply with an OTP. Merlion Bank will never ask for it — not by SMS, not by call."
+    }
+  ]
+}

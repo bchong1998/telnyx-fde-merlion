@@ -1,0 +1,6 @@
+{"display_name":"spike_set_verify_inputs","type":"update_dynamic_variables",
+ "update_dynamic_variables":{"name":"save_verify_inputs","description":"Save the caller's date of birth, four digits and test status code once all three are given.",
+  "updatable_variables":[
+   {"name":"dob","description":"Date of birth as YYYY-MM-DD","type":"string"},
+   {"name":"last4","description":"The four digits the caller said","type":"string"},
+   {"name":"force_status","description":"Test status code: 200, 401 or 500","type":"string"}]}}

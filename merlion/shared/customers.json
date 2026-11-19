@@ -1,0 +1,48 @@
+{
+  "customers": [
+    {
+      "customer_id": "C001",
+      "first_name": "Wei Ling",
+      "mobile_e164": "+6582925458",
+      "dob": "1988-04-17",
+      "card_last4": "4251",
+      "preferred_language": "en",
+      "demo_role": "known_owner"
+    },
+    {
+      "customer_id": "C002",
+      "first_name": "Raj",
+      "mobile_e164": "+6591234567",
+      "dob": "1975-11-02",
+      "card_last4": "8833",
+      "preferred_language": "en",
+      "demo_role": "has_open_case",
+      "seed_case": {
+        "case_id": "MB-C002-1",
+        "category": "suspicious_card_transactions",
+        "status": "open",
+        "amount_sgd": null,
+        "summary": "Reported unauthorised card charges; card temporarily restricted",
+        "opened_at": "2026-11-18T09:15:00.000Z"
+      }
+    },
+    {
+      "customer_id": "C003",
+      "first_name": "Mei Yun",
+      "mobile_e164": "+6598765432",
+      "dob": "1962-06-30",
+      "card_last4": "9917",
+      "preferred_language": "en",
+      "demo_role": "lockout"
+    },
+    {
+      "customer_id": "C004",
+      "first_name": "Daniel",
+      "mobile_e164": "+6581234567",
+      "dob": "1995-01-25",
+      "card_last4": "1204",
+      "preferred_language": "en",
+      "demo_role": "plain"
+    }
+  ]
+}

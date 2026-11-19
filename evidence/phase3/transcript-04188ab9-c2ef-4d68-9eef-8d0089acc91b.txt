@@ -1,0 +1,24 @@
+tool-result [verify_collect]: {"attempts_remaining":"2","customer_id":"C003","first_name":"","lockout_until":"","verification_status":"failed"}
+Assistant [verify_collect]: I'm sorry, those details did not match our records. We have 2 attempts remaining.
+
+Could you check your date of birth and the last 4 digits of your card again?
+User [verify_collect]: Fifth May nineteen ninety nine.
+Assistant [verify_collect]: Thank you. So your date of birth is 5 May 1999 — is that correct?
+User [verify_collect]: Yes.
+Assistant [verify_collect]: And the last 4 digits of your card?
+User [verify_collect]: One two zero four.
+Assistant [verify_collect] CALLS verify({"dob":"1999-05-05","last4":"1204","mobile":"+6580000002"})
+tool-result [verify_collect]: {"attempts_remaining":"1","customer_id":"C003","first_name":"","lockout_until":"","verification_status":"failed"}
+Assistant [verify_collect]: I'm sorry, those details did not match again. We have 1 attempt remaining before your account is temporarily locked.
+
+Please double-check your card and confirm the last 4 digits once more.
+User [verify_collect]: Eighth June nineteen ninety six.
+Assistant [verify_collect]: Thank you. So your date of birth is 8 June 1996 — is that correct?
+User [verify_collect]: Yes.
+Assistant [verify_collect]: And the last 4 digits of your card?
+User [verify_collect]: One two zero four.
+Assistant [verify_collect] CALLS verify({"dob":"1996-06-08","last4":"1204","mobile":"+6580000002"})
+tool-result [verify_collect]: {"attempts_remaining":"0","customer_id":"C003","first_name":"","lockout_until":"3:55 PM","verification_status":"locked"}
+Assistant [locked_notice]: For your security, phone verification on this account is locked until 3:55 PM. Please visit any Merlion Bank branch with your NRIC, or call back after that time. If you are in danger of losing money right now, call the ScamShield Helpline on 1799.
+Assistant [bye] CALLS hangup({})
+tool-result [bye]: {"data":{"result":"ok"}}

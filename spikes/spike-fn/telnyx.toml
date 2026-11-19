@@ -1,0 +1,14 @@
+name = "spike-fn"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+[[actors]]
+binding = "COUNTER"
+type = "Counter"
+
+[storage.kv.SPIKE_KV]
+id = "1b9708b5-4948-42cf-9d15-07509ed8b88c"
+
+[edge_compute]
+func_id = "eb9bd597-3642-492e-a806-7c95615d59f6"
+func_name = "spike-fn"

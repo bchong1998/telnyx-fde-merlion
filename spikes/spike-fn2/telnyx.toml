@@ -1,0 +1,11 @@
+name = "spike-fn2"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+[[actors]]
+binding = "COUNTER"
+type = "Counter"
+
+[edge_compute]
+func_id = "e193b348-5493-421d-b183-28bbbda5213c"
+func_name = "spike-fn2"

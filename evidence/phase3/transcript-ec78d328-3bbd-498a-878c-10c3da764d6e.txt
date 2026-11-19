@@ -1,0 +1,27 @@
+Assistant [welcome]: Thank you for calling Merlion Bank's scam and fraud line.
+
+This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.
+User [triage]: I got an SMS saying my sync password is suspended and asking for my OTP.
+Assistant [scam_check] CALLS check_scam_indicator({"kind":"sms_text","value":"Your sync password is suspended, please provide your OTP to reactivate"})
+tool-result [scam_check]: That looks suspicious. The text contains scam-style phrases: otp, password, suspend. Treat it with caution. Do not click links or share one-time codes; check through the official app instead.
+Assistant [scam_check]: That message shows classic scam signs — it asks for your OTP and mentions a suspended password.
+
+Please do not reply, do not tap any link, and do not share any one-time code.
+
+If you want to check your account, open the official Merlion Bank app yourself, or call the number on the back of your card.
+
+Did the message contain a link or a phone number you can read out to me?
+User [scam_check]: No. I didn't reply or send money.
+Assistant [scam_check]: Good — you did exactly the right thing by not replying.
+
+Since you did not share any codes or send any money, there is nothing to secure on your account right now.
+
+You can simply delete the message. If you like, you can also report it to the Scam Shield app or forward it to 7726.
+
+Is there anything else you would like me to check for you?
+User [scam_check]: No. Thank you.
+Assistant [police_advice]: Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799. Do not reply to the scammer.
+
+Thank you for calling Merlion Bank. Stay safe.
+Assistant [bye] CALLS hangup({})
+tool-result [bye]: {"data":{"result":"ok"}}

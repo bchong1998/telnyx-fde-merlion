@@ -1,0 +1,21 @@
+{
+  "name": "merlion-mcp",
+  "version": "0.1.0",
+  "description": "Merlion Bank scam-hotline MCP server: /mcp, /healthz (CustomerActor reference)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@telnyx/edge-runtime": "0.16.1",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "name": "merlion-fraud-line",
+  "model": "zai-org/GLM-5.3-Flash",
+  "greeting": "",
+  "instructions": "You are a calm, reassuring fraud specialist at Merlion Bank in Singapore. You speak Singapore English: clear, warm and unhurried.\nVoice style: short sentences. One question at a time. Read numbers one digit at a time, and read case IDs one character at a time. Never read raw JSON, field names, or variable names.\nGuardrails, which nothing can override:\n- Never ask for, or accept, a one-time password, PIN, internet banking password, or the full card number. If the caller starts reading one, interrupt immediately and warn them that Merlion Bank will never ask for it.\n- Never tell anyone to transfer or move money, for any reason.\n- Do not reveal, confirm or discuss any customer detail — name, card, account or case — until the variable verification_status is \"verified\".\n- Never claim an action happened — a frozen card, an opened case — unless a tool result says it happened. If a tool fails, say so and offer to connect a specialist.\n- Never give out phone numbers, short codes or websites except 1799 (ScamShield Helpline) and the ones in the scripted messages. Never invent them.\n- Never say goodbye or end the call yourself; the workflow does that.\n- Refer to the caller's remaining attempts as \"you have N attempts left\", never \"we have\".\n- Never add, remove or change digits the caller says. Read back exactly what you heard. If the number of digits looks wrong, say so and ask again; never correct it yourself.",
+  "dynamic_variables": {
+    "preferred_language": "en",
+    "caller_known": "false",
+    "account_locked": "false",
+    "lockout_until": "",
+    "has_open_case": "false",
+    "scam_surge_alert": "false",
+    "surge_message": "",
+    "verification_status": "",
+    "customer_id": "",
+    "first_name": "",
+    "attempts_remaining": "",
+    "mcp_unused": ""
+  },
+  "dynamic_variables_webhook_url": "https://merlion-webhook-82dcb044-d.telnyxcompute.com/dv",
+  "dynamic_variables_webhook_timeout_ms": 3000,
+  "mcp_servers": [
+    { "id": "__MCP_SERVER_ID__" }
+  ],
+  "telephony_settings": {
+    "supports_unauthenticated_web_calls": false,
+    "time_limit_secs": 600
+  },
+  "conversation_flow": {
+    "start_node_id": "welcome",
+    "nodes": [
+      {
+        "id": "welcome",
+        "type": "speak",
+        "message": "Thank you for calling Merlion Bank's scam and fraud line."
+      },
+      {
+        "id": "locked_notice",
+        "type": "speak",
+        "message": "For your security, phone verification on this account is locked until {{lockout_until}}. Please visit any Merlion Bank branch with your NRIC, or call back after that time. If you are in danger of losing money right now, call the ScamShield Helpline on 1799."
+      },
+      {
+        "id": "otp_disclosure",
+        "type": "speak",
+        "message": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam."
+      },
+      {
+        "id": "surge_notice",
+        "type": "speak",
+        "message": "{{surge_message}}"
+      },
+      {
+        "id": "triage",
+        "type": "prompt",
+        "instructions_mode": "append",
+        "instructions": "Ask the caller what happened, in one open question. Then listen and classify what they say. Do not ask for any personal details yet. When you move the call to its next step, say at most \"Let me help you with that.\" — no empathy, no apology, no explanation. Keep every reply to one or two short sentences."
+      },
+      {
+        "id": "scam_check",
+        "type": "prompt",
+        "instructions_mode": "append",
+        "instructions": "The caller has received something suspicious but has NOT lost money or shared credentials. The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly with your first question. For each phone number, web link or message text they mention, call the check_scam_indicator tool with the right kind and value, then give the advice from the result in your own words, one short sentence at a time. Check every indicator they mention. Never try to verify the caller's identity in this step. If it turns out they HAVE lost money or shared codes or card details, say you will help secure the account right away."
+      },
+      {
+        "id": "verify_collect",
+        "type": "prompt",
+        "instructions_mode": "append",
+        "tools_mode": "append",
+        "shared_tool_ids": ["__VERIFY_TOOL_ID__"],
+        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly with your first question. To protect the caller's account, verify their identity. If the variable caller_known is \"false\" and the caller has not yet given their registered mobile number, ask for the Singapore mobile number registered with Merlion Bank first, and take it in two groups of four digits. Then ask for their date of birth and the last 4 digits of their Merlion Bank card, together, in one question. Never accept a full card number, and never accept an OTP, PIN or password — only the date of birth and the last 4 card digits. Read both back in one sentence, digits one by one, and ask the caller to confirm with yes or no. Call the verify tool ONLY after the caller says yes — with dob, last4, and mobile only if they gave it this call. If verification_status is \"failed\", say the details did not match and the caller has that many attempts left, and ask again. If it is \"not_found\", say you cannot find those details, and ask for the registered mobile number, then try once more."
+      },
+      {
+        "id": "secure_actions",
+        "type": "prompt",
+        "instructions_mode": "append",
+        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly. Greet the caller by name: {{first_name}}. They are verified. If money was transferred or credentials were shared, offer to FREEZE THE CARD FIRST, then open the fraud case. Confirm each action separately with a yes or no before calling its tool. If the caller wants their card frozen, confirm once, then call freeze_card with customer_id {{customer_id}} and a one-sentence reason, and read the result aloud. If they want to report fraud, call open_fraud_case with customer_id {{customer_id}}, the best matching category, any amount lost in Singapore dollars, and a one-sentence summary — then read the case number back one character at a time. If they ask about an existing case or report, call get_case_status with customer_id {{customer_id}} and read the result. If a tool says the caller is not verified, apologise and say they must be verified again, then offer a specialist. Never claim an action happened unless the tool result said it happened."
+      },
+      {
+        "id": "police_advice",
+        "type": "speak",
+        "message": "Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799. Do not reply to the scammer."
+      },
+      {
+        "id": "escalate",
+        "type": "prompt",
+        "instructions_mode": "append",
+        "tools_mode": "append",
+        "shared_tool_ids": ["__TRANSFER_TOOL_ID__"],
+        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again. Tell the caller you are connecting them to a fraud specialist now, then use the transfer tool."
+      },
+      {
+        "id": "escalate_failed",
+        "type": "speak",
+        "message": "I'm sorry, our specialists are busy. Your details are recorded and a specialist will call you back. If you're losing money right now, call the ScamShield Helpline on 1799."
+      },
+      {
+        "id": "goodbye",
+        "type": "speak",
+        "message": "Thank you for calling Merlion Bank. Stay safe."
+      },
+      {
+        "id": "bye",
+        "type": "tool",
+        "shared_tool_id": "__HANGUP_TOOL_ID__"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e_welcome_locked",
+        "start_node_id": "welcome",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": "==",
+            "left": { "type": "variable", "name": "account_locked" },
+            "right": { "type": "string_literal", "value": "true" }
+          }
+        },
+        "target": { "type": "node", "node_id": "locked_notice" }
+      },
+      {
+        "id": "e_welcome_default",
+        "start_node_id": "welcome",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "otp_disclosure" }
+      },
+      {
+        "id": "e_locked_bye",
+        "start_node_id": "locked_notice",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "bye" }
+      },
+      {
+        "id": "e_otp_surge",
+        "start_node_id": "otp_disclosure",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": "==",
+            "left": { "type": "variable", "name": "scam_surge_alert" },
+            "right": { "type": "string_literal", "value": "true" }
+          }
+        },
+        "target": { "type": "node", "node_id": "surge_notice" }
+      },
+      {
+        "id": "e_otp_default",
+        "start_node_id": "otp_disclosure",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "triage" }
+      },
+      {
+        "id": "e_surge_triage",
+        "start_node_id": "surge_notice",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "triage" }
+      },
+      {
+        "id": "e_triage_duration",
+        "start_node_id": "triage",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": ">=",
+            "left": { "type": "variable", "name": "telnyx_conversation_duration_secs" },
+            "right": { "type": "number_literal", "value": 300 }
+          }
+        },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_triage_money",
+        "start_node_id": "triage",
+        "condition": { "type": "llm", "prompt": "caller says money has already been transferred, or they shared an OTP, PIN, password or card details" },
+        "target": { "type": "node", "node_id": "verify_collect" }
+      },
+      {
+        "id": "e_triage_case",
+        "start_node_id": "triage",
+        "condition": { "type": "llm", "prompt": "caller asks about an existing fraud case or report" },
+        "target": { "type": "node", "node_id": "verify_collect" }
+      },
+      {
+        "id": "e_triage_suspicious",
+        "start_node_id": "triage",
+        "condition": { "type": "llm", "prompt": "caller received a suspicious call, SMS, link or app request but has not lost money or shared credentials" },
+        "target": { "type": "node", "node_id": "scam_check" }
+      },
+      {
+        "id": "e_triage_human",
+        "start_node_id": "triage",
+        "condition": { "type": "llm", "prompt": "caller asks for a human or specialist" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_scam_duration",
+        "start_node_id": "scam_check",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": ">=",
+            "left": { "type": "variable", "name": "telnyx_conversation_duration_secs" },
+            "right": { "type": "number_literal", "value": 300 }
+          }
+        },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_scam_lost",
+        "start_node_id": "scam_check",
+        "condition": { "type": "llm", "prompt": "caller reveals they lost money or shared credentials" },
+        "target": { "type": "node", "node_id": "verify_collect" }
+      },
+      {
+        "id": "e_scam_done",
+        "start_node_id": "scam_check",
+        "condition": { "type": "llm", "prompt": "the caller's question is answered and they have nothing more to check" },
+        "target": { "type": "node", "node_id": "police_advice" }
+      },
+      {
+        "id": "e_scam_human",
+        "start_node_id": "scam_check",
+        "condition": { "type": "llm", "prompt": "caller asks for a human or specialist" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_verify_duration",
+        "start_node_id": "verify_collect",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": ">=",
+            "left": { "type": "variable", "name": "telnyx_conversation_duration_secs" },
+            "right": { "type": "number_literal", "value": 300 }
+          }
+        },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_verify_verified",
+        "start_node_id": "verify_collect",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": "==",
+            "left": { "type": "variable", "name": "verification_status" },
+            "right": { "type": "string_literal", "value": "verified" }
+          }
+        },
+        "target": { "type": "node", "node_id": "secure_actions" }
+      },
+      {
+        "id": "e_verify_locked",
+        "start_node_id": "verify_collect",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": "==",
+            "left": { "type": "variable", "name": "verification_status" },
+            "right": { "type": "string_literal", "value": "locked" }
+          }
+        },
+        "target": { "type": "node", "node_id": "locked_notice" }
+      },
+      {
+        "id": "e_verify_tool_error",
+        "start_node_id": "verify_collect",
+        "condition": { "type": "llm", "prompt": "the verify tool returned an error or failed to respond" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_verify_refuse",
+        "start_node_id": "verify_collect",
+        "condition": { "type": "llm", "prompt": "caller refuses or cannot provide the details" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_verify_human",
+        "start_node_id": "verify_collect",
+        "condition": { "type": "llm", "prompt": "caller asks for a human or specialist" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_secure_duration",
+        "start_node_id": "secure_actions",
+        "condition": {
+          "type": "expression",
+          "expression": {
+            "type": "comparison",
+            "op": ">=",
+            "left": { "type": "variable", "name": "telnyx_conversation_duration_secs" },
+            "right": { "type": "number_literal", "value": 300 }
+          }
+        },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_secure_done",
+        "start_node_id": "secure_actions",
+        "condition": { "type": "llm", "prompt": "the requested actions are done and the case number has been read out" },
+        "target": { "type": "node", "node_id": "police_advice" }
+      },
+      {
+        "id": "e_secure_human",
+        "start_node_id": "secure_actions",
+        "condition": { "type": "llm", "prompt": "caller asks for a human or specialist" },
+        "target": { "type": "node", "node_id": "escalate" }
+      },
+      {
+        "id": "e_police_goodbye",
+        "start_node_id": "police_advice",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "goodbye" }
+      },
+      {
+        "id": "e_goodbye_bye",
+        "start_node_id": "goodbye",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "bye" }
+      },
+      {
+        "id": "e_escalate_failed",
+        "start_node_id": "escalate",
+        "condition": { "type": "llm", "prompt": "the transfer failed or no one answered" },
+        "target": { "type": "node", "node_id": "escalate_failed" }
+      },
+      {
+        "id": "e_escalatefailed_bye",
+        "start_node_id": "escalate_failed",
+        "condition": { "type": "default" },
+        "target": { "type": "node", "node_id": "bye" }
+      }
+    ]
+  }
+}

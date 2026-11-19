@@ -1,0 +1,26 @@
+name = "merlion-webhook"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+[[actors]]
+binding = "CUSTOMER"
+type = "CustomerActor"
+
+[storage.kv.MERLION_KV]
+id = "85b93e35-6eb9-4055-b7ba-4afc76ebaa97"
+
+[[secrets]]
+binding = "TELNYX_PUBLIC_KEY"
+name = "TELNYX_PUBLIC_KEY"
+
+[[secrets]]
+binding = "DEV_SKIP_SIG"
+name = "DEV_SKIP_SIG"
+
+[[secrets]]
+binding = "ADMIN_TOKEN"
+name = "ADMIN_TOKEN"
+
+[edge_compute]
+func_id = "82dcb044-d801-4596-bb53-06cc98c7eac8"
+func_name = "merlion-webhook"

@@ -1,0 +1,7 @@
+{"display_name":"spike_verify","type":"webhook","timeout_ms":5000,
+ "webhook":{"name":"verify","description":"Verify the caller.","url":"https://spike-fn-eb9bd597-3.telnyxcompute.com/verify","method":"POST",
+  "headers":[{"name":"X-Trace-Id","value":"{{call_control_id}}"}],
+  "body_parameters":{"type":"object","properties":{
+    "dob":{"type":"string"},"last4":{"type":"string"},"force_status":{"type":"string"}},"required":["dob","last4","force_status"]},
+  "preset_body_fields":{"trace_id":"{{call_control_id}}","caller":"{{telnyx_end_user_target}}"},
+  "store_fields_as_variables":[{"name":"echoed_dob","value_path":"received.dob"}]}}

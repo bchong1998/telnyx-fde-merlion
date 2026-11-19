@@ -1,0 +1,13 @@
+{
+  "updated_at": "2026-11-19T08:00:11.571Z",
+  "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65",
+  "mcp_server_id": "a57bd2a7-9b6b-4a99-ae2f-2e97cab2b1cb",
+  "tools": {
+    "verify": "tool-8a0cff1b-a4ec-4bf0-8387-beb738c9d86b",
+    "transfer": "tool-d5211ced-dcbc-4b5e-a595-a7952f66efe2",
+    "hangup": "tool-bb7ce791-4194-406f-82bd-86e85c3607b9"
+  },
+  "texml_app_id": "3096463221649835537",
+  "phone_number": "+16018678604",
+  "phone_number_id": "3096368418366949167"
+}

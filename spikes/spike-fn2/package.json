@@ -1,0 +1,19 @@
+{
+  "name": "spike-fn2",
+  "version": "0.1.0",
+  "description": "Telnyx Edge spike: shared-actor reference function (type Counter, owned by spike-fn)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@telnyx/edge-runtime": "0.16.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

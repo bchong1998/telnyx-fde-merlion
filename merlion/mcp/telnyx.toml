@@ -1,0 +1,15 @@
+name = "merlion-mcp"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+# REFERENCE binding: merlion-webhook owns the CustomerActor class.
+[[actors]]
+binding = "CUSTOMER"
+type = "CustomerActor"
+
+[storage.kv.MERLION_KV]
+id = "85b93e35-6eb9-4055-b7ba-4afc76ebaa97"
+
+[edge_compute]
+func_id = "dc70ffb9-5da3-416a-86c1-baafdf9b877c"
+func_name = "merlion-mcp"

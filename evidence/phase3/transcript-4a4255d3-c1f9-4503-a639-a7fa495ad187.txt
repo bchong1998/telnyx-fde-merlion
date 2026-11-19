@@ -1,0 +1,30 @@
+tool-result [verify_collect]: {"attempts_remaining":"3","customer_id":"C004","first_name":"Daniel","lockout_until":"","verification_status":"verified"}
+Assistant [secure_actions]: Thank you, Daniel — you're verified.
+
+I'm sorry to hear about the money you transferred. Before we open a case, may I ask: roughly how much did you transfer, in Singapore dollars?
+User [secure_actions]: Ten thousand dollars.
+Assistant [secure_actions]: Thank you. Let me confirm before I open the case: you transferred ten thousand Singapore dollars to someone pretending to be from Merlion Bank. Is that correct — yes or no?
+User [secure_actions]: Yes.
+Assistant [secure_actions] CALLS open_fraud_case({"amount_sgd":10000,"category":"money_transferred","customer_id":"C004","summary":"Caller transferred SGD 10,000 to a scammer impersonating Merlion Bank staff."})
+tool-result [secure_actions]: Fraud case MB-C004-1 is now open. Our fraud team will review it today.
+Assistant [secure_actions]: Your fraud case is open. The case number is M, B, dash, C, zero, zero, four, dash, one. Our fraud team will review it today.
+
+Would you also like me to freeze your card, so no more money can leave it?
+User [secure_actions]: Yes.
+Assistant [secure_actions]: Just to confirm: you'd like me to freeze your card immediately, so no money can leave it. Is that correct — yes or no?
+User [secure_actions]: Yes.
+Assistant [secure_actions] CALLS freeze_card({"customer_id":"C004","reason":"Caller transferred money to a bank impersonation scam; freezing to prevent further loss."})
+tool-result [secure_actions]: The card is now frozen. No new transactions can go through.
+Assistant [secure_actions]: Your card is now frozen — no new transactions can go through.
+
+To recap: your fraud case M, B, dash, C, zero, zero, four, dash, one is open, and your card is frozen. Our fraud team will review your case today.
+
+Is there anything else I can help you with?
+User [secure_actions]: No.
+Assistant [secure_actions]: Thank you, Daniel. Please remember: Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money. Take care, and goodbye.
+User [secure_actions]: Goodbye.
+Assistant [police_advice]: Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799. Do not reply to the scammer.
+
+Thank you for calling Merlion Bank. Stay safe.
+Assistant [bye] CALLS hangup({})
+tool-result [bye]: {"data":{"result":"ok"}}

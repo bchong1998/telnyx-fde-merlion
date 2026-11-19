@@ -1,0 +1,27 @@
+{
+ "data": {
+  "record_type": "event",
+  "id": "c50a8e1b-226a-45a6-8b2e-c5d6a7bd4aff",
+  "event_type": "assistant.initialization",
+  "occurred_at": "2026-11-19T05:18:39.400740+00:00",
+  "payload": {
+   "assistant_id": "assistant-38c61f30-aa0f-47bb-b2f4-b42af9d60a90",
+   "telnyx_conversation_id": "44d386a5-cea5-4e66-af2a-e1bf56ef2f4e",
+   "to": "telnyxportal@assistant-38c61f30-aa0f-47bb-b2f4-b42af9d60a90.sip.telnyx.com",
+   "from": "84rl1imb@sip.telnyx.eu",
+   "call_control_id": "v3:7PYF5-RYQ0tMzutbc8nIuwUHl1brtmGAO-W1hM2cMSsd3t32O4i54A",
+   "call_session_id": "ad05683a-e3d8-11f1-b034-02420a1f0b69",
+   "call_leg_id": "ad057316-e3d8-11f1-8b9f-02420a1f0b69",
+   "telnyx_conversation_channel": "phone_call",
+   "telnyx_agent_target": "telnyxportal@assistant-38c61f30-aa0f-47bb-b2f4-b42af9d60a90.sip.telnyx.com",
+   "telnyx_end_user_target": "84rl1imb@sip.telnyx.eu",
+   "rtc_callid": "d1d1bd2d-e35d-4795-9a78-bcbc721c3f86",
+   "rtc_leg_uuid": "2bd01a55-e840-4a2f-b44d-11843aac9705",
+   "rtc_sessid": "9f23f017-ac39-4834-8751-8231333c0d22",
+   "telnyx_call_answered_time": "Thursday, November 19 2026 05:18:38 AM UTC",
+   "telnyx_call_caller_id_name": "Telnyx Web Dialer",
+   "telnyx_current_time": "Thursday, November 19 2026 05:18:38 AM UTC",
+   "telnyx_end_user_target_verified": false
+  }
+ }
+}

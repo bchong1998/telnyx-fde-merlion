@@ -1,0 +1,24 @@
+{
+  "name": "merlion-webhook",
+  "version": "0.1.0",
+  "description": "Merlion Bank scam-hotline webhook: /dv, /verify, /healthz (owns CustomerActor)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/patch-deps.mjs",
+    "test": "node test/attempt-verify.test.mts"
+  },
+  "dependencies": {
+    "@telnyx/edge-runtime": "0.16.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "telnyx": "7.31.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "display_name": "verify",
+  "type": "webhook",
+  "timeout_ms": 5000,
+  "webhook": {
+    "name": "verify",
+    "description": "Verify the caller's identity against Merlion Bank records using their date of birth and the last 4 digits of their card. Call this only after you have read both details back to the caller and they confirmed them. Returns verification_status: verified, failed, locked or not_found, plus the caller's first name when verified.",
+    "url": "https://merlion-webhook-82dcb044-d.telnyxcompute.com/verify",
+    "method": "POST",
+    "headers": [
+      { "name": "X-Trace-Id", "value": "{{call_control_id}}" }
+    ],
+    "body_parameters": {
+      "type": "object",
+      "properties": {
+        "mobile": {
+          "type": "string",
+          "description": "The caller's registered Singapore mobile number, only if the caller said it this call. Include the country code if spoken, for example +65 followed by 8 digits."
+        },
+        "dob": {
+          "type": "string",
+          "description": "The caller's date of birth in YYYY-MM-DD format."
+        },
+        "last4": {
+          "type": "string",
+          "description": "The last 4 digits of the caller's Merlion Bank card, given as 4 digits."
+        }
+      },
+      "required": ["dob", "last4"]
+    },
+    "preset_body_fields": {
+      "call_control_id": "{{call_control_id}}",
+      "caller": "{{telnyx_end_user_target}}"
+    },
+    "store_fields_as_variables": [
+      { "name": "verification_status", "value_path": "verification_status" },
+      { "name": "customer_id", "value_path": "customer_id" },
+      { "name": "first_name", "value_path": "first_name" },
+      { "name": "attempts_remaining", "value_path": "attempts_remaining" },
+      { "name": "lockout_until", "value_path": "lockout_until" }
+    ]
+  }
+}

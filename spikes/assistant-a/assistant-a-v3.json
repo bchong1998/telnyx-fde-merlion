@@ -1,0 +1,259 @@
+{
+ "name": "spike-a",
+ "model": "zai-org/GLM-5.3-Flash",
+ "greeting": "",
+ "instructions": "You are a test harness for a voice workflow. Keep replies under 12 words. Route is {{route}}, language is {{preferred_language}}.",
+ "dynamic_variables": {
+  "route": "a",
+  "preferred_language": "en",
+  "dob": "",
+  "last4": "",
+  "force_status": "",
+  "echoed_dob": "",
+  "verify_result": ""
+ },
+ "dynamic_variables_webhook_url": "https://spike-fn-eb9bd597-3.telnyxcompute.com/dv",
+ "dynamic_variables_webhook_timeout_ms": 3000,
+ "mcp_servers": [
+  {
+   "id": "00476101-c3ae-4fca-99e7-150f97e42c0c"
+  }
+ ],
+ "telephony_settings": {
+  "supports_unauthenticated_web_calls": false,
+  "time_limit_secs": 600
+ },
+ "conversation_flow": {
+  "start_node_id": "entry",
+  "nodes": [
+   {
+    "id": "entry",
+    "type": "speak",
+    "message": "One moment."
+   },
+   {
+    "id": "speak_b",
+    "type": "speak",
+    "message": "Route B. Language {{preferred_language}}."
+   },
+   {
+    "id": "speak_a",
+    "type": "speak",
+    "message": "Route A, builder default."
+   },
+   {
+    "id": "collect",
+    "type": "prompt",
+    "instructions_mode": "append",
+    "tools_mode": "append",
+    "shared_tool_ids": [
+     "tool-9e0f4d5b-20f4-4ab7-b12f-f0832a90e711"
+    ],
+    "instructions": "Ask the caller for a date of birth, four digits, and a test status code (200, 401 or 500). Read them back, then call the verify tool with all three. If the caller asks, use the echo tool and read its result aloud."
+   },
+   {
+    "id": "s200",
+    "type": "speak",
+    "message": "Two hundred. Echoed date of birth {{echoed_dob}}."
+   },
+   {
+    "id": "s401",
+    "type": "speak",
+    "message": "Four oh one."
+   },
+   {
+    "id": "sdefault",
+    "type": "speak",
+    "message": "Default branch."
+   },
+   {
+    "id": "bye",
+    "type": "tool",
+    "shared_tool_id": "tool-015cd85d-10e3-47cd-bfa7-4773e57fcf91"
+   }
+  ],
+  "edges": [
+   {
+    "id": "e_entry_b",
+    "start_node_id": "entry",
+    "condition": {
+     "type": "expression",
+     "expression": {
+      "type": "comparison",
+      "op": "==",
+      "left": {
+       "type": "variable",
+       "name": "route"
+      },
+      "right": {
+       "type": "string_literal",
+       "value": "b"
+      }
+     }
+    },
+    "target": {
+     "type": "node",
+     "node_id": "speak_b"
+    }
+   },
+   {
+    "id": "e_entry_a",
+    "start_node_id": "entry",
+    "condition": {
+     "type": "expression",
+     "expression": {
+      "type": "comparison",
+      "op": "==",
+      "left": {
+       "type": "variable",
+       "name": "route"
+      },
+      "right": {
+       "type": "string_literal",
+       "value": "a"
+      }
+     }
+    },
+    "target": {
+     "type": "node",
+     "node_id": "speak_a"
+    }
+   },
+   {
+    "id": "e_entry_default",
+    "start_node_id": "entry",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "speak_a"
+    }
+   },
+   {
+    "id": "e_b_collect",
+    "start_node_id": "speak_b",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "collect"
+    }
+   },
+   {
+    "id": "e_a_collect",
+    "start_node_id": "speak_a",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "collect"
+    }
+   },
+   {
+    "id": "e_s200_bye",
+    "start_node_id": "s200",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "bye"
+    }
+   },
+   {
+    "id": "e_s401_bye",
+    "start_node_id": "s401",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "bye"
+    }
+   },
+   {
+    "id": "e_sdefault_bye",
+    "start_node_id": "sdefault",
+    "condition": {
+     "type": "default"
+    },
+    "target": {
+     "type": "node",
+     "node_id": "bye"
+    }
+   },
+   {
+    "id": "e_collect_200",
+    "start_node_id": "collect",
+    "condition": {
+     "type": "expression",
+     "expression": {
+      "type": "comparison",
+      "op": "==",
+      "left": {
+       "type": "variable",
+       "name": "verify_result"
+      },
+      "right": {
+       "type": "string_literal",
+       "value": "200"
+      }
+     }
+    },
+    "target": {
+     "type": "node",
+     "node_id": "s200"
+    }
+   },
+   {
+    "id": "e_collect_401",
+    "start_node_id": "collect",
+    "condition": {
+     "type": "expression",
+     "expression": {
+      "type": "comparison",
+      "op": "==",
+      "left": {
+       "type": "variable",
+       "name": "verify_result"
+      },
+      "right": {
+       "type": "string_literal",
+       "value": "401"
+      }
+     }
+    },
+    "target": {
+     "type": "node",
+     "node_id": "s401"
+    }
+   },
+   {
+    "id": "e_collect_500",
+    "start_node_id": "collect",
+    "condition": {
+     "type": "expression",
+     "expression": {
+      "type": "comparison",
+      "op": "==",
+      "left": {
+       "type": "variable",
+       "name": "verify_result"
+      },
+      "right": {
+       "type": "string_literal",
+       "value": "500"
+      }
+     }
+    },
+    "target": {
+     "type": "node",
+     "node_id": "sdefault"
+    }
+   }
+  ]
+ }
+}

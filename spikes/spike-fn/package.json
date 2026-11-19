@@ -1,0 +1,21 @@
+{
+  "name": "spike-fn",
+  "version": "0.1.0",
+  "description": "Telnyx Edge spike: platform behaviour probes",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/patch-deps.mjs"
+  },
+  "dependencies": {
+    "@telnyx/edge-runtime": "latest",
+    "@modelcontextprotocol/sdk": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
