@@ -27,6 +27,7 @@ jobs:
         env:
           MERLION_WEBHOOK_URL: https://merlion-webhook-82dcb044-d.telnyxcompute.com
           MERLION_MCP_URL: https://merlion-mcp-dc70ffb9-5.telnyxcompute.com
+          MCP_TOKEN: ${{ secrets.MERLION_MCP_TOKEN }}
         run: |
           chmod +x scripts/probe.sh
           scripts/probe.sh --once

@@ -1,0 +1,126 @@
+{
+  "data": [
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I understand your worry, and I'm sorry, but I can't use those details to verify you. Only your NRIC or customer ID will work.\n\nMeanwhile, a few things that will keep you safe:\n\nMerlion Bank will never call you to ask for your card details or ask you to move money. If the caller did that, you can treat it as a scam.\n\nUntil you can verify your identity, I can't look at your card or freeze it here. But you can protect yourself right away: do not share any one-time password, PIN or card details with anyone, and hang up if they call back.\n\nIf you have your NRIC with you later, call us back and we can check and freeze your card straight away. Or if anything urgent comes up, you can reach the ScamShield Helpline at 1799.\n\nIs there anything else about that call you can tell me, like what the caller asked you to do?",
+      "created_at": "2026-11-19T14:08:34.746286Z",
+      "sent_at": "2026-11-19T14:08:34.746286Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I don't have the caller's number or any link or message from them — it was just a phone call. I'm still really worried my card is compromised. Could you check on my card using my registered mobile 9876 5432 and the last 4 digits of my card, 9917?",
+      "created_at": "2026-11-19T14:08:32.962879Z",
+      "sent_at": "2026-11-19T14:08:32.962879Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, I can only verify your identity with your NRIC or customer ID.\n\nI can still check the call itself for you though. Do you have the phone number the caller gave, or any link or message they sent you?",
+      "created_at": "2026-11-19T14:08:27.679871Z",
+      "sent_at": "2026-11-19T14:08:27.679871Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I'm sorry, I don't have my NRIC with me right now. Could I verify my identity using my registered mobile number and the last 4 digits of my card instead?",
+      "created_at": "2026-11-19T14:08:26.065639Z",
+      "sent_at": "2026-11-19T14:08:26.065639Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. Before I check your card, may I have your NRIC or customer ID, one character at a time?",
+      "created_at": "2026-11-19T14:08:20.370164Z",
+      "sent_at": "2026-11-19T14:08:20.370164Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I got a call from someone saying they are the bank and I think my card is compromised.",
+      "created_at": "2026-11-19T14:08:19.796735Z",
+      "sent_at": "2026-11-19T14:08:19.796735Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T14:08:18.480552Z",
+      "sent_at": "2026-11-19T14:08:18.480552Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T14:08:18.177448Z",
+      "sent_at": "2026-11-19T14:08:18.177448Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

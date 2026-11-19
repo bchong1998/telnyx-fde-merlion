@@ -1,0 +1,512 @@
+{
+  "data": [
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "I'm sorry, our specialists are busy. Your details are recorded and a specialist will call you back. If you're losing money right now, call the ScamShield Helpline on 1799.",
+      "created_at": "2026-11-19T14:05:40.648330Z",
+      "sent_at": "2026-11-19T14:05:40.648330Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "escalate_failed"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Still no luck on my end, Raj. I'm sorry about the wait. The specialist will need to pick this up directly — please stay on the line and I'll connect you now.",
+      "created_at": "2026-11-19T14:05:39.569371Z",
+      "sent_at": "2026-11-19T14:05:39.569371Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T14:05:38.674499Z",
+      "sent_at": "2026-11-19T14:05:38.674499Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_9dd489a64d9cd6a9_ec9c5dc7-3524-4f3b-90fb-d7c19ee6a94d",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Raj — I'm still unable to retrieve your case status myself, and the specialist connection isn't through yet. Let me try once more for you.",
+      "created_at": "2026-11-19T14:05:38.594361Z",
+      "sent_at": "2026-11-19T14:05:38.594361Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_9dd489a64d9cd6a9_ec9c5dc7-3524-4f3b-90fb-d7c19ee6a94d",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Could you please read out my case status now, or let me know when the specialist is available?",
+      "created_at": "2026-11-19T14:05:37.090328Z",
+      "sent_at": "2026-11-19T14:05:37.090328Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Of course, Raj. The specialist will be able to go through your case status with you once connected. I'll stay on to make that happen — please hold the line a little longer.",
+      "created_at": "2026-11-19T14:05:33.817195Z",
+      "sent_at": "2026-11-19T14:05:33.817195Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "I understand. When the specialist comes on, could you please read out the status of my fraud case?",
+      "created_at": "2026-11-19T14:05:32.624158Z",
+      "sent_at": "2026-11-19T14:05:32.624158Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Raj — the system is still not letting me retrieve your case status at the moment. This needs a specialist to look into it directly. Please stay on the line while I connect you.",
+      "created_at": "2026-11-19T14:05:29.962916Z",
+      "sent_at": "2026-11-19T14:05:29.962916Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T14:05:29.258118Z",
+      "sent_at": "2026-11-19T14:05:29.258118Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_b361c1e5d9996eb2_d9f9030f-dfd0-4d98-bd80-0b5d4b96f91e",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "",
+      "created_at": "2026-11-19T14:05:29.075017Z",
+      "sent_at": "2026-11-19T14:05:29.075017Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_b361c1e5d9996eb2_d9f9030f-dfd0-4d98-bd80-0b5d4b96f91e",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Thank you. Could you please tell me the status of my fraud case?",
+      "created_at": "2026-11-19T14:05:28.710629Z",
+      "sent_at": "2026-11-19T14:05:28.710629Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Understood, Raj. I'll connect you to a fraud specialist now who can retrieve your case details. Please hold the line.",
+      "created_at": "2026-11-19T14:05:26.017270Z",
+      "sent_at": "2026-11-19T14:05:26.017270Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "No, nothing else — I just want to check the status of my existing fraud case.",
+      "created_at": "2026-11-19T14:05:24.455846Z",
+      "sent_at": "2026-11-19T14:05:24.455846Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "I'm sorry, Raj — I'm having trouble retrieving your case status on my end right now. Let me connect you to a specialist who can pull that up for you. Please stay on the line.\n\nBefore I do — in the meantime, is there anything else that happened recently, like a call, message or link you'd like me to check for you?",
+      "created_at": "2026-11-19T14:05:20.386910Z",
+      "sent_at": "2026-11-19T14:05:20.386910Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "tool",
+      "text": "I can't verify this session's binding, so I cannot take any account action. Please connect the caller to a specialist.",
+      "created_at": "2026-11-19T14:05:19.362939Z",
+      "sent_at": "2026-11-19T14:05:19.362939Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_1e9b06873b72c16f_972005e8-8497-48a5-8cc6-c9ba9d3771f6",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you, Raj. You're verified.",
+      "created_at": "2026-11-19T14:05:19.250804Z",
+      "sent_at": "2026-11-19T14:05:19.250804Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_1e9b06873b72c16f_972005e8-8497-48a5-8cc6-c9ba9d3771f6",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "get_case_status",
+            "arguments": "{}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "tool",
+      "text": "{\"verification_status\":\"verified\",\"customer_id\":\"C002\",\"first_name\":\"Raj\",\"attempts_remaining\":\"3\",\"lockout_until\":\"\"}",
+      "created_at": "2026-11-19T14:05:17.832554Z",
+      "sent_at": "2026-11-19T14:05:17.832554Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": "mts1_glm53flash-at1deep-overshoot_20f6597892100523_015cdb7e-ebe5-4188-874d-86c9335f189d",
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "",
+      "created_at": "2026-11-19T14:05:15.685906Z",
+      "sent_at": "2026-11-19T14:05:15.685906Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": [
+        {
+          "id": "mts1_glm53flash-at1deep-overshoot_20f6597892100523_015cdb7e-ebe5-4188-874d-86c9335f189d",
+          "type": "function",
+          "index": 0,
+          "function": {
+            "name": "verify",
+            "arguments": "{\"dob\":\"1975-11-02\",\"last4\":\"8833\",\"mobile\":\"+6591234567\"}"
+          }
+        }
+      ],
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Yes, that's all correct.",
+      "created_at": "2026-11-19T14:05:14.633718Z",
+      "sent_at": "2026-11-19T14:05:14.633718Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you. Let me read that back. Date of birth, 2 November 1975. Card ending, eight eight three three. Registered mobile, nine one two three, four five six seven. Is all of that correct — yes or no?",
+      "created_at": "2026-11-19T14:05:11.223103Z",
+      "sent_at": "2026-11-19T14:05:11.223103Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "8833.",
+      "created_at": "2026-11-19T14:05:09.235675Z",
+      "sent_at": "2026-11-19T14:05:09.235675Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you. Now I just need the last 4 digits of your Merlion Bank card.",
+      "created_at": "2026-11-19T14:05:06.265606Z",
+      "sent_at": "2026-11-19T14:05:06.265606Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "My date of birth is 2 November 1975.",
+      "created_at": "2026-11-19T14:05:04.296120Z",
+      "sent_at": "2026-11-19T14:05:04.296120Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Thank you. I have nine one two three, four five six seven.",
+      "created_at": "2026-11-19T14:04:59.152305Z",
+      "sent_at": "2026-11-19T14:04:59.152305Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Nine one two three, four five six seven.",
+      "created_at": "2026-11-19T14:04:57.655584Z",
+      "sent_at": "2026-11-19T14:04:57.655584Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Of course, that's the right thing to do. Could you give me the Singapore mobile number registered with Merlion Bank, eight digits in two groups of four?",
+      "created_at": "2026-11-19T14:04:55.294559Z",
+      "sent_at": "2026-11-19T14:04:55.294559Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Before I share any details, could you please verify my identity first?",
+      "created_at": "2026-11-19T14:04:54.010519Z",
+      "sent_at": "2026-11-19T14:04:54.010519Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": "",
+      "role": "assistant",
+      "text": "Let me help you with that. Before I can check anything, could you tell me what happened that led to the case?",
+      "created_at": "2026-11-19T14:04:47.711489Z",
+      "sent_at": "2026-11-19T14:04:47.711489Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "user",
+      "text": "Hi, I'd like to check the status of my fraud case.",
+      "created_at": "2026-11-19T14:04:46.220888Z",
+      "sent_at": "2026-11-19T14:04:46.220888Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": null,
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.",
+      "created_at": "2026-11-19T14:04:43.793805Z",
+      "sent_at": "2026-11-19T14:04:43.793805Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "otp_disclosure"
+      },
+      "reasoning": null
+    },
+    {
+      "name": null,
+      "role": "assistant",
+      "text": "Thank you for calling Merlion Bank's scam and fraud line.",
+      "created_at": "2026-11-19T14:04:43.483645Z",
+      "sent_at": "2026-11-19T14:04:43.483645Z",
+      "ended_at": null,
+      "tools": null,
+      "tool_calls": null,
+      "tool_choice": null,
+      "tool_call_id": null,
+      "metadata": {
+        "active_flow_node_id": "welcome"
+      },
+      "reasoning": null
+    }
+  ]
+}

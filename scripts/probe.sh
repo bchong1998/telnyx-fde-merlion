@@ -16,6 +16,11 @@ ONCE=0
 
 W="${MERLION_WEBHOOK_URL:-https://merlion-webhook-82dcb044-d.telnyxcompute.com}"
 M="${MERLION_MCP_URL:-https://merlion-mcp-dc70ffb9-5.telnyxcompute.com}"
+# MCP bearer: repo secret / env var wins; local admin.env fallback (dogfooding #33)
+if [ -z "${MCP_TOKEN:-}" ] && [ -f "$HOME/.config/merlion/admin.env" ]; then
+  MCP_TOKEN=$(sed -n 's/^export MCP_TOKEN=//p' "$HOME/.config/merlion/admin.env" | tr -d '"')
+fi
+: "${MCP_TOKEN:=$MCP_TOKEN}"
 
 notify() {
   [ "$(uname -s)" = "Darwin" ] || return 0
@@ -23,8 +28,8 @@ notify() {
 }
 
 run_checks() {
-  W="$W" M="$M" node --input-type=module - <<'EOF'
-const W = process.env.W, M = process.env.M;
+  W="$W" M="$M" MCP_TOKEN="$MCP_TOKEN" node --input-type=module - <<'EOF'
+const W = process.env.W, M = process.env.M, TOKEN = process.env.MCP_TOKEN ?? "";
 const line = (check, ok, ms, detail) =>
   console.log(JSON.stringify({ ts: new Date().toISOString(), check, ok, ms, ...(detail ? { detail } : {}) }));
 const out = await (async () => {
@@ -55,7 +60,7 @@ const out = await (async () => {
       anyFail ||= !ok;
     } catch (e) { line("verify_sig_401", false, Date.now() - t0, String(e).slice(0, 200)); anyFail = true; }
   }
-  // 3. MCP initialize
+  // 3a. unauthenticated /mcp must be rejected with 401 (#33)
   {
     const t0 = Date.now();
     try {
@@ -65,19 +70,34 @@ const out = await (async () => {
         body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "probe", version: "0" } } }),
         signal: AbortSignal.timeout(10000),
       });
+      const ok = r.status === 401;
+      line("mcp_unauth_401", ok, Date.now() - t0, ok ? undefined : `HTTP ${r.status}`);
+      anyFail ||= !ok;
+    } catch (e) { line("mcp_unauth_401", false, Date.now() - t0, String(e).slice(0, 200)); anyFail = true; }
+  }
+  // 3b. MCP initialize (authenticated)
+  {
+    const t0 = Date.now();
+    try {
+      const r = await fetch(`${M}/mcp`, {
+        method: "POST",
+        headers: { "content-type": "application/json", accept: "application/json, text/event-stream", authorization: `Bearer ${TOKEN}` },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "probe", version: "0" } } }),
+        signal: AbortSignal.timeout(10000),
+      });
       const j = await r.json();
       const ok = r.ok && j.result?.protocolVersion != null;
       line("mcp_initialize", ok, Date.now() - t0, ok ? undefined : JSON.stringify(j).slice(0, 200));
       anyFail ||= !ok;
     } catch (e) { line("mcp_initialize", false, Date.now() - t0, String(e).slice(0, 200)); anyFail = true; }
   }
-  // 4. MCP tools/list must return 4 tools
+  // 4. MCP tools/list must return 4 tools (authenticated)
   {
     const t0 = Date.now();
     try {
       const r = await fetch(`${M}/mcp`, {
         method: "POST",
-        headers: { "content-type": "application/json", accept: "application/json, text/event-stream" },
+        headers: { "content-type": "application/json", accept: "application/json, text/event-stream", authorization: `Bearer ${TOKEN}` },
         body: JSON.stringify({ jsonrpc: "2.0", id: 2, method: "tools/list" }),
         signal: AbortSignal.timeout(10000),
       });

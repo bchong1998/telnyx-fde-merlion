@@ -1,0 +1,33 @@
+{
+  "finished_at": "2026-11-19T14:09:02.339Z",
+  "ok": false,
+  "table": [
+    {
+      "test": "T2 case_status_happy",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "49349a9d-cb41-412e-88ec-944362b82042",
+      "wall_s": 95,
+      "ok": false
+    },
+    {
+      "test": "T3 readback_correction",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✓ all",
+      "conversation_id": "27d87627-94d1-4e95-b81c-efd289d17e18",
+      "wall_s": 105,
+      "ok": false
+    },
+    {
+      "test": "T4 lockout",
+      "run": "error",
+      "rubric": "",
+      "asserts": "✗ verify_outcomes: want [failed,failed,locked] got []",
+      "conversation_id": "e544772b-3361-42b8-8ec2-12373d64a6a9",
+      "wall_s": 64,
+      "ok": false
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{"ts":"2026-11-19T14:04:00.449Z","check":"webhook_deep","ok":true,"ms":1578}
+{"ts":"2026-11-19T14:04:00.547Z","check":"verify_sig_401","ok":true,"ms":96}
+{"ts":"2026-11-19T14:04:00.925Z","check":"mcp_unauth_401","ok":true,"ms":378}
+{"ts":"2026-11-19T14:04:01.051Z","check":"mcp_initialize","ok":true,"ms":126}
+{"ts":"2026-11-19T14:04:01.151Z","check":"mcp_tools","ok":true,"ms":100}
+{"ts":"2026-11-19T14:04:01.152Z","overall":"OK"}

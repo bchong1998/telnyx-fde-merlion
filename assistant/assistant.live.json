@@ -14,8 +14,8 @@
   "mcp_messages": [],
   "a2a_agents": [],
   "created_at": "2026-11-19T07:19:37.242023Z",
-  "version_id": "20261119T131925036747",
-  "version_created_at": "2026-11-19T13:19:25.036747Z",
+  "version_id": "20261119T140342527702",
+  "version_created_at": "2026-11-19T14:03:42.527702Z",
   "greeting": "",
   "llm_api_key_ref": null,
   "fallback_config": null,
@@ -218,7 +218,7 @@
         "type": "prompt",
         "id": "verify_collect",
         "name": null,
-        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly with your first question. To protect the caller's account, verify their identity. If the variable caller_known is \"false\" and the caller has not yet given their registered mobile number, ask for the Singapore mobile number registered with Merlion Bank first, and take it in two groups of four digits. Then ask for their date of birth and the last 4 digits of their Merlion Bank card, together, in one question. Never accept a full card number, and never accept an OTP, PIN or password — only the date of birth and the last 4 card digits. Read both back in one sentence, digits one by one, and ask the caller to confirm with yes or no. Call the verify tool ONLY after the caller says yes — with dob, last4, and mobile only if they gave it this call. If verification_status is \"failed\", say the details did not match and the caller has that many attempts left, and ask again. If it is \"not_found\", say you cannot find those details, and ask for the registered mobile number, then try once more.",
+        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly with your first question. To protect the caller's account, verify their identity. Ask ONLY for these three things: the Singapore mobile number registered with Merlion Bank, the date of birth, and the last 4 digits of the Merlion Bank card. Never ask for any customer ID, account number, NRIC or other identifier — the system never needs them. Ask for the mobile number first, taken in two groups of four digits. Then ask for the date of birth and the last 4 card digits, together, in one question. Read both back in one sentence, digits one by one, and ask the caller to confirm with yes or no. Never call the verify tool in the same turn as the read-back: wait for the caller's yes in a separate turn, and call verify only after that yes — with dob, last4, and mobile only if they gave it this call. Never accept a full card number, an OTP, a PIN or a password. If verification_status is \"failed\", say the details did not match and the caller has that many attempts left, and ask again. If it is \"not_found\", say you cannot find those details, and ask for the registered mobile number, then try once more.",
         "instructions_mode": "append",
         "shared_tool_ids": [
           "tool-8a0cff1b-a4ec-4bf0-8387-beb738c9d86b"

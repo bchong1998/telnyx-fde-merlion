@@ -1,0 +1,29 @@
+# Hardening evidence (#28 #31 #33) — 2026-11-19T14:05Z
+
+## #33 MCP bearer auth (fail-closed)
+
+- Integration secret merlion_mcp_token (type bearer); MCP server api_key_ref -> "merlion_mcp_token"
+- Function checkAuth reads process.env.MCP_TOKEN (deploy-time env, ~0 ms; not SECRETS.get ~0.7 s RPC #23)
+- Curl proof (after ship): unauthenticated POST /mcp -> 401; Bearer <token> -> 200; Bearer mcp_nope -> 401
+- probe.sh --once (5 checks): probe-hardening.txt — includes new mcp_unauth_401 check -> ok:true
+- Live assistant-run proof: MCP log shows initialize/tools-list from web_chat runner all "ok 200"
+  (bearer accepted), while gated get_case_status correctly returns bad_call_key on chat (literal key)
+
+## #28/#31 prompt tightening (verify_collect)
+
+- "Ask ONLY for registered mobile, date of birth, last 4 card digits. Never ask for any customer ID,
+  account number, NRIC or other identifier. Never call verify in the same turn as the read-back:
+  wait for the caller's yes in a separate turn."
+- Deployed; GET-back diff: 0 changed, 0 dropped.
+
+## #32 runner flakiness — rerun result
+
+T2/T3/T4 rerun: all three runs errored mid-conversation with the IDENTICAL platform error:
+  "Simplified chat test <id> failed with error: 'NoneType' object has no attribute 'strip'"
+(convs 49349a9d, 27d87627, e544772b). Meets the runner-flakiness stop criterion.
+
+## Post-state
+
+- probe --once: overall OK (probe-hardening.txt)
+- /healthz?deep=1: {"ok":true,...,"bad_call_key_rejected":true,"sig_enforced":true}
+- demo reset: {"ok":true,"reset":["C001","C002","C003","C004"]}

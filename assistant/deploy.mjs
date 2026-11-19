@@ -141,6 +141,29 @@ async function upsertMcpServer() {
   return { id: created.data?.id ?? created.id, action: "created" };
 }
 
+// The MCP bearer token lives in ~/.config/merlion/admin.env (MCP_TOKEN=…) —
+// it is NEVER read from, or written into, this repo. The assistant references
+// it by integration-secret identifier (mcp-server.json: api_key_ref).
+function readLocalSecret(name) {
+  const p = join(homedir(), ".config", "merlion", "admin.env");
+  if (!existsSync(p)) return null;
+  const m = readFileSync(p, "utf8").match(new RegExp(`^export ${name}=(.*)$`, "m"));
+  return m ? m[1].trim().replace(/^["']|["']$/g, "") : null;
+}
+
+async function upsertIntegrationSecret(identifier, token) {
+  // /v2/integration_secrets/{id} has NO update verb (OpenAPI: delete only), so
+  // "rotation" = delete + recreate. The value is identical, so this is atomic-ish
+  // in practice (new id ready before anything rotates).
+  const list = await api("GET", "/integration_secrets?page%5Bsize%5D=100");
+  const existing = (list.data ?? []).find((s) => s.identifier === identifier);
+  if (existing) {
+    await api("DELETE", `/integration_secrets/${existing.id}`);
+  }
+  const created = await api("POST", "/integration_secrets", { identifier, type: "bearer", token });
+  return { id: created.data?.id ?? created.id, action: existing ? "recreated" : "created" };
+}
+
 async function upsertAssistant(body) {
   const list = await api("GET", "/ai/assistants?page%5Bsize%5D=100");
   const existing = (list.data ?? []).find((a) => a.name === body.name);
@@ -232,6 +255,13 @@ async function main() {
   console.log("3/6 upserting MCP server ...");
   const mcp = await upsertMcpServer();
   console.log(`   mcp      ${mcp.id} (${mcp.action})`);
+  const mcpToken = readLocalSecret("MCP_TOKEN");
+  if (mcpToken) {
+    const intsec = await upsertIntegrationSecret("merlion_mcp_token", mcpToken);
+    console.log(`   intsecret merlion_mcp_token (${intsec.action}) — token from ~/.config/merlion/admin.env`);
+  } else {
+    console.log("   warn: MCP_TOKEN not in ~/.config/merlion/admin.env — MCP auth left as-is");
+  }
 
   console.log("4/6 upserting assistant ...");
   const body = assistantRaw

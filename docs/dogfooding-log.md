@@ -222,6 +222,13 @@ Evidence: `evidence/round2/messages-*.json`.
   - The web_chat `destination` is the assistant ID. Passing a URL gives `10015 Invalid destination: assistant with ID '<url>' does not exist`.
 - **Did:** made the deterministic asserts independent of the runner. The offline back-test flags `7723d64a`, `58a869ba` and `d9cf9b9f` for calling verify before the confirmation (#28), which shows the asserts catch real bugs even when the runner fails.
 
+## 33. Security-fix review (commit fbad91c): the chat key works; the MCP endpoint is still unauthenticated
+- **Confirmed live (Claude, after fbad91c):**
+  - Unsigned `/verify` → 401. Deep health shows `sig_enforced:true` and `bad_call_key_rejected:true`.
+  - `{{telnyx_conversation_id}}` resolves in webhook-tool preset fields on web_chat. It does **not** resolve in the MCP server URL, and neither does `{{call_control_id}}`. So on chat, the gated MCP actions fail closed. That's the intended fallback, and one more templating inconsistency between surfaces.
+- **Open: MCP has no auth.** `POST /mcp tools/list` with no credentials → **200**. `MCP_TOKEN` isn't set, and `checkAuth` skips auth when the binding is absent (fail-open by design). Today the only protection is that a verified binding needs an unguessable live `call_control_id`. That's good, but it's one layer. Also, `checkAuth` reads `env.SECRETS.get()`, which costs about 0.7 s per request (#23), so turning it on as written would slow every tool call.
+- **Process note:** `DEV_SKIP_SIG` was updated again at 13:39 (bypass turned on for the curl proofs, then off). It's back on enforced, but proving things by switching off auth in prod is the same pattern as #26. Next time, use a throwaway function or a short window that the probe watches.
+
 ---
 
 ## Observations (not bugs, but they shaped decisions)

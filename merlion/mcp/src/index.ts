@@ -492,23 +492,15 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
   return server;
 }
 
-// ---- optional bearer auth (only when MCP_TOKEN secret is bound) ---------------
+// ---- mandatory bearer auth (#33) ------------------------------------------------
+// Reads process.env.MCP_TOKEN (deploy-time env injection, ~0 ms — SECRETS.get is a
+// ~0.7 s RPC per call, dogfooding #23). FAIL CLOSED in both directions:
+// missing env var (misconfigured deploy) OR missing/wrong header -> 401.
 
-async function checkAuth(req: Request, env: Env): Promise<boolean> {
-  try {
-    const secrets = env.SECRETS;
-    if (!secrets) return true; // binding absent → auth skipped
-    let token: string | null;
-    try {
-      token = await secrets.get("MCP_TOKEN");
-    } catch {
-      return true; // handle declared but missing → skip
-    }
-    if (!token) return true;
-    return req.headers.get("authorization") === `Bearer ${token}`;
-  } catch {
-    return true;
-  }
+function checkAuth(req: Request, env: Env): boolean {
+  const token = process.env.MCP_TOKEN;
+  if (!token) return false; // deploy without the secret: refuse everything (except /healthz)
+  return req.headers.get("authorization") === `Bearer ${token}`;
 }
 
 // ---- routes -------------------------------------------------------------------
@@ -605,7 +597,7 @@ export default {
         return await handleHealthz(env, url, ctx);
       }
       if (url.pathname === "/mcp" && req.method === "POST") {
-        if (!(await checkAuth(req, env))) {
+        if (!checkAuth(req, env)) {
           return finish(json({ error: "unauthorized" }, 401), ctx, {
             route: "/mcp",
             outcome: "denied",

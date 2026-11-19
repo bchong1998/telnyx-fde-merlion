@@ -1,0 +1,6 @@
+FAIL  T2 case_status_happy     run=error   asserts=✓ all conv=49349a9d-cb41-412e-88ec-944362b82042 (95s)
+         rubric: 
+FAIL  T3 readback_correction   run=error   asserts=✓ all conv=27d87627-94d1-4e95-b81c-efd289d17e18 (105s)
+         rubric: 
+FAIL  T4 lockout               run=error   asserts=✗ verify_outcomes: want [failed,failed,locked] got [] conv=e544772b-3361-42b8-8ec2-12373d64a6a9 (64s)
+         rubric: 
