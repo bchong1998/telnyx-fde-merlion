@@ -202,6 +202,26 @@ Evidence: `evidence/round2/messages-*.json`.
 - **Did:** fell back to `web_chat` for the logic tests, plus deterministic checks against the function logs. Voice-only behaviour (speech-to-text digits, double-speak, transfer) stays manual. Re-trigger the phone_call test before the demo, and raise it with Telnyx if it still fails.
 - **Design catch from writing the scenarios:** "T5 locked callback via `/dv`" can't work with a simulated caller, because `/dv` keys on caller ID and the runner calls from a Telnyx number. That's correct behaviour, since caller ID isn't identity. So the lockout is tested at `/verify` (the 4th attempt returns `locked`), not at call start.
 
+## 30. On web_chat, `{{call_control_id}}` stays as literal text, so every chat session shares one auth key ⭐⭐ (security story)
+- **Found by:** Claude reviewing the test-suite evidence (commit 511776f). OpenCode noted the literal trace_id only as a tracing nuance. In `evidence/tests/2026-11-19T12-24-46-289Z/logs/logs-webhook.json`, four `/verify outcome=verified customer_id=C002` lines from *different* chat conversations (12:05, 12:07, 12:26, 12:28Z) all have `trace_id: "{{call_control_id}}"`.
+- **Why it matters:**
+  - The webhook's `/verify` takes `call_control_id` from a preset body field. The MCP takes it from `?trace={{call_control_id}}`. Both use it as the binding key: `verified_call_id` in CustomerActor, the per-call memory in `CALLCTX`, and the `not_verified` gate on freeze, case and status.
+  - On chat, the key is the same constant string for every session. Once one chat verifies Raj, any other chat can call `get_case_status` / `freeze_card` for C002 and pass the gate. A later chat that omits the mobile number would also be resolved to the remembered customer.
+  - Voice is unaffected, because each call gets a real `v3:…` ID. Exposure is limited to web_chat (API-key or widget access). The demo reset clears it.
+- **Lesson:** a template variable the platform doesn't resolve on a channel arrives as its literal text. Never use it as a security key without validating it. Fail closed if it's empty or still contains `{{`.
+- **Platform ask:** either resolve unknown variables to empty strings or reject them, and document which system variables exist on which channel.
+
+## 31. "Please give me your customer ID": caused by MCP tool schemas being visible on every node
+- **Found by:** Claude, root cause of the T4 `9ad2f19e`, T6 `8ab3b358` and T5 `b0b1f042` failures. The `verify_collect` instructions never mention a customer ID. But the MCP server is attached at assistant level, so `freeze_card`, `open_fraud_case` and `get_case_status` are offered on every node. All three take `customer_id: "The verified caller's customer id, for example C001"`. The model sees a required identity field and asks the caller for it.
+- **Fix direction:** the model should never supply identity. Drop `customer_id` from the MCP tool inputs and resolve the customer server-side from the call's verified binding (CALLCTX). That removes the trigger for the hallucination and also an attack surface.
+
+## 32. web_chat test runner is flaky in ways unrelated to our content
+- Verbatim errors: `'NoneType' object has no attribute 'strip'` (7 or more runs) and `Failed to deliver chat message to assistant …: Empty response from assistant: {'content': '', 'whatsapp_template': None}`. The error rate got worse through the day: 3/7, then 4/7, then 6/7 runs erroring.
+- Other chat-channel nuances:
+  - `/dv` fires twice per chat conversation, about 7 s apart, both with `conversation_id: null`.
+  - The web_chat `destination` is the assistant ID. Passing a URL gives `10015 Invalid destination: assistant with ID '<url>' does not exist`.
+- **Did:** made the deterministic asserts independent of the runner. The offline back-test flags `7723d64a`, `58a869ba` and `d9cf9b9f` for calling verify before the confirmation (#28), which shows the asserts catch real bugs even when the runner fails.
+
 ---
 
 ## Observations (not bugs, but they shaped decisions)
