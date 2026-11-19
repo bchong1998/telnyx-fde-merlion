@@ -176,6 +176,19 @@ Evidence: `evidence/round2/messages-*.json`.
 - **Guardrail to add:** the deep health check reports `sig_enforced`, and the 60 s probe alerts if it's false. Secrets are injected at deploy time, so a flipped secret without a ship (or a ship without flipping back) is exactly the drift the probe should catch.
 - `ship` 500s are transient upload failures with no revision created (`deployments` showed none). Retry with `-v` to see the request flow; `rollback <fn> <revision>` is the instant escape hatch.
 
+## 27. Function code can't see its own revision (observability phase, commit cd444c9)
+- **Found by:** OpenCode while building `/healthz?deep=1`. The only `EC_*` env var in the edge-runtime dist is `EC_ACTOR_ROUTER_URL`, so nothing exposes the running revision to function code. `revision` is always `null`.
+- **Did:** kept the field so it's ready if the platform ever injects one. The workaround is `telnyx-edge deployments` from outside, or baking a build ID in at ship time. Ask the platform: inject `EC_REVISION_ID`, because "which revision served this request" is the first question in any incident (see #26).
+
+## 28. trace.sh shows the model calling `verify` *before* the caller confirmed the read-back (it's not clock skew) ⭐ (tracing story)
+- **Found by:** Claude reviewing `evidence/observability/trace.txt` (conversation `7723d64a`, a round-2 call before phase 5). OpenCode reported "~25 s clock skew", because the transcript stamps `CALLS verify` at 08:31:54 but the webhook logged it at 08:31:29.
+- **Why it isn't skew:** function timestamps line up with user turns within ~200 ms. Caller says "eight eight three three" at 08:31:29.077, `/verify` runs at 08:31:29.279, `get_case_status` at 08:31:29.799. The *assistant read-back* is stamped 08:31:29.403 and the caller's "Yes." at 08:31:53.877. Transcript tool-call rows are written when the turn is flushed, not when the tool runs.
+- **So what actually happened:** the model spoke the read-back and called `verify` (and then `get_case_status`) in the same turn, without waiting for the confirmation. If digits are misheard, that burns a lockout attempt the caller never agreed to.
+- **Lessons:**
+  1. Per-source ordering is reliable. For tool *timing*, trust function logs over transcript rows.
+  2. The prompt says "read back and ask to confirm" but never says "call verify only after yes". Retest in round 3, then tighten the prompt.
+  3. The same log also shows "Thank you, Raj. You are verified." twice (a partial and then a full message; check against the audio).
+
 ---
 
 ## Observations (not bugs, but they shaped decisions)
