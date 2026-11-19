@@ -1,5 +1,7 @@
-// Re-export the actor class so it ships with the function (owner of CustomerActor).
+// Re-export the actor classes so they ship with the function
+// (owner of CustomerActor and CallContext).
 export { CustomerActor } from "./customer-actor.ts";
+export { CallContext } from "./call-context.ts";
 
 import { logLine, type Outcome } from "../../shared/log.ts";
 import { normalisePhone, maskPhone } from "../../shared/phone.ts";
@@ -18,6 +20,58 @@ interface Persona {
 }
 const personas: Persona[] = customersData.customers as Persona[];
 const byMobile = new Map(personas.map((p) => [p.mobile_e164, p]));
+const byCustomerId = new Map(personas.map((p) => [p.customer_id, p]));
+
+// ---- /verify resolution -------------------------------------------------------
+
+// In-isolate per-call memory: call_control_id → customer_id.
+// Why map + actor: on this platform an actor read is the cheap dependency
+// (~20-60 ms warm) while KV is ~1 s — but isolate affinity between two
+// /verify calls of the same voice call is best-effort and undocumented, so a
+// map alone can lose the customer mid-call; the CallContext actor (keyed by
+// call_control_id) is the durable fallback when the map misses.
+const callMemory = new Map<string, string>();
+
+async function rememberCustomer(env: Env, ctx: HopCtx, callControlId: string, customerId: string): Promise<void> {
+  callMemory.set(callControlId, customerId);
+  if (callMemory.size > 10_000) callMemory.clear(); // bound isolate memory
+  await actorCall(ctx, env.CALLCTX.idFromName(callControlId).setCustomer({ customerId, traceId: ctx.traceId })).catch(
+    () => {},
+  );
+}
+
+async function recallCustomer(env: Env, ctx: HopCtx, callControlId: string): Promise<string | null> {
+  const local = callMemory.get(callControlId);
+  if (local) return local;
+  try {
+    const r = await actorCall(ctx, env.CALLCTX.idFromName(callControlId).getCustomer({ traceId: ctx.traceId }));
+    if (r.customer_id) callMemory.set(callControlId, r.customer_id);
+    return r.customer_id;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Customer resolution for /verify, in order: spoken `mobile` → preset `caller`
+ * → per-call memory (already identified this call). Exported for unit tests.
+ */
+export function resolvePersona(args: {
+  mobile?: unknown;
+  caller?: unknown;
+  rememberedId?: string | null;
+}): Persona | undefined {
+  const viaPhone = (v: unknown): Persona | undefined => {
+    if (typeof v !== "string") return undefined;
+    const e164 = normalisePhone(v);
+    return e164 ? byMobile.get(e164) : undefined;
+  };
+  return (
+    viaPhone(args.mobile) ??
+    viaPhone(args.caller) ??
+    (args.rememberedId ? byCustomerId.get(args.rememberedId) : undefined)
+  );
+}
 
 // ---- helpers ----------------------------------------------------------------
 
@@ -271,10 +325,24 @@ async function handleVerify(req: Request, env: Env, ctx: HopCtx, raw: string, pa
   }
   const skipWarn = sig.skipped ? { level: "warn" as const } : {};
 
-  // Resolve the customer: spoken registered mobile first, then platform caller.
-  const e164 = normalisePhone(payload?.mobile) ?? normalisePhone(payload?.caller);
+  // Resolve the customer: spoken registered mobile first, then platform
+  // caller, then whoever was already identified on this call (dogfooding #24:
+  // the model sometimes drops `mobile` mid-call and web callers have no caller
+  // id — without memory that produced not_found and swallowed an attempt).
+  const callControlId = String(payload?.call_control_id ?? ctx.traceId);
+  const e164 =
+    (typeof payload?.mobile === "string" ? normalisePhone(payload.mobile) : null) ??
+    (typeof payload?.caller === "string" ? normalisePhone(payload.caller) : null);
   const callerMasked = maskPhone(e164);
-  const persona = e164 ? byMobile.get(e164) : undefined;
+  const rememberedId = e164 ? null : await recallCustomer(env, ctx, callControlId);
+  const persona = resolvePersona({
+    mobile: payload?.mobile,
+    caller: payload?.caller,
+    rememberedId,
+  });
+  if (persona && persona.customer_id !== rememberedId) {
+    await rememberCustomer(env, ctx, callControlId, persona.customer_id);
+  }
   if (!persona) {
     return finish(
       json({
@@ -293,7 +361,6 @@ async function handleVerify(req: Request, env: Env, ctx: HopCtx, raw: string, pa
   const dob: unknown = payload?.dob;
   const last4 = String(payload?.last4 ?? "").replace(/\D/g, "");
   const match = typeof dob === "string" && dob === persona.dob && last4 === persona.card_last4;
-  const callControlId = String(payload?.call_control_id ?? ctx.traceId);
 
   const r = await actorCall(
     ctx,

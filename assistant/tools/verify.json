@@ -4,7 +4,7 @@
   "timeout_ms": 5000,
   "webhook": {
     "name": "verify",
-    "description": "Verify the caller's identity against Merlion Bank records using their date of birth and the last 4 digits of their card. Call this only after you have read both details back to the caller and they confirmed them. Returns verification_status: verified, failed, locked or not_found, plus the caller's first name when verified.",
+    "description": "Verify the caller's identity against Merlion Bank records using their date of birth and the last 4 digits of their card. Always include the mobile number the caller gave earlier in this call. Call this only after you have read both details back to the caller and they confirmed them. Returns verification_status: verified, failed, locked or not_found, plus the caller's first name when verified.",
     "url": "https://merlion-webhook-82dcb044-d.telnyxcompute.com/verify",
     "method": "POST",
     "headers": [

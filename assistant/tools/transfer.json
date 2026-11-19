@@ -8,6 +8,7 @@
         "to": "+6582925458",
         "name": "Fraud desk"
       }
-    ]
+    ],
+    "warm_transfer_instructions": "Brief the specialist in one or two sentences before the caller is connected. Say whether the caller is verified (verification_status is \"{{verification_status}}\"), their first name if verified (\"{{first_name}}\"), and what happened — the closest of: money transferred, credentials shared, suspicious contact, or the caller simply asked for a human. Then the calls are bridged."
   }
 }

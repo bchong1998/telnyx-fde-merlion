@@ -1,5 +1,7 @@
 # Dogfooding log
 
+> Entries compiled with Claude Code (planning/review aid) from the evidence files and OpenCode's build reports. All solution code was written in OpenCode with Telnyx Inference.
+
 Each entry: what broke or surprised me, how I found out, and what I did. Newest entries at the bottom. Evidence (request IDs, log lines, exact error text) goes inline.
 
 Environment: macOS 27.2 on Apple M4 Max (arm64) · OpenCode 1.19.6 · @telnyx/opencode 0.1.5 · telnyx-edge v0.6.0
@@ -154,6 +156,14 @@ Evidence: `evidence/phase3/messages-4a4255d3-….json`, `messages-04188ab9-….j
 - **Result (warm, same routes):** `/dv` ~700 → **25–29 ms** (cold isolate 991 ms); `/verify` 0.9–2.5 s → **36–46 ms**; `check_scam_indicator` 2.1–2.3 s → **~0 ms** (KV cache removed, bundled feed + heuristics).
 - **General lesson:** on this runtime, every binding call except the Actor (KV, secrets) is a sidecar round trip of ~1 s. Keep them off mid-call paths, cache in-isolate, and use the Actor (~30–60 ms warm) for hot state.
 - Other phase 4 changes: `/admin/reset` (bearer `ADMIN_TOKEN`, 401 otherwise) + `scripts/reset-demo.sh`; personas moved to speakable numbers; prompt fixes for #21/#22. Deploy diff: 0 changed, 0 dropped.
+
+## 24. Test round 2 (19 Nov 08:22–08:34Z), after phase 4
+Evidence: `evidence/round2/messages-*.json`.
+- ✅ Scam SMS path, ✅ Daniel freeze-first + case, ✅ the double "sorry" on triage → verify_collect is gone (triage now says only "Let me help you with that.").
+- **"More than 3 tries" (Mei Yun, C003): the Actor was right, the model wasn't.** 4 `verify` calls: failed (2 left) → failed (1 left) → **`not_found`** → `locked`. On the 3rd call the model **dropped the `mobile` argument**. A web caller has no phone caller ID, so the server couldn't resolve a customer, returned `not_found`, and no attempt was counted. The caller experienced 4 tries. Fix: `/verify` remembers the customer resolved earlier **in the same call** (keyed by `call_control_id`) when `mobile` is missing; the tool schema/description says to always send the mobile once given.
+- **"Thank you, Raj. You are verified." spoken twice:** a different double-speak path, within one node. In `secure_actions` the model emitted text **alongside** the `get_case_status` tool call (spoken immediately), then repeated it after the tool result. Fix: when calling a tool, say at most a short filler ("One moment.") and never repeat it after the result.
+- **Transfer reached voicemail:** `transfer` result "Transfer completed". The call was bridged to the mobile's voicemail (likely phone-side screening of an unknown international +1 caller, e.g. iOS "Silence Unknown Callers" or carrier scam filtering). The platform counts voicemail as success, so `escalate_failed` didn't run. Fix: the transfer tool's `voicemail_detection` with `on_voicemail_detected.action = "stop_transfer"`, so voicemail → transfer fails → `escalate_failed`. Plus `warm_transfer_instructions` so the specialist hears context (verified? customer name? what happened?) before the bridge.
+- API note: `GET /v2/ai/conversations/{id}/messages?page[size]=200` → `10015 Bad Request` (max page size 100).
 
 ---
 

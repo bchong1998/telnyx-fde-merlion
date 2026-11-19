@@ -6,6 +6,10 @@ compatibility_date = "2026-05-01"
 binding = "CUSTOMER"
 type = "CustomerActor"
 
+[[actors]]
+binding = "CALLCTX"
+type = "CallContext"
+
 [storage.kv.MERLION_KV]
 id = "85b93e35-6eb9-4055-b7ba-4afc76ebaa97"
 

@@ -7,6 +7,8 @@
 
 import assert from "node:assert/strict";
 import { CustomerActor } from "../src/customer-actor.ts";
+import { CallContext } from "../src/call-context.ts";
+import { resolvePersona } from "../src/index.ts";
 import { normalisePhone, maskPhone } from "../../shared/phone.ts";
 import { verifyTelnyxSignature, SigError } from "../src/sig.ts";
 
@@ -213,6 +215,41 @@ console.log("PASS  phone normalise + mask");
   s = await seeded.actor.getSummary("t");
   assert.equal(s.has_open_case, true); // seed re-armed
   console.log("PASS  adminReset wipes state; C002 seed re-arms");
+}
+
+// ---- per-call customer memory (dogfooding #24) -------------------------------
+
+{
+  const storage = makeStorage();
+  const ctx = { id: "cc_round2_example", storage };
+  const memory = new CallContext(ctx as never, {} as never);
+
+  // web caller: model forgets `mobile`; server has no caller id → memory resolves
+  await memory.setCustomer({ customerId: "C003", traceId: "t" });
+  let person = resolvePersona({
+    mobile: undefined,
+    caller: "84rl1imb@sip.telnyx.eu",
+    rememberedId: (await memory.getCustomer({ traceId: "t" })).customer_id,
+  });
+  assert.equal(person?.customer_id, "C003");
+
+  // an explicitly spoken mobile always wins over memory
+  person = resolvePersona({ mobile: "+6581234567", caller: "x@sip.telnyx.eu", rememberedId: "C003" });
+  assert.equal(person?.customer_id, "C004");
+
+  // caller E.164 is used when mobile is absent
+  person = resolvePersona({ mobile: undefined, caller: "+65 9123 4567", rememberedId: null });
+  assert.equal(person?.customer_id, "C002");
+
+  // nothing anywhere → undefined (the route answers not_found)
+  person = resolvePersona({ mobile: undefined, caller: "x@sip.telnyx.eu", rememberedId: null });
+  assert.equal(person, undefined);
+
+  // stale memory (>30 min) is ignored and cleared
+  const mem = storage._map.get("call") as { customer_id: string; written_at: number };
+  storage._map.set("call", { ...mem, written_at: Date.now() - 31 * 60_000 });
+  assert.deepEqual(await memory.getCustomer({ traceId: "t" }), { customer_id: null });
+  console.log("PASS  per-call memory: set/get, mobile wins, SIP+memory resolves, stale memory ignored");
 }
 
 // ---- 6. signature round-trip -------------------------------------------------
