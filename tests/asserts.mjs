@@ -100,25 +100,12 @@ for (const t of asserts.transcript_tools_absent ?? []) {
   add(`transcript_absent.${t}`, !toolCalls.includes(t), `tools called: [${toolCalls.join(",")}]`);
 }
 
-// ---- no_verify_before: earliest /verify must not precede the user's mark -------
-if (asserts.no_verify_before) {
-  const rx = new RegExp(asserts.no_verify_before.regex, "i");
-  const mark = messages.find((m) => (m.role === "user" || m.name === "User") && rx.test(m.text ?? ""));
-  const firstVerify = wh.filter((m) => m.route === "/verify").sort((a, b) => a.ts.localeCompare(b.ts))[0];
-  if (!mark) {
-    add("no_verify_before", false, `no user message matched ${rx}`);
-  } else if (!firstVerify) {
-    add("no_verify_before", true, `no /verify happened (vacuously OK); mark at ${mark.created_at}`);
-  } else {
-    const vTs = Date.parse(firstVerify.ts);
-    const mTs = Date.parse(mark.created_at ?? mark.sent_at ?? "");
-    add(
-      "no_verify_before",
-      vTs >= mTs,
-      `first /verify ${firstVerify.ts} vs user mark ${mark.created_at ?? mark.sent_at}`,
-    );
-  }
-}
+// NOTE (#34): the previous `no_verify_before` assert is REMOVED. It compared
+// conversation message timestamps against function log timestamps; platform
+// evidence shows conversation *message* stamps lag about one turn while
+// function stamps are real-time, so the comparison produced false positives
+// (see dogfooding #34 for the impossibility proof). Tool-before-yes ordering is
+// now enforced by the verify_collect prompt itself, not by log timing.
 
 const ok = checks.every((c) => c.ok);
 console.log(JSON.stringify({ scenario: scenario.name, ok, checks }, null, 2));

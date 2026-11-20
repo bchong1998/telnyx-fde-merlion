@@ -30,6 +30,13 @@
     },
     {
       "kind": "url",
+      "value": "merlion-secure-verify.com",
+      "verdict": "known_scam",
+      "reason": "Fake Merlion Bank login page harvesting credentials, one-time codes and card details.",
+      "advice": "Do not log in there and do not enter codes or card details. Merlion Bank's app and official site never look like that."
+    },
+    {
+      "kind": "url",
       "value": "singpass-verify-account.top",
       "verdict": "known_scam",
       "reason": "Phishing site cloned to look like the SingPass login page to steal credentials and one-time codes.",

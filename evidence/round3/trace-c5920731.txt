@@ -1,0 +1,39 @@
+conversation c5920731-9463-4757-919a-a46b48cc3282  ↔  call_control_id v3:DnRPEu6ynMyedKDSehTOJH-URCL9fBYuGpX_NQ0gsxmsLRrmgLIEJQ
+────────────────────────────────────────────────────────────────────────
+05:42:45.444  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:42:45.460  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=5
+05:42:45.491  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:43:06.608  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+05:43:21.661  user [triage]  I'll check my case.
+05:43:22.022  assistant [verify_collect]  Let me help you with that.
+05:43:22.381  assistant [verify_collect]  To check your case, I first need to verify your identity.  May I have the Singapore mobile number registered with Merlion Bank? Please read it to me in two grou
+05:43:37.311  user [verify_collect]  Nine eight seven six five four three two.
+05:43:37.643  assistant [verify_collect]  Thank you. I have your mobile number as nine eight seven six, five four three two.  Next, may I have your date of birth, and the last four digits of your Merlio
+05:43:38.767  user [verify_collect]  First January nineteen seventy.
+05:43:38.979  assistant [verify_collect]  Thank
+05:43:52.340  user [verify_collect]  nine nine one seven.
+05:43:52.350  fn:webhook       webhook:/verify                    outcome=failed       status=200 duration_ms=816 actor_ms=815
+05:43:52.680  assistant [verify_collect]  Thank you. Let me read that back.  Your date of birth is the first of January, nineteen seventy. Your card's last four digits are nine, nine, one, seven.  Is th
+05:44:08.239  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:44:08.255  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+05:44:08.294  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:44:09.078  user [verify_collect]  Yes.
+05:44:09.307  transcript [verify_collect]  CALLS verify({"dob":"1970-01-01","last4":"9917","mobile":"+6598765432"})
+05:44:09.608  transcript [verify_collect]  tool-result {"attempts_remaining":"2","customer_id":"C003","first_name":"","lockout_until":"","verification_status":"failed"}
+05:44:09.830  assistant [verify_collect]  I'm sorry, those details did not match our records. You have two attempts left.  Let me try again. May I have your date of birth, and the last four digits of yo
+05:44:21.858  fn:webhook       webhook:/verify                    outcome=failed       status=200 duration_ms=352 actor_ms=345
+05:44:22.474  user [verify_collect]  First January nineteen seventy, nine nine one seven.
+05:44:22.825  assistant [verify_collect]  Let me read that back.  Your date of birth is the first of January, nineteen seventy. Your card's last four digits are nine, nine, one, seven.  Is that correct 
+05:44:40.177  user [verify_collect]  Yes.
+05:44:40.510  transcript [verify_collect]  CALLS verify({"dob":"1970-01-01","last4":"9917","mobile":"+6598765432"})
+05:44:40.925  transcript [verify_collect]  tool-result {"attempts_remaining":"1","customer_id":"C003","first_name":"","lockout_until":"","verification_status":"failed"}
+05:44:41.262  assistant [verify_collect]  I'm sorry, those details did not match our records again. You have one attempt left.  Let me try once more. May I have your date of birth, and the last four dig
+05:44:53.114  fn:webhook       webhook:/verify                    outcome=locked       status=200 duration_ms=374 actor_ms=343
+05:44:53.733  user [verify_collect]  First January nineteen seventy, nine nine one seven.
+05:44:54.093  assistant [verify_collect]  Let me read that back.  Your date of birth is the first of January, nineteen seventy. Your card's last four digits are nine, nine, one, seven.  Is that correct 
+05:45:10.562  user [verify_collect]  Yes.
+05:45:10.915  transcript [verify_collect]  CALLS verify({"dob":"1970-01-01","last4":"9917","mobile":"+6598765432"})
+05:45:11.310  transcript [verify_collect]  tool-result {"attempts_remaining":"0","customer_id":"C003","first_name":"","lockout_until":"1:59 PM","verification_status":"locked"}
+05:45:11.659  assistant [locked_notice]  For your security, phone verification on this account is locked until 1:59 PM. Please visit any Merlion Bank branch with your NRIC, or call back after that time
+05:45:11.994  transcript [bye]  CALLS hangup({})
+05:45:12.416  transcript [bye]  tool-result {"data":{"result":"ok"}}

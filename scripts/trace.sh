@@ -103,6 +103,7 @@ for (const [svc, rows] of [["webhook", wh], ["mcp", mcp]]) {
 
 events.sort((a, b) => String(a.t).localeCompare(String(b.t)));
 console.log(`conversation ${CID}  ↔  call_control_id ${traceId}`);
+console.log("note: transcript message stamps lag ~1 turn; function log times are real-time (#34)");
 console.log("─".repeat(72));
 for (const e of events) console.log(e.line);
 EOF

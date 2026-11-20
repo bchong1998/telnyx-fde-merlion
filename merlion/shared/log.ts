@@ -34,6 +34,7 @@ export interface LogFields {
   actor_ms?: number;
   err?: string | null;
   level?: "info" | "warn" | "error";
+  match?: "exact" | "fuzzy" | "none";
 }
 
 export function logLine(f: LogFields): void {
@@ -60,6 +61,7 @@ export function logLine(f: LogFields): void {
       kv_ms: f.kv_ms ?? null,
       actor_ms: f.actor_ms ?? null,
       err: f.err ?? null,
+      ...(f.match ? { match: f.match } : {}),
     }),
   );
 }

@@ -1,1 +1,1 @@
-{"name":"backtest d9cf9b9f-ae18-43ff-be16-8a6a9998ec14 (round 2)","asserts":{"no_verify_before":{"regex":"\\byes\\b|\\bcorrect\\b|\\bright\\b","description":"verify must not precede caller confirmation (#28)"}}}
+{"name":"backtest d9cf9b9f-ae18-43ff-be16-8a6a9998ec14 (round 2)","asserts":{"transcript_tools_absent":[]}}

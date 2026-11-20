@@ -5,7 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node test/scam-check.test.mts"
   },
   "dependencies": {
     "@telnyx/edge-runtime": "0.16.1",

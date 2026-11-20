@@ -1,0 +1,56 @@
+conversation 8d8679f5-4429-4bd8-bdf1-6e988c5e6d83  ↔  call_control_id v3:kWjFfsngwtbidLKv0aH4CEqMw4gJhza1XN1Zb5wLlXsOTni59TdmPg
+────────────────────────────────────────────────────────────────────────
+05:35:42.500  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=26
+05:35:42.532  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=5
+05:35:42.628  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=9
+05:36:13.098  fn:mcp           mcp:check_scam_indicator           outcome=ok           status=200 duration_ms=0
+05:36:13.102  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=8
+05:36:13.557  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+05:36:33.899  user [triage]  Again, SMS from with a link, million dash secure dash verify dot com. I clicked it and typed in my OTP.
+05:36:34.249  transcript [verify_collect]  CALLS check_scam_indicator({"kind":"url","value":"million-dash-secure-dash-verify.com"})
+05:36:34.689  transcript [verify_collect]  tool-result This indicator is not in the current scam watchlist. I have no record of it, but stay cautious and never share one-time codes.
+05:36:34.910  assistant [verify_collect]  Let me help you with that.
+05:36:35.154  assistant [verify_collect]  I'm sorry, I'm having a technical issue on my side. Let me continue from here.  To protect your account, I need to verify your identity first. May I have the Si
+05:36:44.024  user [verify_collect]  Eight two nine two five four five eight.
+05:36:44.379  assistant [verify_collect]  Thank you. And may I have your date of birth, and the last four digits of your Merlion Bank card?
+05:36:47.691  user [verify_collect]  Seventeenth April nineteen ninety eight.
+05:36:48.023  assistant [verify_collect]  Thank you. I have your date of birth, but I still need the last
+05:36:56.549  user [verify_collect]  five four.
+05:36:56.891  assistant [verify_collect]  I need four digits for the last four of your card. Could you read them again, one by one?
+05:37:14.984  user [verify_collect]  Four two five one.
+05:37:15.321  fn:webhook       webhook:/verify                    outcome=failed       status=200 duration_ms=925 actor_ms=906
+05:37:15.337  assistant [verify_collect]  Let me read that back. Date of birth: one nine nine eight, zero four, one seven. Last four card digits: four, two, five, one. Mobile: eight two nine two, five f
+05:37:31.393  user [verify_collect]  Yes.
+05:37:31.738  transcript [verify_collect]  CALLS verify({"dob":"1998-04-17","last4":"4251","mobile":"+6582925458"})
+05:37:32.151  transcript [verify_collect]  tool-result {"attempts_remaining":"2","customer_id":"C001","first_name":"","lockout_until":"","verification_status":"failed"}
+05:37:32.506  assistant [verify_collect]  I'm sorry, those details did not match our records. You have two attempts left. Could you read the date of birth and the last four card digits again?
+05:37:34.743  user [verify_collect]  seventeenth April nineteen eighty eight.
+05:37:35.097  assistant [verify_collect]  Let me read that
+05:37:52.101  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=4
+05:37:52.122  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=6
+05:37:52.192  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=5
+05:37:52.931  user [verify_collect]  four two five one.
+05:37:53.279  assistant [verify_collect]  Let me read that back. Date of birth: one nine nine eight, zero four, one seven. Last four card digits: four, two, five, one. Mobile: eight two nine two, five f
+05:38:09.698  fn:webhook       webhook:/verify                    outcome=verified     status=200 duration_ms=204 actor_ms=202
+05:38:10.300  user [verify_collect]  No.
+05:38:10.522  assistant [verify_collect]  Let me read that back. Date of birth: one nine eight eight, zero four, one seven. Last four card digits: four, two, five, one. Mobile: eight two nine two, five 
+05:38:25.738  fn:mcp           mcp:freeze_card                    outcome=ok           status=200 duration_ms=372 actor_ms=364
+05:38:25.740  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=375 actor_ms=364
+05:38:25.980  user [verify_collect]  Yes.
+05:38:26.337  transcript [verify_collect]  CALLS verify({"dob":"1988-04-17","last4":"4251","mobile":"+6582925458"})
+05:38:26.747  transcript [verify_collect]  tool-result {"attempts_remaining":"3","customer_id":"C001","first_name":"Wei Ling","lockout_until":"","verification_status":"verified"}
+05:38:27.103  assistant [secure_actions]  Thank you, Wei Ling. You are verified.  You clicked the link and entered your OTP — that means your credentials may be compromised. I strongly recommend we free
+05:38:35.693  fn:mcp           mcp:open_fraud_case                outcome=ok           status=200 duration_ms=205 actor_ms=197
+05:38:35.696  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=212 actor_ms=197
+05:38:36.033  user [secure_actions]  Yes.
+05:38:36.265  transcript [secure_actions]  CALLS freeze_card({"reason":"Caller clicked a phishing link and shared an OTP; card frozen to prevent unauthorised transactions."})
+05:38:36.538  transcript [secure_actions]  tool-result The card is now frozen. No new transactions can go through.
+05:38:36.769  assistant [secure_actions]  Your card is now frozen. No new transactions can go through.  Now, shall I open a fraud case to record this incident? Yes or no?
+05:38:50.988  user [secure_actions]  Yes.
+05:38:51.450  transcript [secure_actions]  CALLS open_fraud_case({"category":"credentials_shared","summary":"Caller clicked a phishing link (million-dash-secure-dash-verify.com) and entered their OTP. Card frozen."})
+05:38:51.880  transcript [secure_actions]  tool-result Fraud case MB-C001-1 is now open. Our fraud team will review it today.
+05:38:52.231  assistant [secure_actions]  Your fraud case is open. The case number is M B, dash, C zero zero one, dash, one. Our fraud team will review it today.  Is there anything else I can help you w
+05:39:10.205  user [secure_actions]  Can I speak to someone?
+05:39:10.429  assistant [escalate]  I'm connecting you to a fraud specialist now. One moment.
+05:39:10.662  transcript [escalate]  CALLS transfer({"warm_transfer_message":"Caller Wei Ling is verified. She clicked a phishing link and shared her OTP; card frozen and fraud case MB-C001-1 opened. She asked to)
+05:39:10.957  transcript [escalate]  tool-result Transfer completed

@@ -1,0 +1,28 @@
+conversation d052e1e1-be8b-447e-a1a5-a2c78edca779  ↔  call_control_id v3:UEX6CgTNclZ9eJjNPX-GPJVnUqzNW90fpmq9r6Z90YsQjsOzVph4vg
+────────────────────────────────────────────────────────────────────────
+05:45:22.239  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:45:22.250  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+05:45:22.271  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:45:42.857  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+05:45:57.992  user [triage]  I wanna check my case.
+05:45:58.336  assistant [verify_collect]  Let me help you with that.
+05:45:58.674  assistant [verify_collect]  First, I need to verify your identity. May I have the Singapore mobile number registered with Merlion Bank? Please read it to me in two groups of four digits.
+05:46:13.841  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=3
+05:46:13.853  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+05:46:13.880  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=3
+05:46:14.682  user [verify_collect]  Nine eight seven six five four three two.
+05:46:15.032  assistant [verify_collect]  Thank you. Let me read that back: nine, eight, seven, six — five, four, three, two. Is that correct?  And may I also have your date of birth, and the last four 
+05:46:24.029  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=1
+05:46:24.041  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+05:46:24.065  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:46:24.887  user [verify_collect]  Yes.
+05:46:25.223  assistant [verify_collect]  Thank you. I still need your date of
+05:46:49.711  user [verify_collect]  Uh, my birthday is thirtieth June nineteen sixty two. My card is nine nine one seven.
+05:46:49.744  fn:webhook       webhook:/verify                    outcome=locked       status=200 duration_ms=800 actor_ms=769
+05:46:50.085  assistant [verify_collect]  Thank you. Let me read that back.  Date of birth: three, zero, zero, six, one, nine, six, two. Card last four digits: nine, nine, one, seven. Mobile: nine, eigh
+05:47:06.950  user [verify_collect]  Yes.
+05:47:07.293  transcript [verify_collect]  CALLS verify({"dob":"1962-06-30","last4":"9917","mobile":"+6598765432"})
+05:47:07.597  transcript [verify_collect]  tool-result {"attempts_remaining":"0","customer_id":"C003","first_name":"","lockout_until":"1:59 PM","verification_status":"locked"}
+05:47:07.837  assistant [locked_notice]  For your security, phone verification on this account is locked until 1:59 PM. Please visit any Merlion Bank branch with your NRIC, or call back after that time
+05:47:08.052  transcript [bye]  CALLS hangup({})
+05:47:08.338  transcript [bye]  tool-result {"data":{"result":"ok"}}

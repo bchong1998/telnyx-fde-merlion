@@ -88,7 +88,7 @@ function toolLog(
   tool: string,
   outcome: Outcome,
   startMs: number,
-  extra: { customerId?: string | null; err?: string | null } = {},
+  extra: { customerId?: string | null; err?: string | null; match?: "exact" | "fuzzy" | "none" } = {},
 ): void {
   logLine({
     svc: "mcp",
@@ -101,6 +101,7 @@ function toolLog(
     kv_ms: ctx.kvMs.size ? [...ctx.kvMs.values()].reduce((a, b) => a + b, 0) : undefined,
     actor_ms: ctx.actorMs ?? undefined,
     err: extra.err,
+    match: extra.match,
   });
 }
 
@@ -158,23 +159,52 @@ const SMS_HINTS = [
   "credit card", "debit card", "bank account", "transfer",
 ];
 
+/** De-spoken-ify: spoken word forms of separators → their character forms.
+ *  "million dash secure dash verify dot com" → "million-dash-secure-verify.com" */
+export function deSpoken(value: string): string {
+  let v = value.trim().toLowerCase();
+  v = v.replace(/\b(?:dash|hyphen|minus)\b/g, "-");
+  v = v.replace(/\b(?:dot|point|period|fullstop|full stop)\b/g, ".");
+  return v.replace(/\s+/g, "");
+}
+
 function normaliseIndicator(kind: string, value: string): string | null {
-  const v = value.trim();
-  if (!v) return null;
+  const raw = value.trim();
+  if (!raw) return null;
   switch (kind) {
     case "phone":
-      return normalisePhone(v);
+      return normalisePhone(deSpoken(raw));
     case "url": {
-      let s = v.toLowerCase().replace(/^[a-z][a-z0-9+.-]*:\/\//, "");
+      let s = deSpoken(raw).replace(/^[a-z][a-z0-9+.-]*:\/\//, "");
       s = s.split(/[/?#]/)[0] ?? "";
       if (s.startsWith("www.")) s = s.slice(4);
       return s || null;
     }
     case "sms_text":
-      return v.toLowerCase().replace(/\s+/g, " ").trim() || null;
+      return raw.toLowerCase().replace(/\s+/g, " ").trim() || null;
     default:
       return null;
   }
+}
+
+/** Full host minus subdomains — the registrable name (naive: last two labels). */
+export function registrable(host: string): string {
+  const labels = host.split(".");
+  return labels.length <= 2 ? host : labels.slice(-2).join(".");
+}
+
+/** Small Levenshtein distance, enough for short domain strings. */
+export function editDistance(a: string, b: string): number {
+  const m = a.length, n = b.length;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = cur;
+  }
+  return prev[n];
 }
 
 const DEFAULT_ADVICE: Record<Verdict, string> = {
@@ -183,40 +213,74 @@ const DEFAULT_ADVICE: Record<Verdict, string> = {
   no_record: "I have no record of it, but stay cautious and never share one-time codes.",
 };
 
-function computeVerdict(kind: string, norm: string): VerdictRecord {
+export interface VerdictOut extends VerdictRecord {
+  match: "exact" | "fuzzy" | "none";
+  matched_value?: string;
+}
+
+const FUZZY_DOMAIN_MAX_EDITS = 2;
+
+export function computeVerdict(kind: string, norm: string): VerdictOut {
   if (kind === "phone" || kind === "url") {
     const hit = feed.find(
       (e) => e.kind === kind && (norm === e.value || (kind === "url" && norm.endsWith("." + e.value))),
     );
-    if (hit) return { verdict: hit.verdict as Verdict, reason: hit.reason, advice: hit.advice };
+    if (hit) {
+      return { ...hit, verdict: hit.verdict as Verdict, match: "exact", matched_value: hit.value };
+    }
+    if (kind === "url") {
+      // Fuzzy: close-but-not-identical domain → likely the same lure said differently
+      // (e.g. "million-secure-verify.com" ≈ "merlion-secure-verify.com", ed=2).
+      const cand = registrable(norm);
+      let best: { e: FeedEntry; d: number } | null = null;
+      for (const e of feed) {
+        if (e.kind !== "url") continue;
+        const d = editDistance(cand, registrable(e.value));
+        if (d <= FUZZY_DOMAIN_MAX_EDITS && (best === null || d < best.d)) best = { e, d };
+      }
+      if (best) {
+        return {
+          verdict: best.e.verdict as Verdict,
+          reason: `likely match for ${best.e.value}: ${best.e.reason}`,
+          advice: best.e.advice,
+          match: "fuzzy",
+          matched_value: best.e.value,
+        };
+      }
+    }
     return {
       verdict: "no_record",
       reason: "This indicator is not in the current scam watchlist.",
       advice: DEFAULT_ADVICE.no_record,
+      match: "none",
     };
   }
   // sms_text: exact fixture match, then keyword heuristics
   const exact = feed.find((e) => e.kind === "sms_text" && norm === e.value.toLowerCase());
-  if (exact) return { verdict: exact.verdict as Verdict, reason: exact.reason, advice: exact.advice };
+  if (exact) {
+    return { ...exact, verdict: exact.verdict as Verdict, match: "exact", matched_value: exact.value };
+  }
   const hits = SMS_HINTS.filter((k) => norm.includes(k));
   if (hits.length > 0) {
     return {
       verdict: "suspicious",
       reason: `The text contains scam-style phrases: ${hits.slice(0, 4).join(", ")}.`,
       advice: DEFAULT_ADVICE.suspicious,
+      match: "none",
     };
   }
   return {
     verdict: "no_record",
     reason: "Nothing recognisably malicious in this text, and it is not in the scam watchlist.",
     advice: DEFAULT_ADVICE.no_record,
+    match: "none",
   };
 }
 
 async function checkScamIndicator(
   kind: "phone" | "url" | "sms_text",
   value: string,
-): Promise<VerdictRecord> {
+): Promise<VerdictOut> {
   // removed: KV cache — KV reads measured ~1 s from the assistant path, see
   // dogfooding #18/#21. The lookup below (bundled feed + heuristics) is ~0 ms.
   const norm = normaliseIndicator(kind, value);
@@ -225,6 +289,7 @@ async function checkScamIndicator(
       verdict: "no_record",
       reason: "I could not parse that value as a " + kind + ".",
       advice: DEFAULT_ADVICE.no_record,
+      match: "none",
     };
   }
   return computeVerdict(kind, norm);
@@ -305,17 +370,24 @@ function buildServer(env: Env, ctx: HopCtx): McpServer {
       const t0 = Date.now();
       try {
         const rec = await checkScamIndicator(kind, value);
-        toolLog(ctx, "check_scam_indicator", "ok", t0);
+        toolLog(ctx, "check_scam_indicator", "ok", t0, { match: rec.match });
         const sentence =
-          rec.verdict === "known_scam"
-            ? `That is a known scam. ${rec.reason} ${rec.advice}`
-            : rec.verdict === "suspicious"
-              ? `That looks suspicious. ${rec.reason} ${rec.advice}`
-              : `${rec.reason} ${rec.advice}`;
+          rec.match === "fuzzy"
+            ? `That is very likely a scam: it closely resembles ${rec.matched_value}. ${rec.advice}`
+            : rec.verdict === "known_scam"
+              ? `That is a known scam. ${rec.reason} ${rec.advice}`
+              : rec.verdict === "suspicious"
+                ? `That looks suspicious. ${rec.reason} ${rec.advice}`
+                : `${rec.reason} ${rec.advice}`;
         return {
           content: [{ type: "text", text: sentence }],
-          // cache removed (dogfooding #18/#21); field kept for response-shape stability
-          structuredContent: { verdict: rec.verdict, reason: rec.reason, advice: rec.advice, cached: false },
+          structuredContent: {
+            verdict: rec.verdict,
+            reason: rec.reason,
+            advice: rec.advice,
+            match: rec.match,
+            ...(rec.matched_value ? { matched_value: rec.matched_value } : {}),
+          },
         };
       } catch (e) {
         toolLog(ctx, "check_scam_indicator", "error", t0, { err: String(e) });

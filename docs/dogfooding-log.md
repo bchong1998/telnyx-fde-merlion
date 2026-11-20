@@ -180,7 +180,7 @@ Evidence: `evidence/round2/messages-*.json`.
 - **Found by:** OpenCode while building `/healthz?deep=1`. The only `EC_*` env var in the edge-runtime dist is `EC_ACTOR_ROUTER_URL`, so nothing exposes the running revision to function code. `revision` is always `null`.
 - **Did:** kept the field so it's ready if the platform ever injects one. The workaround is `telnyx-edge deployments` from outside, or baking a build ID in at ship time. Ask the platform: inject `EC_REVISION_ID`, because "which revision served this request" is the first question in any incident (see #26).
 
-## 28. trace.sh shows the model calling `verify` *before* the caller confirmed the read-back (it's not clock skew) ⭐ (tracing story)
+## 28. ~~trace.sh shows the model calling `verify` before the caller confirmed~~ WRONG, see #34 (timestamp lag, not model behaviour)
 - **Found by:** Claude reviewing `evidence/observability/trace.txt` (conversation `7723d64a`, a round-2 call before phase 5). OpenCode reported "~25 s clock skew", because the transcript stamps `CALLS verify` at 08:31:54 but the webhook logged it at 08:31:29.
 - **Why it isn't skew:** function timestamps line up with user turns within ~200 ms. Caller says "eight eight three three" at 08:31:29.077, `/verify` runs at 08:31:29.279, `get_case_status` at 08:31:29.799. The *assistant read-back* is stamped 08:31:29.403 and the caller's "Yes." at 08:31:53.877. Transcript tool-call rows are written when the turn is flushed, not when the tool runs.
 - **So what actually happened:** the model spoke the read-back and called `verify` (and then `get_case_status`) in the same turn, without waiting for the confirmation. If digits are misheard, that burns a lockout attempt the caller never agreed to.
@@ -228,6 +228,27 @@ Evidence: `evidence/round2/messages-*.json`.
   - `{{telnyx_conversation_id}}` resolves in webhook-tool preset fields on web_chat. It does **not** resolve in the MCP server URL, and neither does `{{call_control_id}}`. So on chat, the gated MCP actions fail closed. That's the intended fallback, and one more templating inconsistency between surfaces.
 - **Open: MCP has no auth.** `POST /mcp tools/list` with no credentials → **200**. `MCP_TOKEN` isn't set, and `checkAuth` skips auth when the binding is absent (fail-open by design). Today the only protection is that a verified binding needs an unguessable live `call_control_id`. That's good, but it's one layer. Also, `checkAuth` reads `env.SECRETS.get()`, which costs about 0.7 s per request (#23), so turning it on as written would slow every tool call.
 - **Process note:** `DEV_SKIP_SIG` was updated again at 13:39 (bypass turned on for the curl proofs, then off). It's back on enforced, but proving things by switching off auth in prod is the same pattern as #26. Next time, use a throwaway function or a short window that the probe watches.
+
+## 34. CORRECTION to #28: the model was *not* verifying before "yes". Transcript message timestamps lag by about one turn ⭐ (honesty story)
+- **Found by:** Claude, tracing round-3 voice calls (20 Nov, `evidence/round3/`). Proof of impossibility: in `8d8679f5` the MCP logged `check_scam_indicator({"value":"million-dash-secure-dash-verify.com"})` at **05:36:13.098**, but the user message containing that URL is stamped **05:36:33.899**. A tool can't be called with words the caller hasn't said yet.
+- **Not clock skew either:** call-start `/dv` (function clock 05:45:19.660) agrees with the conversation's `created_at` (05:45:22.137). But that call's welcome message is stamped 05:45:42.857, 23 s after `/dv`. **Conversation *message* timestamps are written about one turn late.** Every "tool before confirmation" in #28 lines up instead with the caller's *next* message, which is the "yes". Examples: freeze at 05:38:25.738 matches the "Yes." stamped 05:38:36.033, and the case at 05:38:35.693 matches the "Yes." stamped 05:38:50.988.
+- **What was wrong:** my #28 diagnosis, the `no_verify_before` assert built on it, and the back-test "flags" (3 false positives). OpenCode's "skew" call was closer than mine: it's a stamp lag, not skew.
+- **Lessons:**
+  - Never compare cross-system timestamps without a calibration point, and look for an impossibility check (a tool called with values the caller hasn't said yet) before believing a timeline.
+  - The live log tail is real time, so it's the trustworthy view.
+  - The "verify only after yes" prompt rule stays. It's harmless and correct.
+
+## 35. Round-3 voice calls (20 Nov 05:35–05:47Z): 4 calls, `evidence/round3/trace-*.txt`
+- **Works end to end on voice:**
+  - The MCP bearer token (freeze, case, status all ok).
+  - The verify binding without `customer_id`, with no customer-ID asks.
+  - The lockout: exactly 3 attempts, then `locked`. The call-back with *correct* details is still `locked`.
+  - The warm transfer with a briefing.
+  - Actor latency ~200–400 ms warm (first `/verify` ~800–900 ms).
+- **Date read-back is unnatural and inconsistent:** "one nine nine eight, zero four, one seven", "zero two, one one, one nine seven five", "three zero zero six one nine six two". **Real impact:** STT heard "nineteen ninety eight" for 1988, the caller couldn't parse the digit-string read-back, said "yes", and burned an attempt. Then the model re-read the *old* 1998 value after the caller restated 1988.
+- **Scam check missed the known URL:** STT gave "million dash secure dash verify dot com", and the model passed `million-dash-secure-dash-verify.com` literally, so it got "not in watchlist". Spoken indicators need server-side normalisation (dash, dot, spaces) and fuzzy domain matching. The model also said "I'm having a technical issue on my side" when no tool had failed.
+- **The freeze wasn't offered up front:** after an OTP was shared, it went straight to verification without saying "I'll freeze your card. First I need to verify you."
+- **Double "Thank you, Raj. You are verified."** is still there (`17135bbc`). The verify_collect turn says it, then secure_actions' "greet the caller by name" instruction says it again.
 
 ---
 

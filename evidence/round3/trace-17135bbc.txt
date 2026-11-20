@@ -1,0 +1,43 @@
+conversation 17135bbc-546d-4315-a77f-4e8946f7ad6a  ↔  call_control_id v3:w_IWp24EzkyPLWyqYcbYma9UKho38RGytDPtjw6woaxMwxk_ypMQCQ
+────────────────────────────────────────────────────────────────────────
+05:39:34.067  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:39:34.081  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=2
+05:39:34.114  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:39:55.183  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+05:40:09.633  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:40:09.646  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+05:40:09.709  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+05:40:10.447  user [triage]  What's the status of my case?
+05:40:10.790  assistant [verify_collect]  Let me help you with that.
+05:40:11.130  assistant [verify_collect]  Before I can look at your case, I need to verify your identity.  May I have the Singapore mobile number registered with Merlion Bank? Please read it to me in tw
+05:40:19.139  user [verify_collect]  Nine one two three four five six seven.
+05:40:19.484  assistant [verify_collect]  Thank you. Let me read that back: nine one two three, four five six seven. Is that correct?
+05:40:30.306  user [verify_collect]  Yes.
+05:40:30.856  assistant [verify_collect]  Thank you. Now, may I have your date of birth, and the last four digits of your Merlion Bank card?
+05:40:32.581  user [verify_collect]  Second November nineteen seventy five.
+05:40:32.921  assistant [verify_collect]  Thank you. And
+05:40:48.081  user [verify_collect]  eight eight two three.
+05:40:48.269  fn:webhook       webhook:/verify                    outcome=failed       status=200 duration_ms=784 actor_ms=782
+05:40:48.415  assistant [verify_collect]  Thank you. Let me read that back: your date of birth is zero two, one one, one nine seven five. And the last four digits of your card are eight, eight, two, thr
+05:41:09.894  user [verify_collect]  Yes.
+05:41:10.235  transcript [verify_collect]  CALLS verify({"dob":"1975-11-02","last4":"8823","mobile":"+6591234567"})
+05:41:10.649  transcript [verify_collect]  tool-result {"attempts_remaining":"2","customer_id":"C002","first_name":"","lockout_until":"","verification_status":"failed"}
+05:41:10.869  assistant [verify_collect]  I'm sorry, those details did not match our records. You have two attempts left.  Let's try again. May I have your date of birth, and the last four digits of you
+05:41:24.249  fn:webhook       webhook:/verify                    outcome=verified     status=200 duration_ms=383 actor_ms=366
+05:41:24.837  user [verify_collect]  Second November nineteen seventy five. Eight eight three three.
+05:41:25.014  fn:mcp           mcp:get_case_status                outcome=ok           status=200 duration_ms=288 actor_ms=286
+05:41:25.015  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=291 actor_ms=286
+05:41:25.188  assistant [verify_collect]  Thank you. Let me read that back: your date of birth is zero two, one one, one nine seven five. And the last four digits of your card are eight, eight, three, t
+05:41:47.713  user [verify_collect]  Yes.
+05:41:48.068  transcript [verify_collect]  CALLS verify({"dob":"1975-11-02","last4":"8833","mobile":"+6591234567"})
+05:41:48.514  transcript [verify_collect]  tool-result {"attempts_remaining":"3","customer_id":"C002","first_name":"Raj","lockout_until":"","verification_status":"verified"}
+05:41:48.846  transcript [secure_actions]  CALLS get_case_status({})
+05:41:49.256  transcript [secure_actions]  tool-result You have 1 case: MB-C002-1, suspicious card transactions, open.
+05:41:49.609  assistant [secure_actions]  Thank you, Raj. You are verified.
+05:41:49.957  assistant [secure_actions]  Thank you, Raj. You are verified.  I can see you have one case with us. The case number is M B, dash, C zero zero two, dash, one. It concerns suspicious card tr
+05:42:13.975  user [secure_actions]  No. That's all.
+05:42:14.335  assistant [secure_actions]  Thank you, Raj. Before you go, please remember: Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you
+05:42:30.538  user [secure_actions]  Thank you.
+05:42:30.886  assistant [police_advice]  Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799
+05:42:31.225  transcript [bye]  CALLS hangup({})
+05:42:31.634  transcript [bye]  tool-result {"data":{"result":"ok"}}
