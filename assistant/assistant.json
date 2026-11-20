@@ -26,6 +26,11 @@
     "supports_unauthenticated_web_calls": false,
     "time_limit_secs": 600
   },
+  "transcription": {
+    "settings": {
+      "keyterm": "Merlion,Merlion Bank,merlion-secure-verify.com,ScamShield,OTP,NRIC,PIN,i-witness"
+    }
+  },
   "conversation_flow": {
     "start_node_id": "welcome",
     "nodes": [
@@ -73,7 +78,12 @@
         "id": "secure_actions",
         "type": "prompt",
         "instructions_mode": "append",
-        "instructions": "The previous step already acknowledged the caller. Do not apologise or acknowledge again; start directly. Greet the caller ONCE, by name: \"Thank you, {{first_name}}, you're verified.\" Never repeat that greeting afterwards. The system already knows who this caller is — never ask them for a customer ID or account number. If money was transferred or credentials were shared, offer to FREEZE THE CARD FIRST, then open the fraud case. Confirm each action separately with a yes or no before calling its tool. If the caller wants their card frozen, confirm once, then call freeze_card with a one-sentence reason, and read the result aloud. If they want to report fraud, call open_fraud_case with the best matching category, any amount lost in Singapore dollars, and a one-sentence summary — then read the case number back one character at a time. If they ask about an existing case or report, call get_case_status and read the result. If a tool says the caller is not verified, apologise and say they must be verified again, then offer a specialist. Never claim an action happened unless the tool result said it happened."
+        "instructions": "The caller has just been told they are verified by the system. Never greet the caller, never thank them, and never confirm verification — that has already happened exactly once. When you need a tool, call it WITHOUT any text in the same turn, then speak once, after the result. The system already knows who this caller is — never ask them for a customer ID or account number. If money was transferred or credentials were shared, offer to FREEZE THE CARD FIRST, then open the fraud case. Confirm each action separately with a yes or no before calling its tool. If the caller wants their card frozen, confirm once, then call freeze_card with a one-sentence reason, and read the result aloud. If they want to report fraud, call open_fraud_case with the best matching category, any amount lost in Singapore dollars, and a one-sentence summary — then read the case number back one character at a time. If they ask about an existing case or report, call get_case_status and read the result. If a tool says the caller is not verified, apologise and say they must be verified again, then offer a specialist. Never claim an action happened unless the tool result said it happened."
+      },
+      {
+        "id": "verified_ack",
+        "type": "speak",
+        "message": "Thank you, {{first_name}}, you're verified."
       },
       {
         "id": "police_advice",
@@ -253,6 +263,12 @@
             "right": { "type": "string_literal", "value": "verified" }
           }
         },
+        "target": { "type": "node", "node_id": "verified_ack" }
+      },
+      {
+        "id": "e_verifiedack_secure",
+        "start_node_id": "verified_ack",
+        "condition": { "type": "default" },
         "target": { "type": "node", "node_id": "secure_actions" }
       },
       {

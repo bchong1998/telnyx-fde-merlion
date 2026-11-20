@@ -247,9 +247,30 @@ Evidence: `evidence/round2/messages-*.json`.
   - Actor latency ~200–400 ms warm (first `/verify` ~800–900 ms).
 - **Date read-back is unnatural and inconsistent:** "one nine nine eight, zero four, one seven", "zero two, one one, one nine seven five", "three zero zero six one nine six two". **Real impact:** STT heard "nineteen ninety eight" for 1988, the caller couldn't parse the digit-string read-back, said "yes", and burned an attempt. Then the model re-read the *old* 1998 value after the caller restated 1988.
 - **Scam check missed the known URL:** STT gave "million dash secure dash verify dot com", and the model passed `million-dash-secure-dash-verify.com` literally, so it got "not in watchlist". Spoken indicators need server-side normalisation (dash, dot, spaces) and fuzzy domain matching. The model also said "I'm having a technical issue on my side" when no tool had failed.
+- **Root cause found by OpenCode (0e8b741):** `merlion-secure-verify.com` was only in the demo/test scenario text. It was never in `scam-feed.json`. Our test data and our feed disagreed, so even a perfect transcription would have missed it. It's now in the feed, with normalisation and fuzzy matching (Levenshtein ≤ 2) as well.
 - **The freeze wasn't offered up front:** after an OTP was shared, it went straight to verification without saying "I'll freeze your card. First I need to verify you."
 - **Double "Thank you, Raj. You are verified."** is still there (`17135bbc`). The verify_collect turn says it, then secure_actions' "greet the caller by name" instruction says it again.
 
+## 36. Confirming calls after 0e8b741 (20 Nov 06:54–07:00Z, `evidence/round3/trace-confirm-*.txt`)
+- **Fixed and confirmed on voice:**
+  - The DOB is read back naturally ("the seventeenth of April, nineteen eighty-eight").
+  - Freeze is offered first when an OTP was shared.
+  - Single greeting for Wei Ling.
+  - No "technical issue" claims.
+- **Double "Thank you, Raj, you're verified." persists (`6500a70b`), now *inside* `secure_actions`.** The model speaks the greeting, calls `get_case_status` in the same turn (text alongside a tool call is spoken, as in #22), then regenerates the whole reply, greeting included, after the tool result. Wei Ling's call had no tool call on that turn, so it wasn't doubled. The prompt can't reliably prevent this. **Fix:** make the greeting a *speak node* (`verified_ack`: "Thank you, {{first_name}}, you're verified.") between `verify_collect` and `secure_actions`, and have `secure_actions` never greet.
+- **STT hears "Merlion" as "Malayan"** ("Malayan Bank", "malayan dash secure dash verify dot com"). That's 5 edits from "merlion", so fuzzy matching (≤2) can't catch it, and the model skipped `check_scam_indicator` entirely. Live config: `transcription.model = deepgram/flux`, `settings.keyterm = null`. The SDK documents `keyterm` (comma-separated boost list for Deepgram/AssemblyAI/Speechmatics, mustache-templatable) for exactly this.
+- **TTS mispronunciations** (reported by the user): "police.gov.sg" is read as "police dot *goof* dot S G", and "Merlion" isn't said as "mer-lion" (mermaid + lion). The account has a Pronunciation Dictionaries API (alias and IPA phoneme items), but the assistant's `voice_settings` type has no field to attach one. Whether the voice uses it automatically isn't documented, which is a docs gap.
+- **Accent STT on digits:** "eight eight three three" was heard as "it it tree tree" twice before it came through. The model handled it well (it asked again and never guessed), but it's a real Singapore-English risk to mention.
+
+
+## 37. Pronunciation Dictionary CAN be attached to an assistant voice — via the untyped `voice_settings.pronunciation_dict_id` (20 Nov)
+- **Found by:** OpenCode, after the SDK + OpenAPI showed nothing. `assistant/voice_settings` type has no pronunciation field, and `pronunciation_dict_id` appears nowhere in the OpenAPI spec except the path param of its own endpoint. An empirical guess (`voice_settings.pronunciation_dict_ids`, plural) was **silently dropped** on update (HTTP 200, field absent on GET). A GET of the live assistant then echoed the real scalar: `voice_settings.pronunciation_dict_id` (null) — the field exists in the live API but is untyped in the SDK and missing from the spec.
+- **Attach path that works:** `POST /v2/ai/assistants/{id}` with `voice_settings: {..., pronunciation_dict_id: <dict-uuid>}` merges; GET confirms persistence; the voice key (`Telnyx.Ultra.*`) and STT model (`deepgram/flux`) are untouched. Dictionary is `/v2/pronunciation_dicts` (alias + IPA phoneme items; ours: `Merlion`→"Mer-lion", `gov.sg`→"guv dot S G"). Now config-as-code in `assistant/deploy.mjs` (`upsertPronunciationDict` + `attachPronunciationDict`, dict id in `assistant/state.json`).
+- **Docs gap filed:** nothing documents where a pronunciation dict is consumed. Described behaviour worth a call-verification: "Merlion" spoken as "Mer-lion" and police.gov.sg URL as "guv dot S G" on the next calls.
+- **Also verified this round:** `transcription.settings.keyterm` is honoured by `deepgram/flux` (SDK documents Deepgram/Reson8/Speechmatics/AssemblyAI): boost list `Merlion,Merlion Bank,merlion-secure-verify.com,ScamShield,OTP,NRIC,PIN,i-witness` now live for #36's "Malayan Bank" STT confusion.
+- **Note:** only the standalone `MinimaxProviderParams` schema references pronunciation in the whole spec; the standalone `/text-to-speech` API does not expose dict usage either.
+
+---
 ---
 
 ## Observations (not bugs, but they shaped decisions)

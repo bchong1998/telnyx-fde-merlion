@@ -198,6 +198,39 @@ async function assignPhone(texmlAppId) {
   return { id: number.id, phone_number: number.phone_number };
 }
 
+// Pronunciation dictionary (config-as-code): upsert by name and attach via the
+// assistant's voice_settings.pronunciation_dict_id (untyped in the node SDK's
+// VoiceSettings, but live in the v2 API — dogfooding #37).
+async function upsertPronunciationDict() {
+  const name = "merlion-brand";
+  const items = [
+    { text: "Merlion", type: "alias", alias: "Mer-lion" },
+    { text: "gov.sg", type: "alias", alias: "guv dot S G" },
+  ];
+  const list = await api("GET", "/pronunciation_dicts?page%5Bsize%5D=100");
+  const existing = (list.data ?? []).find((d) => d.name === name);
+  if (existing) {
+    await api("PATCH", `/pronunciation_dicts/${existing.id}`, { items });
+    return { id: existing.id, action: "updated" };
+  }
+  const created = await api("POST", "/pronunciation_dicts", { name, items });
+  return { id: created.data?.id ?? created.id, action: "created" };
+}
+
+async function attachPronunciationDict(assistantId, dictId) {
+  const cur = await api("GET", `/ai/assistants/${assistantId}`);
+  const live = cur.data ?? cur;
+  const body = {
+    ...live,
+    voice_settings: { ...(live.voice_settings ?? {}), pronunciation_dict_id: dictId },
+  };
+  delete body.id;
+  delete body.created_at;
+  delete body.updated_at;
+  delete body.version;
+  await api("POST", `/ai/assistants/${assistantId}`, body);
+}
+
 // ---- diff: compare what we sent against what the API returns -----------------
 
 function leaves(obj, prefix = "") {
@@ -279,6 +312,9 @@ async function main() {
   const phone = await assignPhone(texml.id);
   console.log(`   texml app ${texml.id} (${texml.action})`);
   console.log(`   ${phone.phone_number} voice connection -> texml app`);
+  const dict = await upsertPronunciationDict();
+  await attachPronunciationDict(asst.id, dict.id);
+  console.log(`   pronunciation dict ${dict.id} (${dict.action}) attached via voice_settings.pronunciation_dict_id`);
 
   const state = {
     updated_at: new Date().toISOString(),
@@ -286,6 +322,7 @@ async function main() {
     mcp_server_id: mcp.id,
     tools: { verify: verify.id, transfer: transfer.id, hangup: hangup.id },
     texml_app_id: texml.id,
+    pronunciation_dict_id: dict.id,
     phone_number: phone.phone_number,
     phone_number_id: phone.id,
   };

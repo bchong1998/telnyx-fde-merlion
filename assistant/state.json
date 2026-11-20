@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T06:16:58.094Z",
+  "updated_at": "2026-11-20T07:11:17.902Z",
   "assistant_id": "assistant-48c6f37c-1b3b-42bb-aa83-62ab1d65cd65",
   "mcp_server_id": "a57bd2a7-9b6b-4a99-ae2f-2e97cab2b1cb",
   "tools": {
@@ -8,6 +8,7 @@
     "hangup": "tool-bb7ce791-4194-406f-82bd-86e85c3607b9"
   },
   "texml_app_id": "3096463221649835537",
+  "pronunciation_dict_id": "6bf9c5a0-1271-4e7c-be3d-7e6e2cf50265",
   "phone_number": "+16018678604",
   "phone_number_id": "3096368418366949167"
 }

@@ -1,0 +1,37 @@
+conversation 0463c035-93b0-4795-a322-ea503f8325c1  ↔  call_control_id v3:-ia_SstCB2vVq9lWvVOYHRhf8TP4_Bl1xh4Kib5VCklEsB7YtmZfZw
+note: transcript message stamps lag ~1 turn; function log times are real-time (#34)
+────────────────────────────────────────────────────────────────────────
+06:54:14.926  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=26
+06:54:14.950  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=4
+06:54:14.991  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=6
+06:54:46.839  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+06:55:07.497  user [triage]  I got an SMS from Malayan Bank with a link. Malayan dash secure dash verify dot com. I clicked it and typed in my OTP.
+06:55:07.849  assistant [verify_collect]  I'm sorry to hear that — that link is not from us, and sharing your OTP means someone may have access to your account. Let me help you with that.
+06:55:08.081  assistant [verify_collect]  To protect your account, I need to verify your identity first.  Could you give me the Singapore mobile number registered with Merlion Bank? Please read it in tw
+06:55:21.071  user [verify_collect]  Eight two nine two five four five eight.
+06:55:21.433  assistant [verify_collect]  Thank you — that's 8292 5458.  Now, could you give me your date of birth, and the last 4 digits of your Merlion Bank card?
+06:55:22.765  user [verify_collect]  Seventeenth April nineteen eighty eight.
+06:55:23.101  assistant [verify_collect]  Thank
+06:55:38.977  user [verify_collect]  four two five one.
+06:55:39.125  fn:webhook       webhook:/verify                    outcome=verified     status=200 duration_ms=848 actor_ms=845
+06:55:39.330  assistant [verify_collect]  Thank you. Let me read that back: card digits four, two, five, one; mobile 8292 5458; date of birth the seventeenth of April, nineteen eighty-eight. Is that cor
+06:55:50.811  user [verify_collect]  Yes.
+06:55:51.074  fn:mcp           mcp:freeze_card                    outcome=ok           status=200 duration_ms=362 actor_ms=354
+06:55:51.077  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=390 actor_ms=354
+06:55:51.164  transcript [verify_collect]  CALLS verify({"dob":"1988-04-17","last4":"4251","mobile":"+6582925458"})
+06:55:51.596  transcript [verify_collect]  tool-result {"attempts_remaining":"3","customer_id":"C001","first_name":"Wei Ling","lockout_until":"","verification_status":"verified"}
+06:55:51.936  assistant [secure_actions]  Thank you, Wei Ling, you're verified.  Because you shared your OTP, I'd like to freeze your card right away so no money can leave it. Shall I go ahead — yes or 
+06:56:02.177  user [secure_actions]  Yes.
+06:56:02.741  transcript [secure_actions]  CALLS freeze_card({"reason":"Caller shared OTP after clicking a phishing link; card frozen to prevent unauthorised transactions."})
+06:56:03.186  transcript [secure_actions]  tool-result The card is now frozen. No new transactions can go through.
+06:56:03.529  assistant [secure_actions]  Your card is now frozen — no new transactions can go through.  Next, I'd like to open a fraud case to record what happened. Shall I go ahead — yes or no?
+06:56:03.728  fn:mcp           mcp:open_fraud_case                outcome=ok           status=200 duration_ms=332 actor_ms=330
+06:56:03.729  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=338 actor_ms=330
+06:56:17.755  user [secure_actions]  Yes.
+06:56:18.141  transcript [secure_actions]  CALLS open_fraud_case({"category":"credentials_shared","summary":"Caller clicked a phishing link (malayan-secure-verify.com) and entered her OTP. Card frozen during this call."})
+06:56:18.435  transcript [secure_actions]  tool-result Fraud case MB-C001-1 is now open. Our fraud team will review it today.
+06:56:18.683  assistant [secure_actions]  Your fraud case is open. The case number is M B, dash, C zero zero one, dash, one. Our fraud team will review it today.  Is there anything else I can help you w
+06:56:34.081  user [secure_actions]  No.
+06:56:34.439  assistant [police_advice]  Please also make a police report online at police.gov.sg/i-witness, or at any neighbourhood police centre. For scam advice, call the ScamShield Helpline on 1799
+06:56:34.778  transcript [bye]  CALLS hangup({})
+06:56:35.188  transcript [bye]  tool-result {"data":{"result":"ok"}}

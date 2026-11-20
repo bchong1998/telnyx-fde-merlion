@@ -1,0 +1,36 @@
+conversation 6500a70b-ecf5-4740-b6e1-26c941b98047  ↔  call_control_id v3:clWlWTSwk9hkXlD6LmqUEQMYZJMJRYUUPp9ZUJiKayJ48QUKPG2F3g
+note: transcript message stamps lag ~1 turn; function log times are real-time (#34)
+────────────────────────────────────────────────────────────────────────
+06:57:38.682  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+06:57:38.697  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=2
+06:57:38.733  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+06:58:03.162  assistant [welcome]  Thank you for calling Merlion Bank's scam and fraud line.  This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet bankin
+06:58:19.362  user [triage]  What's the status of my case?
+06:58:19.721  assistant [verify_collect]  Let me help you with that.
+06:58:20.070  assistant [verify_collect]  First, I need to verify your identity before I can share any case details.  May I have the Singapore mobile number registered with your Merlion Bank account? Pl
+06:58:36.071  user [verify_collect]  Nine one two three four five six seven.
+06:58:36.410  assistant [verify_collect]  Thank you. That's nine one two three, four five six seven.  Now, may I have your date of birth, and the last four digits of your Merlion Bank card?
+06:58:38.322  user [verify_collect]  Uh, second November nineteen seventy five.
+06:58:38.583  assistant [verify_collect]  Thank you. And
+06:58:47.722  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=2
+06:58:47.734  fn:mcp           mcp:/mcp                           outcome=ok           status=202 duration_ms=1
+06:58:47.808  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=6
+06:58:47.953  user [verify_collect]  And it... it's tree tree.
+06:58:48.309  assistant [verify_collect]  I'm sorry, I need four digits for the card. Could you give me the last four digits of your Merlion Bank card, one by one?
+06:59:04.758  user [verify_collect]  It it tree tree.
+06:59:05.092  assistant [verify_collect]  I'm still hearing only two digits — tree, tree. I need four digits in total. Could you read the last four digits of your Merlion Bank card, one by one?
+06:59:22.656  user [verify_collect]  eight eight three three
+06:59:22.733  fn:webhook       webhook:/verify                    outcome=verified     status=200 duration_ms=890 actor_ms=887
+06:59:23.005  assistant [verify_collect]  Thank you. Let me read that back to you.  Your card ends in eight, eight, three, three. Your mobile number is nine one two three, four five six seven. Your date
+06:59:24.234  fn:mcp           mcp:get_case_status                outcome=ok           status=200 duration_ms=342 actor_ms=335
+06:59:24.237  fn:mcp           mcp:/mcp                           outcome=ok           status=200 duration_ms=349 actor_ms=335
+06:59:46.082  user [verify_collect]  Yes.
+07:00:09.143  assistant [verify_collect]  One moment.
+07:00:09.498  transcript [verify_collect]  CALLS verify({"dob":"1975-11-02","last4":"8833","mobile":"+6591234567"})
+07:00:09.918  transcript [verify_collect]  tool-result {"attempts_remaining":"3","customer_id":"C002","first_name":"Raj","lockout_until":"","verification_status":"verified"}
+07:00:10.273  transcript [secure_actions]  CALLS get_case_status({})
+07:00:10.709  transcript [secure_actions]  tool-result You have 1 case: MB-C002-1, suspicious card transactions, open.
+07:00:11.071  assistant [secure_actions]  Thank you, Raj, you're verified.
+07:00:11.424  assistant [secure_actions]  Thank you, Raj, you're verified.  You have one case with us. The case number is M B, dash, C zero zero two, dash, one. It's about suspicious card transactions, 
+07:00:11.776  user [secure_actions]  No. That's all.
+07:00:12.116  assistant [secure_actions]  Thank you, Raj. Before you go, please remember: Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you
