@@ -273,6 +273,12 @@ Evidence: `evidence/round2/messages-*.json`.
 ---
 ---
 
+## 38. Final confirming call (Raj, after 414d1eb)
+- Confirmed by the user on voice: a single "Thank you, Raj, you're verified."; "gov" and "Merlion" are pronounced correctly through the pronunciation dictionary (#37).
+- **Known trade-off:** after the `verified_ack` speak node, `secure_actions` waits for the caller's next turn before reading the case. The caller has to prompt it. That's acceptable; the alternative is the double-speak (#36).
+
+---
+
 ## Observations (not bugs, but they shaped decisions)
 - **Edge CLI v0.6.0 has features the brief doesn't mention:**
   - `actors` (account-scoped StatefulActor types, with `inspect`, `instances`, `logs`, `metrics`). This suggests actors are shared across functions by design, and `actors instances` shows live actor state for the demo.

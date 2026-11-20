@@ -53,7 +53,7 @@ welcome (speak) ─ account_locked=="true" ─► locked_notice ─► goodbye
    └ default ─► otp_disclosure (speak, verbatim) ─ scam_surge_alert=="true" ─► surge_notice
                                          └ default ─► triage (prompt)
 triage ─ llm ─► scam_check (MCP check_scam_indicator) ─► police_advice
-       ─ llm ─► verify_collect ─ verification_status=="verified" ─► secure_actions (freeze / case / status)
+       ─ llm ─► verify_collect ─ verification_status=="verified" ─► verified_ack (speak) ─► secure_actions (freeze / case / status)
                                ─ verification_status=="locked"   ─► locked_notice
        ─ llm ─► escalate (transfer + warm briefing) ─ failed ─► escalate_failed
 every prompt node ─ telnyx_conversation_duration_secs >= 300 ─► escalate
@@ -89,7 +89,9 @@ The full node and edge table, with all spoken text, is in `docs/design.md` §12.
 4. **Keep latency off the call path.** KV (~1 s) and `env.SECRETS.get()` (~0.7 s) are out of the mid-call path, and secrets are read from deploy-time env (#18, #23). `/verify` takes about 40 ms warm. The `/dv` timeout is set to 3 s, because on timeout the call silently continues with builder defaults.
 5. **Model: GLM-5.3-Flash** for the assistant. It's on the assistant allowlist, gave the best latency for voice, and the workflow carries the deterministic parts. Llama 3.3 was rejected for assistants (`10027`).
 6. **US number for an SG bank.** SG DIDs need KYC documents, so the number is a +1 DID. Transfers to the SG mobile number needed SG added to the outbound voice profile (#21).
-7. **Scope cuts:**
+7. **Use speak nodes wherever the model kept double-speaking.** The text a model says alongside a tool call gets spoken, then it says it again after the result (#22, #36), and prompting didn't fix it reliably. The "you're verified" line is a speak node (`verified_ack`), so it's said exactly once. Trade-off: after a speak node, the next prompt node waits for the caller, so the caller says "go ahead" before hearing their case status.
+8. **Tune voice for Singapore.** STT `keyterm` boosts "Merlion", "ScamShield", "NRIC" and the like ("Merlion" was heard as "Malayan"). A pronunciation dictionary fixes TTS for "Merlion" and "gov.sg"; it's attached through the undocumented `voice_settings.pronunciation_dict_id` (#37). Spoken URLs are normalised server-side, with fuzzy domain matching.
+9. **Scope cuts:**
    - Multi-language specialist assistants (SG has 4 official languages): designed, then deferred to protect the English core.
    - Voicemail detection on transfer: we assume the specialist answers. Production would enable it.
 
@@ -104,7 +106,7 @@ The full node and edge table, with all spoken text, is in `docs/design.md` §12.
 - **#30: on chat, every session shared one auth key.** `{{call_control_id}}` isn't resolved on web_chat, so it arrives as literal text, and four different chats were verified under the key `"{{call_control_id}}"`. The fix fails closed on unresolved templates, keys chat by `{{telnyx_conversation_id}}`, and removes model-supplied identity from MCP.
 - **#14: tool nodes silently skip their HTTP call**, and #22/#24: double-speak around transitions and tool calls. Both were fixed by changing the architecture and prompts, and the log has the evidence.
 
-All 35 entries are in [`docs/dogfooding-log.md`](docs/dogfooding-log.md), with what happened, who found it, what we did, and the exact error text.
+All 37 entries are in [`docs/dogfooding-log.md`](docs/dogfooding-log.md), with what happened, who found it, what we did, and the exact error text.
 
 ## AI tooling (dogfooding)
 
