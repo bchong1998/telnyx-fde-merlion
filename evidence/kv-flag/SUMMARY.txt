@@ -1,0 +1,21 @@
+# KV flag evidence (req 4b) — 2026-11-20T08:14:34Z
+
+## Admin route worked: writes + live reads
+
+/admin/flag GET sandwich above/below shows KV truth flip instantly.
+
+## Function /dv behaviour (webhook log lines, flag ON):
+first post-toggle hit per isolate: kv miss (~1.8-2.0 s read), later hits: cached (SWR 30s TTL)
+
+## 4 chat attempts + 1 sentinel attempt: surge_notice NEVER played on web_chat —
+welcome -> otp_disclosure -> triage, no surge node, e.g.:
+assistant: Thank you for calling Merlion Bank's scam and fraud line.
+assistant: This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.
+user: Hi, I got an SMS from Merlion Bank asking me to log in at merlion-secure-verify.com. Is this a real Merlion Bank page?
+ CALLS check_scam_indicator({"kind":"url","value":"merlion-secure-verify.com"})
+: Let me check that link for you.
+
+CONCLUSION for the log: on web_chat, /dv webhook RETURNED variables are not consumed
+by edge routing (builder defaults apply; tool-level variables flow fine). The KV flag
+itself is correct end-to-end on the function side: toggle -> (SWR TTL) -> readable
+in /dv. The surge_notice demo therefore needs a real phone call.

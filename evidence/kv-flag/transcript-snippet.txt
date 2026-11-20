@@ -1,0 +1,5 @@
+assistant: Thank you for calling Merlion Bank's scam and fraud line.
+assistant: This call is recorded. Merlion Bank will never ask for your one-time password, PIN or internet banking password, and will never ask you to transfer money to a safe account. If anyone has, it is a scam.
+user: Hi, I got an SMS from Merlion Bank asking me to log in at merlion-secure-verify.com. Is this a real Merlion Bank page?
+ CALLS check_scam_indicator({"kind":"url","value":"merlion-secure-verify.com"})
+: Let me check that link for you.

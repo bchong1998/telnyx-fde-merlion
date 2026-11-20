@@ -1,0 +1,3 @@
+{"ok":true,"wrote":{"key":"flag/surge_message","value":"Warning: we are seeing a surge in scam SMS pretending to be from Merlion Bank about a 'card verification' link. Do not click any links."}}
+{"ok":true,"wrote":{"key":"flag/scam_surge_alert","value":"true"}}
+{"flag/scam_surge_alert":"true","flag/surge_message":"Warning: we are seeing a surge in scam SMS pretending to be from Merlion Bank about a 'card verification' link. Do not click any links."}

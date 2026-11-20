@@ -16,6 +16,10 @@ A voice AI line for a fictional Singapore bank. People call it when they think t
 
 Reset the demo state with `. ~/.config/merlion/admin.env && sh scripts/reset-demo.sh`.
 
+**Feature flag (KV, toggled without a redeploy).** `scripts/flag.sh on ["message"]` / `off` writes `flag/scam_surge_alert` (+ optional surge banner text) into MERLION_KV via the bearer-protected `POST /admin/flag` endpoint (same `ADMIN_TOKEN` as `scripts/reset-demo.sh`; `GET /admin/flag` returns current values — other keys are rejected with 400). After `on`, the next call should hear the surge notice right after the OTP disclosure. The `/dv` response flags ride an **in-isolate stale-while-revalidate cache with a 30 s TTL**: a toggle reaches each isolate on its first `/dv` *after* that isolate's TTL expires — a cold isolate never needs a warm-up, but each warm one may serve one stale turn before it refreshes in the background. For a deterministic recording: toggle, wait ≥35 s, then make one throwaway interaction before the recorded call. Caveat (20 Nov, candid log): on **web_chat** the returned variables are not consumed by edge routing (builder defaults win — see `evidence/kv-flag/SUMMARY.txt`), so the surge-notice demo needs a phone call; the function-side toggle itself is correct and measurable end-to-end.
+
+The MCP server is public but requires a bearer token (the assistant authenticates via an integration secret). Reviewers: send your own `Authorization: Bearer <token>` header, or use the phone number.
+
 ## Architecture
 
 ```mermaid

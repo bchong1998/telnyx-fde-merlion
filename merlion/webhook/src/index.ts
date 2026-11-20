@@ -159,6 +159,8 @@ function finish(
     callerMasked?: string | null;
     customerId?: string | null;
     err?: string | null;
+    key?: string;
+    value?: string;
   },
 ): Response {
   const duration = Date.now() - ctx.start;
@@ -185,6 +187,8 @@ function finish(
     kv_ms: ctx.kvMs.size ? kvMsTotal : undefined,
     actor_ms: ctx.actorMs ?? undefined,
     err: log.err,
+    ...(log.key !== undefined ? { key: log.key } : {}),
+    ...(log.value !== undefined ? { value: log.value } : {}),
   });
   return out;
 }
@@ -193,6 +197,15 @@ async function kvGet(env: Env, key: string, ctx?: HopCtx): Promise<string | null
   const t0 = Date.now();
   try {
     return await env.MERLION_KV.get(key);
+  } finally {
+    ctx?.kvMs.set(key, Date.now() - t0);
+  }
+}
+
+async function kvPut(env: Env, key: string, value: string, ctx?: HopCtx): Promise<void> {
+  const t0 = Date.now();
+  try {
+    await env.MERLION_KV.put(key, value);
   } finally {
     ctx?.kvMs.set(key, Date.now() - t0);
   }
@@ -467,12 +480,15 @@ async function handleHealthz(env: Env, url: URL, ctx: HopCtx): Promise<Response>
   );
 }
 
+async function requireAdmin(req: Request, env: Env): Promise<boolean> {
+  const token = await secretValue(env, "ADMIN_TOKEN");
+  if (!token) return false;
+  return req.headers.get("authorization") === `Bearer ${token}`;
+}
+
 async function handleAdminReset(req: Request, env: Env, ctx: HopCtx): Promise<Response> {
   const base = { svc: "webhook" as const, route: "/admin/reset" };
-  const token = await secretValue(env, "ADMIN_TOKEN");
-  const auth = req.headers.get("authorization");
-  // Never exposed without a correctly bound secret AND a matching bearer token.
-  if (!token || auth !== `Bearer ${token}`) {
+  if (!(await requireAdmin(req, env))) {
     return finish(json({ error: "unauthorized" }, 401), ctx, {
       ...base,
       outcome: "denied",
@@ -485,6 +501,58 @@ async function handleAdminReset(req: Request, env: Env, ctx: HopCtx): Promise<Re
     reset.push(p.customer_id);
   }
   return finish(json({ ok: true, reset }), ctx, { ...base, outcome: "ok" });
+}
+
+// --- /admin/flag: demo toggle for KV feature flags (brief req 4b) --------------
+
+const FLAG_KEYS: Record<string, (v: unknown) => string | null> = {
+  "flag/scam_surge_alert": (v) => (v === "true" || v === "false" ? v : null),
+  "flag/surge_message": (v) =>
+    typeof v === "string" && v.length > 0 && v.length <= 200 && !/[\r\n]/.test(v) ? v : null,
+};
+
+async function handleAdminFlag(req: Request, env: Env, ctx: HopCtx, body: any): Promise<Response> {
+  const base = { svc: "webhook" as const, route: "/admin/flag" };
+  if (!(await requireAdmin(req, env))) {
+    return finish(json({ error: "unauthorized" }, 401), ctx, {
+      ...base,
+      outcome: "denied",
+      err: "bad or missing bearer token",
+    });
+  }
+
+  if (req.method === "GET") {
+    const [alert, message] = await Promise.all([
+      kvGet(env, "flag/scam_surge_alert", ctx),
+      kvGet(env, "flag/surge_message", ctx),
+    ]);
+    return finish(json({ "flag/scam_surge_alert": alert ?? "false", "flag/surge_message": message ?? "" }), ctx, {
+      ...base,
+      outcome: "ok",
+    });
+  }
+
+  // POST {key, value} — body already parsed at the entry point (req is consumed).
+  const key = typeof body?.key === "string" ? body.key : "";
+  const validator = FLAG_KEYS[key];
+  if (!validator) {
+    return finish(json({ error: `unknown flag key (allowed: ${Object.keys(FLAG_KEYS).join(", ")})` }, 400), ctx, {
+      ...base,
+      outcome: "denied",
+      err: `flag key rejected: ${key}`,
+    });
+  }
+  const value = validator(body?.value);
+  if (value === null) {
+    return finish(json({ error: `invalid value for ${key}` }, 400), ctx, {
+      ...base,
+      outcome: "denied",
+      err: `flag value rejected for ${key}`,
+    });
+  }
+  await kvPut(env, key, value, ctx);
+  kvCache.delete(key); // this isolate is fresh immediately; others catch up via SWR/TTL
+  return finish(json({ ok: true, wrote: { key, value } }), ctx, { ...base, outcome: "ok", key, value });
 }
 
 // ---- entry point -------------------------------------------------------------
@@ -517,6 +585,9 @@ export default {
       }
       if (url.pathname === "/admin/reset" && req.method === "POST") {
         return await handleAdminReset(req, env, ctx);
+      }
+      if (url.pathname === "/admin/flag") {
+        return await handleAdminFlag(req, env, ctx, payload);
       }
       if (url.pathname === "/healthz" && req.method === "GET") {
         return await handleHealthz(env, url, ctx);
